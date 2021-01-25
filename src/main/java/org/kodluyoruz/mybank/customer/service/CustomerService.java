@@ -51,7 +51,7 @@ public class CustomerService {
         if (deletedCustomer != null){
             customerRepository.delete(deletedCustomer);
         }else{
-            throw new CustomerNotFoundException("Customer Not Found in deleting moment.");
+            throw new CustomerNotFoundException("Customer not found in deleting moment.");
         }
     }
 }
