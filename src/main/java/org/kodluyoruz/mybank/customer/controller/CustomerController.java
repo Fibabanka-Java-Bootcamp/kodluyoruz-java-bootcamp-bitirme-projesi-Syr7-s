@@ -23,7 +23,7 @@ public class CustomerController {
         try {
             return customerService.create(customerDto.toCustomer()).toCustomerDto();
         } catch (Exception exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hata olustu");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "An error occurred");
         }
     }
 
@@ -43,9 +43,9 @@ public class CustomerController {
         try{
             return customerService.updateCustomer(customerDto.toCustomer()).toCustomerDto();
         }catch (CustomerNotFoundException exception){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Hata olustu");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"An error occurred");
         }catch (Exception exception){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Sunucu Hatası");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Server Error");
         }
     }
     @DeleteMapping("/delete/{id}")
@@ -53,9 +53,9 @@ public class CustomerController {
         try{
             customerService.deleteCustomer(id);
         }catch (CustomerNotFoundException exception){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Hata olustu");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"An error occurred");
         }catch (Exception exception){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Sunucu Hatası");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Server Error");
         }
     }
 
