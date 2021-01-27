@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.kodluyoruz.mybank.account.demanddepositaccount.entity.DemandDepositAccount;
+import org.kodluyoruz.mybank.creditcard.entity.CreditCard;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
 import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -28,14 +30,18 @@ public class Customer {
     private String customerEmail;
     private String customerAddress;
     private boolean customerRemovable;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate customerBirthDate;
 
     @OneToMany(mappedBy = "customer")
     @JsonIgnore
     private Set<DemandDepositAccount> demandDepositAccounts;
 
-    public CustomerDto toCustomerDto(){
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
+    private Set<CreditCard> creditCards;
+
+    public CustomerDto toCustomerDto() {
         return CustomerDto.builder()
                 .customerID(this.customerID)
                 .customerTC(this.customerTC)
@@ -49,19 +55,4 @@ public class Customer {
                 .build();
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "customerID=" + customerID +
-                ", customerTC='" + customerTC + '\'' +
-                ", customerName='" + customerName + '\'' +
-                ", customerLastname='" + customerLastname + '\'' +
-                ", customerPhone='" + customerPhone + '\'' +
-                ", customerEmail='" + customerEmail + '\'' +
-                ", customerAddress='" + customerAddress + '\'' +
-                ", customerRemovable=" + customerRemovable +
-                ", customerBirthDate=" + customerBirthDate +
-               // ", demandDepositAccounts=" + demandDepositAccounts +
-                '}';
-    }
 }
