@@ -1,6 +1,7 @@
 package org.kodluyoruz.mybank.customer.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.kodluyoruz.mybank.account.demanddepositaccount.entity.DemandDepositAccount;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
@@ -8,7 +9,7 @@ import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
-
+import java.util.List;
 @Entity
 @Getter
 @Setter
@@ -31,6 +32,7 @@ public class Customer {
     private LocalDate customerBirthDate;
 
     @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     private Set<DemandDepositAccount> demandDepositAccounts;
 
     public CustomerDto toCustomerDto(){
@@ -47,5 +49,19 @@ public class Customer {
                 .build();
     }
 
-
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerID=" + customerID +
+                ", customerTC='" + customerTC + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", customerLastname='" + customerLastname + '\'' +
+                ", customerPhone='" + customerPhone + '\'' +
+                ", customerEmail='" + customerEmail + '\'' +
+                ", customerAddress='" + customerAddress + '\'' +
+                ", customerRemovable=" + customerRemovable +
+                ", customerBirthDate=" + customerBirthDate +
+               // ", demandDepositAccounts=" + demandDepositAccounts +
+                '}';
+    }
 }

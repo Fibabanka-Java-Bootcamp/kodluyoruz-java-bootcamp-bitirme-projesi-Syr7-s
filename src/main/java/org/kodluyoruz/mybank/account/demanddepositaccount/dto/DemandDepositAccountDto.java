@@ -7,7 +7,8 @@ import org.kodluyoruz.mybank.customer.entity.Customer;
 import java.time.LocalDate;
 
 
-@Data
+@Getter
+@Setter
 @Builder
 public class DemandDepositAccountDto {
     private int demandDepositAccountIBAN;
@@ -25,7 +26,7 @@ public class DemandDepositAccountDto {
                     .customer(customer)
                 .build();
 
-
     }
+
 
 }

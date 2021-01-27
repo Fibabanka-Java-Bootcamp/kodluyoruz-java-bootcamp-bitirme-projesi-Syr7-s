@@ -21,7 +21,5 @@ public class DemandDepositAccountService {
     public Optional<DemandDepositAccount> get(int accountIBAN){
         return demandDepositAccountRepository.findById(accountIBAN);
     }
-    public DemandDepositAccount getByCustomerID(long customerID){
-        return demandDepositAccountRepository.findByCustomer_CustomerID(customerID);
-    }
+
 }

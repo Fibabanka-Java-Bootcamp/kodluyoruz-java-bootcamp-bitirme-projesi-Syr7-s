@@ -1,6 +1,7 @@
 package org.kodluyoruz.mybank.account.demanddepositaccount.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.kodluyoruz.mybank.account.demanddepositaccount.dto.DemandDepositAccountDto;
 import org.kodluyoruz.mybank.customer.entity.Customer;
@@ -25,6 +26,7 @@ public class DemandDepositAccount {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate demandDepositAccountCreationDate;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
