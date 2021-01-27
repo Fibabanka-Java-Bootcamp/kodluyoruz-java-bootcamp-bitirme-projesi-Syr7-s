@@ -1,7 +1,6 @@
 package org.kodluyoruz.mybank.customer.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.kodluyoruz.mybank.customer.entity.Customer;
 
 import java.time.LocalDate;
@@ -33,5 +32,6 @@ public class CustomerDto {
                 .build();
 
     }
+
 
 }
