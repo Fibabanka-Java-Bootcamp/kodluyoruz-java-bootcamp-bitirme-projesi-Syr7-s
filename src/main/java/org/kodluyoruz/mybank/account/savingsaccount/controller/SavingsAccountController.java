@@ -3,6 +3,8 @@ package org.kodluyoruz.mybank.account.savingsaccount.controller;
 import org.kodluyoruz.mybank.account.savingsaccount.dto.SavingsAccountDto;
 import org.kodluyoruz.mybank.account.savingsaccount.entity.SavingsAccount;
 import org.kodluyoruz.mybank.account.savingsaccount.service.SavingsAccountService;
+import org.kodluyoruz.mybank.bankcard.dto.BankCardDto;
+import org.kodluyoruz.mybank.bankcard.service.BankCardService;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import org.kodluyoruz.mybank.customer.service.CustomerService;
 import org.springframework.data.domain.PageRequest;
@@ -19,16 +21,20 @@ import java.util.stream.Collectors;
 public class SavingsAccountController {
     private final SavingsAccountService savingsAccountService;
     private final CustomerService customerService;
+    private final BankCardService bankCardService;
 
-    public SavingsAccountController(SavingsAccountService savingsAccountService, CustomerService customerService) {
+    public SavingsAccountController(SavingsAccountService savingsAccountService, CustomerService customerService, BankCardService bankCardService) {
         this.savingsAccountService = savingsAccountService;
         this.customerService = customerService;
+        this.bankCardService = bankCardService;
     }
-    @PostMapping("/{customerID}/account")
+    @PostMapping("/{customerID}/account/{bankcardNO}")
     @ResponseStatus(HttpStatus.CREATED)
-    public SavingsAccountDto create(@PathVariable("customerID") long customerID, @RequestBody SavingsAccountDto savingsAccountDto){
+    public SavingsAccountDto create(@PathVariable("customerID") long customerID,@PathVariable("bankcardNO") long bankCardNO, @RequestBody SavingsAccountDto savingsAccountDto){
         CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
         savingsAccountDto.setCustomer(customerDto.toCustomer());
+        BankCardDto bankCardDto = bankCardService.findBankCard(bankCardNO).toBankCardDto();
+        savingsAccountDto.setBankCard(bankCardDto.toBankCard());
         return savingsAccountService.create(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
     }
     @GetMapping("/{accountIBAN}")

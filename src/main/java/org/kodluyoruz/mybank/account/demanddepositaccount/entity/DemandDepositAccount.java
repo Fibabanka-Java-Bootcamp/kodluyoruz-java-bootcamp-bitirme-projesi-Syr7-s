@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.kodluyoruz.mybank.account.demanddepositaccount.dto.DemandDepositAccountDto;
+import org.kodluyoruz.mybank.bankcard.entity.BankCard;
 import org.kodluyoruz.mybank.customer.entity.Customer;
 
 import javax.persistence.*;
@@ -30,6 +31,10 @@ public class DemandDepositAccount {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name="bankcard_no")
+    private BankCard bankCard;
     public DemandDepositAccountDto toDemandDepositAccountDto() {
         return DemandDepositAccountDto.builder()
                 .demandDepositAccountIBAN(this.demandDepositAccountIBAN)
@@ -37,6 +42,7 @@ public class DemandDepositAccount {
                 .demandDepositAccountCurrency(this.demandDepositAccountCurrency)
                 .demandDepositAccountCreationDate(this.demandDepositAccountCreationDate)
                 .customer(this.customer)
+                .bankCard(this.bankCard)
                 .build();
     }
 

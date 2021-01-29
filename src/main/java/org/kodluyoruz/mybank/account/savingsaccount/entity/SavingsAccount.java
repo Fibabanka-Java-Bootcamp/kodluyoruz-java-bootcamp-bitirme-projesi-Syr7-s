@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.kodluyoruz.mybank.account.savingsaccount.dto.SavingsAccountDto;
+import org.kodluyoruz.mybank.bankcard.entity.BankCard;
 import org.kodluyoruz.mybank.customer.entity.Customer;
 
 import javax.persistence.*;
@@ -30,6 +31,10 @@ public class SavingsAccount {
     @JoinColumn(name="customer_id")
     private Customer customer;
 
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "bankcard__no")
+    private BankCard bankCard;
     public SavingsAccountDto toSavingsAccountDto(){
         return SavingsAccountDto.builder()
                 .savingsAccountIBAN(this.savingsAccountIBAN)
@@ -38,6 +43,7 @@ public class SavingsAccount {
                 .savingsAccountCreationDate(this.savingsAccountCreationDate)
                 .savingsAccountInterestRate(this.savingsAccountInterestRate)
                 .customer(this.customer)
+                .bankCard(this.bankCard)
                 .build();
     }
 

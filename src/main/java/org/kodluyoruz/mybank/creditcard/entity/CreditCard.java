@@ -27,6 +27,7 @@ public class CreditCard {
     private int cardDebt;
     @ManyToOne
     @JsonIgnore
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     public CreditCardDto toCreditCardDto(){
