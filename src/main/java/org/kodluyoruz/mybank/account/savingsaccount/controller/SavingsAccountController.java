@@ -6,6 +6,7 @@ import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import org.kodluyoruz.mybank.customer.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/savings")
@@ -23,5 +24,10 @@ public class SavingsAccountController {
         CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
         savingsAccountDto.setCustomer(customerDto.toCustomer());
         return savingsAccountService.create(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
+    }
+    @GetMapping("/{accountIBAN}")
+    public SavingsAccountDto get(@PathVariable("accountIBAN") int accountIBAN){
+        return savingsAccountService.get(accountIBAN).orElseThrow(()->
+                new ResponseStatusException(HttpStatus.NOT_FOUND,"Savings Account is not fount")).toSavingsAccountDto();
     }
 }
