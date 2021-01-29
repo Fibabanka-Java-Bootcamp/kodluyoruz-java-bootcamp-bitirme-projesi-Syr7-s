@@ -2,6 +2,8 @@ package org.kodluyoruz.mybank.account.savingsaccount.service;
 
 import org.kodluyoruz.mybank.account.savingsaccount.entity.SavingsAccount;
 import org.kodluyoruz.mybank.account.savingsaccount.repository.SavingsAccountRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,5 +20,8 @@ public class SavingsAccountService {
     }
     public Optional<SavingsAccount> get(int accountIBAN){
         return savingsAccountRepository.findById(accountIBAN);
+    }
+    public Page<SavingsAccount> savingsAccounts(Pageable pageable){
+        return savingsAccountRepository.findAll(pageable);
     }
 }
