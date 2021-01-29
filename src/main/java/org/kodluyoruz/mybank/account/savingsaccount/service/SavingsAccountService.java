@@ -4,6 +4,8 @@ import org.kodluyoruz.mybank.account.savingsaccount.entity.SavingsAccount;
 import org.kodluyoruz.mybank.account.savingsaccount.repository.SavingsAccountRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SavingsAccountService {
     private final SavingsAccountRepository savingsAccountRepository;
@@ -13,5 +15,8 @@ public class SavingsAccountService {
     }
     public SavingsAccount create(SavingsAccount savingsAccount){
         return savingsAccountRepository.save(savingsAccount);
+    }
+    public Optional<SavingsAccount> get(int accountIBAN){
+        return savingsAccountRepository.findById(accountIBAN);
     }
 }
