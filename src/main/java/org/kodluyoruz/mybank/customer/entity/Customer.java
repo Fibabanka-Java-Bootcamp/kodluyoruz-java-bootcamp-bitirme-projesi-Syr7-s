@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.kodluyoruz.mybank.account.demanddepositaccount.entity.DemandDepositAccount;
+import org.kodluyoruz.mybank.account.savingsaccount.entity.SavingsAccount;
 import org.kodluyoruz.mybank.creditcard.entity.CreditCard;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 
@@ -41,6 +42,9 @@ public class Customer {
     @JsonIgnore
     private Set<CreditCard> creditCards;
 
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
+    private Set<SavingsAccount> savingsAccounts;
     public CustomerDto toCustomerDto() {
         return CustomerDto.builder()
                 .customerID(this.customerID)
