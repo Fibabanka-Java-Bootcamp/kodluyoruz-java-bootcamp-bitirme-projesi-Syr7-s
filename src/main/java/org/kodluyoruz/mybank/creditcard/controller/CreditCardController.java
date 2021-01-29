@@ -33,7 +33,7 @@ public class CreditCardController {
     }
 
     @GetMapping(value = "/creditCards",params = {"page","size"})
-    public List<CreditCardDto> getAllCreditCard(@Min(value = 0) @RequestParam("page") int page, @RequestParam("size") int size){
+    public List<CreditCardDto> getAllCreditCard(@Min(value = 0) @RequestParam("page") int page,@Min(value = 1) @RequestParam("size") int size){
         return creditCardService.creditCards(PageRequest.of(page,size)).stream()
                 .map(CreditCard::toCreditCardDto)
                 .collect(Collectors.toList());
