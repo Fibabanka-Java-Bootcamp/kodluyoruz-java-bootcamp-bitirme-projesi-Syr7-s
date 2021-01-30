@@ -40,6 +40,7 @@ public class DemandDepositAccountController {
     }
 
     @PutMapping("/{bankCardNo}/deposit/{accountIBAN}")
+    @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto getUpdatedDeposit(@PathVariable("bankCardNo") long bankCardNo,
                                                      @PathVariable("accountIBAN") int accountIBAN, @RequestParam("depositMoney") int depositMoney) {
         DemandDepositAccountDto demandDepositAccountDto = demandDepositAccountService.get(accountIBAN).orElseThrow(() ->
@@ -55,6 +56,7 @@ public class DemandDepositAccountController {
         }
     }
     @PutMapping("/{bankCardNo}/withDrawMoney/{accountIBAN}")
+    @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto getUpdateDepositWithDrawMoney(@PathVariable("bankCardNo") long bankCardNo,
                                                                  @PathVariable("accountIBAN") int accountIBAN, @RequestParam("withDrawMoney") int withDrawMoney){
         DemandDepositAccountDto demandDepositAccountDto = demandDepositAccountService.get(accountIBAN).orElseThrow(() ->

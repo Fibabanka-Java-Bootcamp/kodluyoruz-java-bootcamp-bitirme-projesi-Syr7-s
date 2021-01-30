@@ -24,4 +24,7 @@ public class SavingsAccountService {
     public Page<SavingsAccount> savingsAccounts(Pageable pageable){
         return savingsAccountRepository.findAll(pageable);
     }
+    public SavingsAccount updateBalance(SavingsAccount savingsAccount){
+        return savingsAccountRepository.save(savingsAccount);
+    }
 }

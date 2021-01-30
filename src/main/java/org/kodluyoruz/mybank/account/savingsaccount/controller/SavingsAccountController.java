@@ -28,24 +28,64 @@ public class SavingsAccountController {
         this.customerService = customerService;
         this.bankCardService = bankCardService;
     }
+
     @PostMapping("/{customerID}/account/{bankcardNO}")
     @ResponseStatus(HttpStatus.CREATED)
-    public SavingsAccountDto create(@PathVariable("customerID") long customerID,@PathVariable("bankcardNO") long bankCardNO, @RequestBody SavingsAccountDto savingsAccountDto){
+    public SavingsAccountDto create(@PathVariable("customerID") long customerID, @PathVariable("bankcardNO") long bankCardNO, @RequestBody SavingsAccountDto savingsAccountDto) {
         CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
         savingsAccountDto.setCustomer(customerDto.toCustomer());
         BankCardDto bankCardDto = bankCardService.findBankCard(bankCardNO).toBankCardDto();
         savingsAccountDto.setBankCard(bankCardDto.toBankCard());
         return savingsAccountService.create(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
     }
+
     @GetMapping("/{accountIBAN}")
-    public SavingsAccountDto get(@PathVariable("accountIBAN") int accountIBAN){
-        return savingsAccountService.get(accountIBAN).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NOT_FOUND,"Savings Account is not fount")).toSavingsAccountDto();
+    public SavingsAccountDto get(@PathVariable("accountIBAN") int accountIBAN) {
+        return savingsAccountService.get(accountIBAN).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Savings Account is not fount")).toSavingsAccountDto();
     }
-    @GetMapping(value = "/accounts",params = {"page","size"})
-    public List<SavingsAccountDto> getAllSavingsAccount(@Min(value = 0) @RequestParam("page") int page, @Min(value = 1) @RequestParam("size") int size){
+
+    @GetMapping(value = "/accounts", params = {"page", "size"})
+    public List<SavingsAccountDto> getAllSavingsAccount(@Min(value = 0) @RequestParam("page") int page, @Min(value = 1) @RequestParam("size") int size) {
         return savingsAccountService.savingsAccounts(PageRequest.of(page, size)).stream()
                 .map(SavingsAccount::toSavingsAccountDto)
                 .collect(Collectors.toList());
     }
+
+    @PutMapping("/{bankCardNo}/deposit/{accountIBAN}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public SavingsAccountDto getUpdateSavings(@PathVariable("bankCardNo") long bankCardNo,
+                                              @PathVariable("accountIBAN") int accountIBAN, @RequestParam("depositMoney") int depositMoney) {
+        SavingsAccountDto savingsAccountDto = savingsAccountService.get(accountIBAN).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toSavingsAccountDto();
+        long cardNo = savingsAccountDto.getBankCard().getBankCardNO();
+        if (cardNo == bankCardNo) {
+            int balance = savingsAccountDto.getSavingsAccountBalance();
+            savingsAccountDto.setSavingsAccountBalance(balance + depositMoney);
+            return savingsAccountService.updateBalance(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
+        } else {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
+        }
+    }
+
+    @PutMapping("/{bankCardNo}/withDrawMoney/{accountIBAN}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public SavingsAccountDto getUpdateSavingsWithDrawMoney(@PathVariable("bankCardNo") long bankCardNo,
+                                                           @PathVariable("accountIBAN") int accountIBAN, @RequestParam("withDrawMoney") int withDrawMoney) {
+        SavingsAccountDto savingsAccountDto = savingsAccountService.get(accountIBAN).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toSavingsAccountDto();
+        long cardNo = savingsAccountDto.getBankCard().getBankCardNO();
+        if (cardNo == bankCardNo){
+            int balance = savingsAccountDto.getSavingsAccountBalance();
+            if (balance<withDrawMoney){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Not enough money in your account.");
+            }else{
+                savingsAccountDto.setSavingsAccountBalance(balance-withDrawMoney);
+                return savingsAccountService.updateBalance(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
+        }
+    }
+
 }
