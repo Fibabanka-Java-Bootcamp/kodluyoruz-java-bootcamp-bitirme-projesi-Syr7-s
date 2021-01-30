@@ -4,7 +4,6 @@ import org.kodluyoruz.mybank.bankcard.dto.BankCardDto;
 import org.kodluyoruz.mybank.bankcard.entity.BankCard;
 import org.kodluyoruz.mybank.bankcard.service.BankCardService;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
-import org.kodluyoruz.mybank.customer.entity.Customer;
 import org.kodluyoruz.mybank.customer.service.CustomerService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
