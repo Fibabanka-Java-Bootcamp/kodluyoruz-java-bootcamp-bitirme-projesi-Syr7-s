@@ -54,5 +54,23 @@ public class DemandDepositAccountController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Server Error");
         }
     }
+    @PutMapping("/{bankCardNo}/withDrawMoney/{accountIBAN}")
+    public DemandDepositAccountDto getUpdateDepositWithDrawMoney(@PathVariable("bankCardNo") long bankCardNo,
+                                                                 @PathVariable("accountIBAN") int accountIBAN, @RequestParam("withDrawMoney") int withDrawMoney){
+        DemandDepositAccountDto demandDepositAccountDto = demandDepositAccountService.get(accountIBAN).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toDemandDepositAccountDto();
+        long cardNo = demandDepositAccountDto.getBankCard().getBankCardNO();
+        if (cardNo == bankCardNo){
+            int balance = demandDepositAccountDto.getDemandDepositAccountBalance();
+            if (balance<withDrawMoney){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Not enough money in your account");
+            }else{
+                demandDepositAccountDto.setDemandDepositAccountBalance(balance-withDrawMoney);
+                return demandDepositAccountService.update(demandDepositAccountDto.toDemandDepositAccount()).toDemandDepositAccountDto();
+            }
+        }else{
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Server Error");
+        }
+    }
 
 }
