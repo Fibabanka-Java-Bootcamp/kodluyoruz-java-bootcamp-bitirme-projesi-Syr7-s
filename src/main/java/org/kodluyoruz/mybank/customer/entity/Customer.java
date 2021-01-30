@@ -34,15 +34,15 @@ public class Customer {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate customerBirthDate;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<DemandDepositAccount> demandDepositAccounts;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<CreditCard> creditCards;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<SavingsAccount> savingsAccounts;
     public CustomerDto toCustomerDto() {

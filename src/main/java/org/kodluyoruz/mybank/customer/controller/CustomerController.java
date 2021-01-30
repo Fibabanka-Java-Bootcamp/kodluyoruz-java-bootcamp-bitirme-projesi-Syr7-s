@@ -2,6 +2,7 @@ package org.kodluyoruz.mybank.customer.controller;
 
 import lombok.Getter;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
+import org.kodluyoruz.mybank.customer.exception.CustomerCouldNotDeletedException;
 import org.kodluyoruz.mybank.customer.exception.CustomerNotFoundException;
 import org.kodluyoruz.mybank.customer.service.CustomerService;
 import org.springframework.http.HttpStatus;
@@ -52,8 +53,8 @@ public class CustomerController {
     public void delete(@PathVariable("id") long id){
         try{
             customerService.deleteCustomer(id);
-        }catch (CustomerNotFoundException exception){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"An error occurred");
+        }catch (CustomerCouldNotDeletedException exception){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"An error occurred");
         }catch (Exception exception){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Server Error");
         }

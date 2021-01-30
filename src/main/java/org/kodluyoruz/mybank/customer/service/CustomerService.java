@@ -1,10 +1,18 @@
 package org.kodluyoruz.mybank.customer.service;
 
+import org.kodluyoruz.mybank.account.demanddepositaccount.entity.DemandDepositAccount;
+import org.kodluyoruz.mybank.account.savingsaccount.entity.SavingsAccount;
+import org.kodluyoruz.mybank.creditcard.entity.CreditCard;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import org.kodluyoruz.mybank.customer.entity.Customer;
+import org.kodluyoruz.mybank.customer.exception.CustomerCouldNotDeletedException;
 import org.kodluyoruz.mybank.customer.exception.CustomerNotFoundException;
 import org.kodluyoruz.mybank.customer.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerService {
@@ -46,12 +54,15 @@ public class CustomerService {
         }
     }
 
-    public void deleteCustomer(long id){
+    public void deleteCustomer(long id) {
         Customer deletedCustomer = customerRepository.findCustomerByCustomerID(id);
-        if (deletedCustomer != null){
+        List<Integer> debts = deletedCustomer.getCreditCards().stream().map(CreditCard::getCardDebt).collect(Collectors.toList());
+        List<Integer> demandAccountBalance = deletedCustomer.getDemandDepositAccounts().stream().map(DemandDepositAccount::getDemandDepositAccountBalance).collect(Collectors.toList());
+        List<Integer> savingsAccountBalance = deletedCustomer.getSavingsAccounts().stream().map(SavingsAccount::getSavingsAccountBalance).collect(Collectors.toList());
+        if (deletedCustomer != null && debts.contains(0) && (demandAccountBalance.contains(0) && savingsAccountBalance.contains(0))) {
             customerRepository.delete(deletedCustomer);
-        }else{
-            throw new CustomerNotFoundException("Customer not found in deleting moment.");
+        } else {
+            throw new CustomerCouldNotDeletedException("Customer could not deleted .");
         }
     }
 }
