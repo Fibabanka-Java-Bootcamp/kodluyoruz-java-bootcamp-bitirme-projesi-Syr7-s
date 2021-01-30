@@ -1,8 +1,10 @@
 package org.kodluyoruz.mybank.account.demanddepositaccount.controller;
 
 import org.kodluyoruz.mybank.account.demanddepositaccount.dto.DemandDepositAccountDto;
+import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotEnoughMoneyException;
 import org.kodluyoruz.mybank.account.demanddepositaccount.service.DemandDepositAccountService;
 import org.kodluyoruz.mybank.bankcard.dto.BankCardDto;
+import org.kodluyoruz.mybank.bankcard.exception.BankCardNotMatchException;
 import org.kodluyoruz.mybank.bankcard.service.BankCardService;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import org.kodluyoruz.mybank.customer.service.CustomerService;
@@ -52,7 +54,7 @@ public class DemandDepositAccountController {
             return demandDepositAccountService.update(demandDepositAccountDto.toDemandDepositAccount()).toDemandDepositAccountDto();
         }
         else{
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Server Error");
+            throw new BankCardNotMatchException("BankCard not matched to the accountIBAN.");
         }
     }
     @PutMapping("/{bankCardNo}/withDrawMoney/{accountIBAN}")
@@ -65,13 +67,13 @@ public class DemandDepositAccountController {
         if (cardNo == bankCardNo){
             int balance = demandDepositAccountDto.getDemandDepositAccountBalance();
             if (balance<withDrawMoney){
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Not enough money in your account");
+                throw new DemandDepositAccountNotEnoughMoneyException("Not enough money in your account");
             }else{
                 demandDepositAccountDto.setDemandDepositAccountBalance(balance-withDrawMoney);
                 return demandDepositAccountService.update(demandDepositAccountDto.toDemandDepositAccount()).toDemandDepositAccountDto();
             }
         }else{
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Server Error");
+            throw new BankCardNotMatchException("BankCard not matched to the accountIBAN.");
         }
     }
 

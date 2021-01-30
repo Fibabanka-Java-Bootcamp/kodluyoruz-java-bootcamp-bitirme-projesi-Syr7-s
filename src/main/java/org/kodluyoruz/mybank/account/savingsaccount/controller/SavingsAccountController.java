@@ -2,8 +2,10 @@ package org.kodluyoruz.mybank.account.savingsaccount.controller;
 
 import org.kodluyoruz.mybank.account.savingsaccount.dto.SavingsAccountDto;
 import org.kodluyoruz.mybank.account.savingsaccount.entity.SavingsAccount;
+import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingsAccountNotEnoughMoneyException;
 import org.kodluyoruz.mybank.account.savingsaccount.service.SavingsAccountService;
 import org.kodluyoruz.mybank.bankcard.dto.BankCardDto;
+import org.kodluyoruz.mybank.bankcard.exception.BankCardNotMatchException;
 import org.kodluyoruz.mybank.bankcard.service.BankCardService;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import org.kodluyoruz.mybank.customer.service.CustomerService;
@@ -42,7 +44,7 @@ public class SavingsAccountController {
     @GetMapping("/{accountIBAN}")
     public SavingsAccountDto get(@PathVariable("accountIBAN") int accountIBAN) {
         return savingsAccountService.get(accountIBAN).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Savings Account is not fount")).toSavingsAccountDto();
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Savings Account is not found")).toSavingsAccountDto();
     }
 
     @GetMapping(value = "/accounts", params = {"page", "size"})
@@ -64,7 +66,7 @@ public class SavingsAccountController {
             savingsAccountDto.setSavingsAccountBalance(balance + depositMoney);
             return savingsAccountService.updateBalance(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
         } else {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
+            throw new BankCardNotMatchException("BankCard not matched to the accountIBAN.");
         }
     }
 
@@ -78,13 +80,13 @@ public class SavingsAccountController {
         if (cardNo == bankCardNo){
             int balance = savingsAccountDto.getSavingsAccountBalance();
             if (balance<withDrawMoney){
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Not enough money in your account.");
+                throw new SavingsAccountNotEnoughMoneyException("Not enough money in your account.");
             }else{
                 savingsAccountDto.setSavingsAccountBalance(balance-withDrawMoney);
                 return savingsAccountService.updateBalance(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
             }
         } else {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
+            throw new BankCardNotMatchException("BankCard not matched to the accountIBAN.");
         }
     }
 
