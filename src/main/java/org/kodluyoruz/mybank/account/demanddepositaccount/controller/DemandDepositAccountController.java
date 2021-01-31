@@ -104,6 +104,7 @@ public class DemandDepositAccountController {
     }
 
     @PutMapping("/{fromAccountIBAN}/betweenAccountMoneyTransfer/{toAccountIBAN}")
+    @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto getBetweenAccountTransferMoney(@PathVariable("fromAccountIBAN") int fromAccountIBAN,
                                                                   @PathVariable("toAccountIBAN") int toAccountIBAN,
                                                                   @RequestParam("transferMoney") int transferMoney) {
