@@ -126,6 +126,5 @@ public class DemandDepositAccountController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Same account.");
         }
-
     }
 }
