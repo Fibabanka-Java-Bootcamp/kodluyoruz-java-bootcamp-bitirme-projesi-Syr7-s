@@ -7,4 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface CreditCardRepository extends CrudRepository<CreditCard,Long> {
     Page<CreditCard> findAll(Pageable pageable);
+    CreditCard findCreditCardByCardNO(long creditCardNo);
 }
