@@ -22,7 +22,7 @@ import java.util.List;
 @Builder
 public class Customer {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long customerID;
     private String customerTC;
     private String customerName;

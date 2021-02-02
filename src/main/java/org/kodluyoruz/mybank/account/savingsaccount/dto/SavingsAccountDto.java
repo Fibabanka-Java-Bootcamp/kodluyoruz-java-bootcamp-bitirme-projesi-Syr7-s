@@ -11,7 +11,8 @@ import java.time.LocalDate;
 @Data
 @Builder
 public class SavingsAccountDto {
-    private int savingsAccountIBAN;
+    private long savingsAccountNumber;
+    private String savingsAccountIBAN;
     private int savingsAccountBalance;
     private String savingsAccountCurrency;
     private LocalDate savingsAccountCreationDate;
@@ -21,6 +22,7 @@ public class SavingsAccountDto {
 
     public SavingsAccount toSavingsAccount(){
         return SavingsAccount.builder()
+                .savingsAccountNumber(this.savingsAccountNumber)
                 .savingsAccountIBAN(this.savingsAccountIBAN)
                 .savingsAccountBalance(this.savingsAccountBalance)
                 .savingsAccountCurrency(this.savingsAccountCurrency)

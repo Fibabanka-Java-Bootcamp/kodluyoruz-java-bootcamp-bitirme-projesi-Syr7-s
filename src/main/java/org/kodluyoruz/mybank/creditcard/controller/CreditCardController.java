@@ -7,6 +7,7 @@ import org.kodluyoruz.mybank.creditcard.exception.CreditCardNotCreatedException;
 import org.kodluyoruz.mybank.creditcard.service.CreditCardService;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import org.kodluyoruz.mybank.customer.service.CustomerService;
+import org.kodluyoruz.mybank.generate.accountgenerate.AccountGenerate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +31,9 @@ public class CreditCardController {
     @PostMapping("/{customerID}/creditCard")
     public CreditCardDto create(@PathVariable("customerID") long customerID
             , @RequestBody CreditCardDto creditCardDto) {
+        creditCardDto.setCreditCardAccountNumber(Long.parseLong(AccountGenerate.accountGenerate.get()));
         CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
-        creditCardDto.setCardNameSurnname(customerDto.getCustomerName() + " " + customerDto.getCustomerLastname());
+        creditCardDto.setCardNameSurname(customerDto.getCustomerName() + " " + customerDto.getCustomerLastname());
         creditCardDto.setCustomer(customerDto.toCustomer());
         return creditCardService.create(creditCardDto.toCreditCard()).toCreditCardDto();
     }

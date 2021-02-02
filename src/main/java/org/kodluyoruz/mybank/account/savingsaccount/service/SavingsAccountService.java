@@ -18,7 +18,7 @@ public class SavingsAccountService {
     public SavingsAccount create(SavingsAccount savingsAccount){
         return savingsAccountRepository.save(savingsAccount);
     }
-    public Optional<SavingsAccount> get(int accountIBAN){
+    public Optional<SavingsAccount> get(long accountIBAN){
         return savingsAccountRepository.findById(accountIBAN);
     }
     public Page<SavingsAccount> savingsAccounts(Pageable pageable){

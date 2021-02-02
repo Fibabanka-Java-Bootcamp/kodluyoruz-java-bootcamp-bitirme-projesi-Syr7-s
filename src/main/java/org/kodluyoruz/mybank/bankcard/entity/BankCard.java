@@ -19,12 +19,13 @@ import java.util.Set;
 @Builder
 public class BankCard {
     @Id
-    @GeneratedValue
-    private long bankCardNO;
+    private long bankCardAccountNumber;
     private String bankCardNameSurname;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    private int bankCardPassword;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate bankCardExpirationDate;
-    private String securityCode;
+    private String bankCardSecurityCode;
+
 
     @OneToMany(mappedBy = "bankCard")
     @JsonIgnore
@@ -34,12 +35,13 @@ public class BankCard {
     @JsonIgnore
     private Set<SavingsAccount> savingsBankCards;
 
-    public BankCardDto toBankCardDto(){
+    public BankCardDto toBankCardDto() {
         return BankCardDto.builder()
-                .bankCardNo(this.bankCardNO)
+                .bankCardAccountNumber(this.bankCardAccountNumber)
                 .bankCardNameSurname(this.bankCardNameSurname)
+                .bankCardPassword(this.bankCardPassword)
                 .bankCardExpirationDate(this.bankCardExpirationDate)
-                .securityCode(this.securityCode)
+                .securityCode(this.bankCardSecurityCode)
                 .build();
     }
 

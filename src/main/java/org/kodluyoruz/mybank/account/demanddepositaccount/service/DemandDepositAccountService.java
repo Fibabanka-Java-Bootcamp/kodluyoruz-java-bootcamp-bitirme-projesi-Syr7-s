@@ -18,7 +18,7 @@ public class DemandDepositAccountService {
     public DemandDepositAccount create(DemandDepositAccount demandDepositAccount){
         return demandDepositAccountRepository.save(demandDepositAccount);
     }
-    public Optional<DemandDepositAccount> get(int accountIBAN){
+    public Optional<DemandDepositAccount> get(long accountIBAN){
         return demandDepositAccountRepository.findById(accountIBAN);
     }
     public DemandDepositAccount update(DemandDepositAccount demandDepositAccount){

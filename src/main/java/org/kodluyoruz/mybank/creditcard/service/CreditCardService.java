@@ -27,7 +27,7 @@ public class CreditCardService {
     }
 
     public CreditCard getCreditCard(long creditCardNo) {
-        CreditCard creditCard = creditCardRepository.findCreditCardByCardNO(creditCardNo);
+        CreditCard creditCard = creditCardRepository.findCreditCardByCardAccountNumber(creditCardNo);
         if (creditCard != null){
             return creditCard;
         }else{

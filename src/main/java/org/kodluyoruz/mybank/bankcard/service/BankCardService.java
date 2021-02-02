@@ -22,7 +22,7 @@ public class BankCardService {
     }
 
     public BankCard findBankCard(long bankCardNO) {
-        BankCard bankCard = bankCardRepository.findBankCardByBankCardNO(bankCardNO);
+        BankCard bankCard = bankCardRepository.findBankCardByBankCardAccountNumber(bankCardNO);
         if (bankCard != null) {
             return bankCard;
         } else {

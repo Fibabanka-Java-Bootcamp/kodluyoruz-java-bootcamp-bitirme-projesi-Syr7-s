@@ -19,8 +19,8 @@ import java.time.LocalDate;
 @Builder
 public class SavingsAccount {
     @Id
-    @GeneratedValue
-    private int savingsAccountIBAN;
+    private long savingsAccountNumber;
+    private String savingsAccountIBAN;
     private int savingsAccountBalance;
     private String savingsAccountCurrency;
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -37,6 +37,7 @@ public class SavingsAccount {
     private BankCard bankCard;
     public SavingsAccountDto toSavingsAccountDto(){
         return SavingsAccountDto.builder()
+                .savingsAccountNumber(this.savingsAccountNumber)
                 .savingsAccountIBAN(this.savingsAccountIBAN)
                 .savingsAccountBalance(this.savingsAccountBalance)
                 .savingsAccountCurrency(this.savingsAccountCurrency)

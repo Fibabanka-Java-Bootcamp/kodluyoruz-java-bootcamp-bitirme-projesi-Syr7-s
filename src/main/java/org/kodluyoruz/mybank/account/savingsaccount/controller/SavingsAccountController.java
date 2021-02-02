@@ -9,6 +9,8 @@ import org.kodluyoruz.mybank.bankcard.exception.BankCardNotMatchException;
 import org.kodluyoruz.mybank.bankcard.service.BankCardService;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import org.kodluyoruz.mybank.customer.service.CustomerService;
+import org.kodluyoruz.mybank.generate.accountgenerate.AccountGenerate;
+import org.kodluyoruz.mybank.generate.ibangenerate.IbanGenerate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,18 +33,21 @@ public class SavingsAccountController {
         this.bankCardService = bankCardService;
     }
 
-    @PostMapping("/{customerID}/account/{bankcardNO}")
+    @PostMapping("/{customerID}/account/{bankCardAccountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
-    public SavingsAccountDto create(@PathVariable("customerID") long customerID, @PathVariable("bankcardNO") long bankCardNO, @RequestBody SavingsAccountDto savingsAccountDto) {
+    public SavingsAccountDto create(@PathVariable("customerID") long customerID, @PathVariable("bankCardAccountNumber") long bankCardAccountNumber, @RequestBody SavingsAccountDto savingsAccountDto) {
+        String accountNumber = AccountGenerate.accountGenerate.get();
+        savingsAccountDto.setSavingsAccountNumber(Long.parseLong(accountNumber));
+        savingsAccountDto.setSavingsAccountIBAN(IbanGenerate.ibanGenerate.apply(accountNumber));
         CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
         savingsAccountDto.setCustomer(customerDto.toCustomer());
-        BankCardDto bankCardDto = bankCardService.findBankCard(bankCardNO).toBankCardDto();
+        BankCardDto bankCardDto = bankCardService.findBankCard(bankCardAccountNumber).toBankCardDto();
         savingsAccountDto.setBankCard(bankCardDto.toBankCard());
         return savingsAccountService.create(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
     }
 
     @GetMapping("/{accountIBAN}")
-    public SavingsAccountDto get(@PathVariable("accountIBAN") int accountIBAN) {
+    public SavingsAccountDto get(@PathVariable("accountIBAN") long accountIBAN) {
         return savingsAccountService.get(accountIBAN).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Savings Account is not found")).toSavingsAccountDto();
     }
@@ -54,14 +59,14 @@ public class SavingsAccountController {
                 .collect(Collectors.toList());
     }
 
-    @PutMapping("/{bankCardNo}/deposit/{accountIBAN}")
+    @PutMapping("/{bankCardAccountNumber}/deposit/{accountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
-    public SavingsAccountDto getUpdateSavings(@PathVariable("bankCardNo") long bankCardNo,
-                                              @PathVariable("accountIBAN") int accountIBAN, @RequestParam("depositMoney") int depositMoney) {
-        SavingsAccountDto savingsAccountDto = savingsAccountService.get(accountIBAN).orElseThrow(() ->
+    public SavingsAccountDto getUpdateSavings(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
+                                              @PathVariable("accountNumber") long accountNumber, @RequestParam("depositMoney") int depositMoney) {
+        SavingsAccountDto savingsAccountDto = savingsAccountService.get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toSavingsAccountDto();
-        long cardNo = savingsAccountDto.getBankCard().getBankCardNO();
-        if (cardNo == bankCardNo) {
+        long cardAccountNumber = savingsAccountDto.getBankCard().getBankCardAccountNumber();
+        if (cardAccountNumber == bankCardAccountNumber) {
             int balance = savingsAccountDto.getSavingsAccountBalance();
             savingsAccountDto.setSavingsAccountBalance(balance + depositMoney);
             return savingsAccountService.updateBalance(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
@@ -70,19 +75,19 @@ public class SavingsAccountController {
         }
     }
 
-    @PutMapping("/{bankCardNo}/withDrawMoney/{accountIBAN}")
+    @PutMapping("/{bankCardAccountNumber}/withDrawMoney/{accountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
-    public SavingsAccountDto getUpdateSavingsWithDrawMoney(@PathVariable("bankCardNo") long bankCardNo,
-                                                           @PathVariable("accountIBAN") int accountIBAN, @RequestParam("withDrawMoney") int withDrawMoney) {
-        SavingsAccountDto savingsAccountDto = savingsAccountService.get(accountIBAN).orElseThrow(() ->
+    public SavingsAccountDto getUpdateSavingsWithDrawMoney(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
+                                                           @PathVariable("accountNumber") long accountNumber, @RequestParam("withDrawMoney") int withDrawMoney) {
+        SavingsAccountDto savingsAccountDto = savingsAccountService.get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toSavingsAccountDto();
-        long cardNo = savingsAccountDto.getBankCard().getBankCardNO();
-        if (cardNo == bankCardNo){
+        long cardAccountNumber = savingsAccountDto.getBankCard().getBankCardAccountNumber();
+        if (cardAccountNumber == bankCardAccountNumber) {
             int balance = savingsAccountDto.getSavingsAccountBalance();
-            if (balance<withDrawMoney){
+            if (balance < withDrawMoney) {
                 throw new SavingsAccountNotEnoughMoneyException("Not enough money in your account.");
-            }else{
-                savingsAccountDto.setSavingsAccountBalance(balance-withDrawMoney);
+            } else {
+                savingsAccountDto.setSavingsAccountBalance(balance - withDrawMoney);
                 return savingsAccountService.updateBalance(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
             }
         } else {

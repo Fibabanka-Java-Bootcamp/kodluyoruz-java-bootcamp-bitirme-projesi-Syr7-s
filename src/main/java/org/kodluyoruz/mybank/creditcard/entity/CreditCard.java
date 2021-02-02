@@ -17,9 +17,9 @@ import java.time.LocalDate;
 @Builder
 public class CreditCard {
     @Id
-    @GeneratedValue
-    private long cardNO;
+    private long cardAccountNumber;
     private String cardNameSurname;
+    private int cardPassword;
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate expirationDate;
     private String securityCode;
@@ -32,8 +32,9 @@ public class CreditCard {
 
     public CreditCardDto toCreditCardDto(){
         return CreditCardDto.builder()
-                .cardNo(this.cardNO)
-                .cardNameSurnname(this.cardNameSurname)
+                .creditCardAccountNumber(this.cardAccountNumber)
+                .cardNameSurname(this.cardNameSurname)
+                .cardPassword(this.cardPassword)
                 .expirationDate(this.expirationDate)
                 .securityCode(this.securityCode)
                 .cardLimit(this.cardLimit)

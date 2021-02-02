@@ -12,20 +12,23 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class DemandDepositAccountDto {
-    private int demandDepositAccountIBAN;
+    private long demandDepositAccountNumber;
+    private String demandDepositAccountIBAN;
     private int demandDepositAccountBalance;
     private String demandDepositAccountCurrency;
     private LocalDate demandDepositAccountCreationDate;
     private Customer customer;
     private BankCard bankCard;
-    public DemandDepositAccount toDemandDepositAccount(){
+
+    public DemandDepositAccount toDemandDepositAccount() {
         return DemandDepositAccount.builder()
-                    .demandDepositAccountIBAN(this.demandDepositAccountIBAN)
-                    .demandDepositAccountBalance(this.demandDepositAccountBalance)
-                    .demandDepositAccountCurrency(this.demandDepositAccountCurrency)
-                    .demandDepositAccountCreationDate(this.demandDepositAccountCreationDate)
-                    .customer(this.customer)
-                    .bankCard(this.bankCard)
+                .demandDepositAccountNumber(this.demandDepositAccountNumber)
+                .demandDepositAccountIBAN(this.demandDepositAccountIBAN)
+                .demandDepositAccountBalance(this.demandDepositAccountBalance)
+                .demandDepositAccountCurrency(this.demandDepositAccountCurrency)
+                .demandDepositAccountCreationDate(this.demandDepositAccountCreationDate)
+                .customer(this.customer)
+                .bankCard(this.bankCard)
                 .build();
 
     }

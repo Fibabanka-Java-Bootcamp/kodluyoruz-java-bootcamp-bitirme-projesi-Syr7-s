@@ -20,8 +20,8 @@ import java.util.UUID;
 @Builder
 public class DemandDepositAccount {
     @Id
-    @GeneratedValue
-    private int demandDepositAccountIBAN;
+    private long demandDepositAccountNumber;
+    private String demandDepositAccountIBAN;
     private int demandDepositAccountBalance;
     private String demandDepositAccountCurrency;
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -33,10 +33,12 @@ public class DemandDepositAccount {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name="bankcard_no")
+    @JoinColumn(name = "bankcard_no")
     private BankCard bankCard;
+
     public DemandDepositAccountDto toDemandDepositAccountDto() {
         return DemandDepositAccountDto.builder()
+                .demandDepositAccountNumber(this.demandDepositAccountNumber)
                 .demandDepositAccountIBAN(this.demandDepositAccountIBAN)
                 .demandDepositAccountBalance(this.demandDepositAccountBalance)
                 .demandDepositAccountCurrency(this.demandDepositAccountCurrency)

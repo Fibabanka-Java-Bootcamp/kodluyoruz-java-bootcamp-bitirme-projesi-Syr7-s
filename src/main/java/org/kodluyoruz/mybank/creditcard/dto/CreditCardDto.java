@@ -10,8 +10,9 @@ import java.time.LocalDate;
 @Data
 @Builder
 public class CreditCardDto {
-    private long cardNo;
-    private String cardNameSurnname;
+    private long creditCardAccountNumber;
+    private String cardNameSurname;
+    private int cardPassword;
     private LocalDate expirationDate;
     private String securityCode;
     private int cardLimit;
@@ -20,8 +21,9 @@ public class CreditCardDto {
 
     public CreditCard toCreditCard(){
         return CreditCard.builder()
-                .cardNO(this.cardNo)
-                .cardNameSurname(this.cardNameSurnname)
+                .cardAccountNumber(this.creditCardAccountNumber)
+                .cardNameSurname(this.cardNameSurname)
+                .cardPassword(this.cardPassword)
                 .expirationDate(this.expirationDate)
                 .securityCode(this.securityCode)
                 .cardLimit(this.cardLimit)

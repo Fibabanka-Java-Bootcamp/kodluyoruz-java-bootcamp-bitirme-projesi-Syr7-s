@@ -12,6 +12,8 @@ import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import org.kodluyoruz.mybank.customer.service.CustomerService;
 import org.kodluyoruz.mybank.exchange.Exchange;
 import org.kodluyoruz.mybank.exchange.ExchangeDto;
+import org.kodluyoruz.mybank.generate.accountgenerate.AccountGenerate;
+import org.kodluyoruz.mybank.generate.ibangenerate.IbanGenerate;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -31,30 +33,33 @@ public class DemandDepositAccountController {
         this.savingsAccountService = savingsAccountService;
     }
 
-    @PostMapping("/{customerID}/account/{bankcardNO}")
+    @PostMapping("/{customerID}/account/{bankCardAccountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
-    public DemandDepositAccountDto create(@PathVariable("customerID") long customerID, @PathVariable("bankcardNO") long bankCardNO, @RequestBody DemandDepositAccountDto demandDepositAccountDto) {
+    public DemandDepositAccountDto create(@PathVariable("customerID") long customerID, @PathVariable("bankCardAccountNumber") long bankCardAccountNumber, @RequestBody DemandDepositAccountDto demandDepositAccountDto) {
+        String accountNumber = AccountGenerate.accountGenerate.get();
+        demandDepositAccountDto.setDemandDepositAccountNumber(Long.parseLong(accountNumber));
+        demandDepositAccountDto.setDemandDepositAccountIBAN(IbanGenerate.ibanGenerate.apply(accountNumber));
         CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
         demandDepositAccountDto.setCustomer(customerDto.toCustomer());
-        BankCardDto bankCardDto = bankCardService.findBankCard(bankCardNO).toBankCardDto();
+        BankCardDto bankCardDto = bankCardService.findBankCard(bankCardAccountNumber).toBankCardDto();
         demandDepositAccountDto.setBankCard(bankCardDto.toBankCard());
         return demandDepositAccountService.create(demandDepositAccountDto.toDemandDepositAccount()).toDemandDepositAccountDto();
     }
 
-    @GetMapping("/{accountIBAN}")
-    public DemandDepositAccountDto getDemandDepositAccount(@PathVariable("accountIBAN") int accountIBAN) {
-        return demandDepositAccountService.get(accountIBAN).orElseThrow(() ->
+    @GetMapping("/{accountNumber}")
+    public DemandDepositAccountDto getDemandDepositAccount(@PathVariable("accountNumber") long accountNumber) {
+        return demandDepositAccountService.get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found.")).toDemandDepositAccountDto();
     }
 
-    @PutMapping("/{bankCardNo}/deposit/{accountIBAN}")
+    @PutMapping("/{bankCardAccountNumber}/deposit/{accountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
-    public DemandDepositAccountDto getUpdatedDeposit(@PathVariable("bankCardNo") long bankCardNo,
-                                                     @PathVariable("accountIBAN") int accountIBAN, @RequestParam("depositMoney") int depositMoney) {
-        DemandDepositAccountDto demandDepositAccountDto = demandDepositAccountService.get(accountIBAN).orElseThrow(() ->
+    public DemandDepositAccountDto getUpdatedDeposit(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
+                                                     @PathVariable("accountNumber") long accountNumber, @RequestParam("depositMoney") int depositMoney) {
+        DemandDepositAccountDto demandDepositAccountDto = demandDepositAccountService.get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toDemandDepositAccountDto();
-        long cardNo = demandDepositAccountDto.getBankCard().getBankCardNO();
-        if (cardNo == bankCardNo) {
+        long cardAccountNumber = demandDepositAccountDto.getBankCard().getBankCardAccountNumber();
+        if (cardAccountNumber == bankCardAccountNumber) {
             int balance = demandDepositAccountDto.getDemandDepositAccountBalance();
             demandDepositAccountDto.setDemandDepositAccountBalance(balance + depositMoney);
             return demandDepositAccountService.update(demandDepositAccountDto.toDemandDepositAccount()).toDemandDepositAccountDto();
@@ -63,14 +68,14 @@ public class DemandDepositAccountController {
         }
     }
 
-    @PutMapping("/{bankCardNo}/withDrawMoney/{accountIBAN}")
+    @PutMapping("/{bankCardAccountNumber}/withDrawMoney/{accountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
-    public DemandDepositAccountDto getUpdateDepositWithDrawMoney(@PathVariable("bankCardNo") long bankCardNo,
-                                                                 @PathVariable("accountIBAN") int accountIBAN, @RequestParam("withDrawMoney") int withDrawMoney) {
-        DemandDepositAccountDto demandDepositAccountDto = demandDepositAccountService.get(accountIBAN).orElseThrow(() ->
+    public DemandDepositAccountDto getUpdateDepositWithDrawMoney(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
+                                                                 @PathVariable("accountNumber") long accountNumber, @RequestParam("withDrawMoney") int withDrawMoney) {
+        DemandDepositAccountDto demandDepositAccountDto = demandDepositAccountService.get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toDemandDepositAccountDto();
-        long cardNo = demandDepositAccountDto.getBankCard().getBankCardNO();
-        if (cardNo == bankCardNo) {
+        long cardAccountNumber = demandDepositAccountDto.getBankCard().getBankCardAccountNumber();
+        if (cardAccountNumber == bankCardAccountNumber) {
             int balance = demandDepositAccountDto.getDemandDepositAccountBalance();
             if (balance < withDrawMoney) {
                 throw new DemandDepositAccountNotEnoughMoneyException("Not enough money in your account");
@@ -79,7 +84,7 @@ public class DemandDepositAccountController {
                 return demandDepositAccountService.update(demandDepositAccountDto.toDemandDepositAccount()).toDemandDepositAccountDto();
             }
         } else {
-            throw new BankCardNotMatchException("BankCard not matched to the accountIBAN.");
+            throw new BankCardNotMatchException("BankCard not matched to the accountNumber.");
         }
     }
 

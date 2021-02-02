@@ -9,17 +9,19 @@ import java.time.LocalDate;
 @Data
 @Builder
 public class BankCardDto {
-    private long bankCardNo;
+    private long bankCardAccountNumber;
     private String bankCardNameSurname;
+    private int bankCardPassword;
     private LocalDate bankCardExpirationDate;
     private String securityCode;
 
     public BankCard toBankCard(){
         return BankCard.builder()
-                .bankCardNO(this.bankCardNo)
+                .bankCardAccountNumber(this.bankCardAccountNumber)
                 .bankCardNameSurname(this.bankCardNameSurname)
+                .bankCardPassword(this.bankCardPassword)
                 .bankCardExpirationDate(this.bankCardExpirationDate)
-                .securityCode(this.securityCode)
+                .bankCardSecurityCode(this.securityCode)
                 .build();
     }
 }

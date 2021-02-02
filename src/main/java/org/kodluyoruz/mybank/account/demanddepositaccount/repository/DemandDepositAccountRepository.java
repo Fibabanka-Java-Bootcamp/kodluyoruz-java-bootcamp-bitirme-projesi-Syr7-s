@@ -4,6 +4,6 @@ import org.kodluyoruz.mybank.account.demanddepositaccount.entity.DemandDepositAc
 import org.springframework.data.repository.CrudRepository;
 
 
-public interface DemandDepositAccountRepository extends CrudRepository<DemandDepositAccount, Integer> {
+public interface DemandDepositAccountRepository extends CrudRepository<DemandDepositAccount, Long> {
     DemandDepositAccount findByCustomer_CustomerID(long customerID);
 }
