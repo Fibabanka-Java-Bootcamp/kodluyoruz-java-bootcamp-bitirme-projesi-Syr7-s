@@ -10,6 +10,8 @@ import org.kodluyoruz.mybank.bankcard.exception.BankCardNotMatchException;
 import org.kodluyoruz.mybank.bankcard.service.BankCardService;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import org.kodluyoruz.mybank.customer.service.CustomerService;
+import org.kodluyoruz.mybank.exchange.Exchange;
+import org.kodluyoruz.mybank.exchange.ExchangeDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -42,7 +44,7 @@ public class DemandDepositAccountController {
     @GetMapping("/{accountIBAN}")
     public DemandDepositAccountDto getDemandDepositAccount(@PathVariable("accountIBAN") int accountIBAN) {
         return demandDepositAccountService.get(accountIBAN).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toDemandDepositAccountDto();
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found.")).toDemandDepositAccountDto();
     }
 
     @PutMapping("/{bankCardNo}/deposit/{accountIBAN}")
@@ -95,8 +97,9 @@ public class DemandDepositAccountController {
         if (demandDepositMoney - transferMoney < 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not enough money in your demandDepositAccount");
         } else {
+            ExchangeDto exchangeDto = Exchange.getConvert.apply(demandDepositAccountDto.getDemandDepositAccountCurrency());
             demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositMoney - transferMoney);
-            savingsAccountDto.setSavingsAccountBalance(savingsMoney + transferMoney);
+            savingsAccountDto.setSavingsAccountBalance((int) (savingsMoney + (transferMoney*exchangeDto.getRates().get(savingsAccountDto.getSavingsAccountCurrency()))));
             savingsAccountService.updateBalance(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
             return demandDepositAccountService.update(demandDepositAccountDto.toDemandDepositAccount()).toDemandDepositAccountDto();
 
@@ -118,8 +121,9 @@ public class DemandDepositAccountController {
             if (fromMoney - transferMoney < 0) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not enough money in your demandDepositAccount");
             } else {
+                ExchangeDto exchangeDto = Exchange.getConvert.apply(fromAccount.getDemandDepositAccountCurrency());
                 fromAccount.setDemandDepositAccountBalance(fromMoney - transferMoney);
-                toAccount.setDemandDepositAccountBalance(toMoney + transferMoney);
+                toAccount.setDemandDepositAccountBalance((int) (toMoney + (transferMoney * exchangeDto.getRates().get(toAccount.getDemandDepositAccountCurrency()))));
                 demandDepositAccountService.update(toAccount.toDemandDepositAccount()).toDemandDepositAccountDto();
                 return demandDepositAccountService.update(fromAccount.toDemandDepositAccount()).toDemandDepositAccountDto();
             }
