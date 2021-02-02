@@ -90,37 +90,37 @@ public class DemandDepositAccountController {
 
     @PutMapping("/{depositAccountIBAN}/transfer/{savingsAccountIBAN}")
     @ResponseStatus(HttpStatus.CREATED)
-    public DemandDepositAccountDto getMoneyTransfer(@PathVariable("depositAccountIBAN") int depositAccountIBAN,
-                                                    @PathVariable("savingsAccountIBAN") int savingsAccountIBAN,
+    public DemandDepositAccountDto getMoneyTransfer(@PathVariable("depositAccountIBAN") String depositAccountIBAN,
+                                                    @PathVariable("savingsAccountIBAN") String savingsAccountIBAN,
                                                     @RequestParam("transferMoney") int transferMoney) {
-        DemandDepositAccountDto demandDepositAccountDto = demandDepositAccountService.get(depositAccountIBAN).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "DepositAccount is not found")).toDemandDepositAccountDto();
-        SavingsAccountDto savingsAccountDto = savingsAccountService.get(savingsAccountIBAN).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "SavingsAccount is not found")).toSavingsAccountDto();
+        DemandDepositAccountDto demandDepositAccountDto = demandDepositAccountService.getByAccountIban(depositAccountIBAN).toDemandDepositAccountDto();
+        SavingsAccountDto savingsAccountDto = savingsAccountService.getByAccountIban(savingsAccountIBAN).toSavingsAccountDto();
         int demandDepositMoney = demandDepositAccountDto.getDemandDepositAccountBalance();
         int savingsMoney = savingsAccountDto.getSavingsAccountBalance();
         if (demandDepositMoney - transferMoney < 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not enough money in your demandDepositAccount");
         } else {
-            ExchangeDto exchangeDto = Exchange.getConvert.apply(demandDepositAccountDto.getDemandDepositAccountCurrency());
-            demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositMoney - transferMoney);
-            savingsAccountDto.setSavingsAccountBalance((int) (savingsMoney + (transferMoney*exchangeDto.getRates().get(savingsAccountDto.getSavingsAccountCurrency()))));
+            if (demandDepositAccountDto.getDemandDepositAccountCurrency().equals(savingsAccountDto.getSavingsAccountCurrency())) {
+                demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositMoney - transferMoney);
+                savingsAccountDto.setSavingsAccountBalance(savingsMoney + transferMoney);
+            } else {
+                ExchangeDto exchangeDto = Exchange.getConvert.apply(demandDepositAccountDto.getDemandDepositAccountCurrency());
+                demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositMoney - transferMoney);
+                savingsAccountDto.setSavingsAccountBalance((int) (savingsMoney + (transferMoney * exchangeDto.getRates().get(savingsAccountDto.getSavingsAccountCurrency()))));
+            }
             savingsAccountService.updateBalance(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
             return demandDepositAccountService.update(demandDepositAccountDto.toDemandDepositAccount()).toDemandDepositAccountDto();
-
         }
     }
 
     @PutMapping("/{fromAccountIBAN}/betweenAccountMoneyTransfer/{toAccountIBAN}")
     @ResponseStatus(HttpStatus.CREATED)
-    public DemandDepositAccountDto getBetweenAccountTransferMoney(@PathVariable("fromAccountIBAN") int fromAccountIBAN,
-                                                                  @PathVariable("toAccountIBAN") int toAccountIBAN,
+    public DemandDepositAccountDto getBetweenAccountTransferMoney(@PathVariable("fromAccountIBAN") String fromAccountIBAN,
+                                                                  @PathVariable("toAccountIBAN") String toAccountIBAN,
                                                                   @RequestParam("transferMoney") int transferMoney) {
         if (fromAccountIBAN != toAccountIBAN) {
-            DemandDepositAccountDto fromAccount = demandDepositAccountService.get(fromAccountIBAN).orElseThrow(() ->
-                    new ResponseStatusException(HttpStatus.NOT_FOUND, "DepositAccount is not found")).toDemandDepositAccountDto();
-            DemandDepositAccountDto toAccount = demandDepositAccountService.get(toAccountIBAN).orElseThrow(()
-                    -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Deposit Account is not found(toAccountIBAN)")).toDemandDepositAccountDto();
+            DemandDepositAccountDto fromAccount = demandDepositAccountService.getByAccountIban(fromAccountIBAN).toDemandDepositAccountDto();
+            DemandDepositAccountDto toAccount = demandDepositAccountService.getByAccountIban(toAccountIBAN).toDemandDepositAccountDto();
             int fromMoney = fromAccount.getDemandDepositAccountBalance();
             int toMoney = toAccount.getDemandDepositAccountBalance();
             if (fromMoney - transferMoney < 0) {

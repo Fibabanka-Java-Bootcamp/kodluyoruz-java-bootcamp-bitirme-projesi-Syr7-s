@@ -8,8 +8,7 @@ import org.kodluyoruz.mybank.customer.entity.Customer;
 import java.time.LocalDate;
 
 
-@Getter
-@Setter
+@Data
 @Builder
 public class DemandDepositAccountDto {
     private long demandDepositAccountNumber;

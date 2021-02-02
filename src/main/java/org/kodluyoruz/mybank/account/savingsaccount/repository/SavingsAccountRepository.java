@@ -7,4 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface SavingsAccountRepository extends CrudRepository<SavingsAccount,Long> {
     Page<SavingsAccount> findAll(Pageable pageable);
+    SavingsAccount findSavingsAccountBySavingsAccountIBAN(String accountIBAN);
 }
