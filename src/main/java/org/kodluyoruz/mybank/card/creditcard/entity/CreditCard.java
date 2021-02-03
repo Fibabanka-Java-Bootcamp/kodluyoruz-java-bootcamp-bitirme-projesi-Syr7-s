@@ -38,6 +38,7 @@ public class CreditCard {
     private Set<Shopping> shoppings;
 
     @OneToOne(mappedBy = "creditCard")
+    @JsonIgnore
     private ExtractOfAccount extractOfAccount;
 
     public CreditCardDto toCreditCardDto(){
