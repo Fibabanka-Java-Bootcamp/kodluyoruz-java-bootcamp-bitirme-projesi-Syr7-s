@@ -10,11 +10,7 @@ import org.springframework.web.client.RestTemplate;
 public class ExchangeController {
     @RequestMapping(value = "/convert/{base}")
     public ExchangeDto getConvert(@PathVariable("base") String base) {
-        RestTemplate restTemplate = new RestTemplate();
-        String uri = "https://api.exchangeratesapi.io";
-        ExchangeDto exchangeDto = restTemplate.getForObject(uri+"/latest?base="+base, ExchangeDto.class);
-        /*System.out.println(exchangeDto.getRates().get("USD"));
-        System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(exchangeDto));*/
-        return exchangeDto;
+        return new RestTemplate()
+                .getForObject("https://api.exchangeratesapi.io/latest?base="+base,ExchangeDto.class);
     }
 }

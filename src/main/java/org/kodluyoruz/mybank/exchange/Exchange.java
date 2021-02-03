@@ -7,11 +7,7 @@ import java.util.function.Function;
 
 @Component
 public class Exchange {
-
-    public static Function<String, ExchangeDto> getConvert = (base -> {
-        RestTemplate restTemplate = new RestTemplate();
-        String uri = "https://api.exchangeratesapi.io";
-        return restTemplate.getForObject(uri + "/latest?base=" + base, ExchangeDto.class);
-    });
-
+    public static Function<String, ExchangeDto> getConvert = (base ->  new RestTemplate()
+               .getForObject("https://api.exchangeratesapi.io/latest?base="+base,ExchangeDto.class)
+    );
 }
