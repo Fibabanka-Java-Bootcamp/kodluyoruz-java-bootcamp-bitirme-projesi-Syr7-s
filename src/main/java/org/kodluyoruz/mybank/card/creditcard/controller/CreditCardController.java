@@ -62,4 +62,12 @@ public class CreditCardController {
                                     @RequestParam("productPrice") int price) {
         return creditCardService.update(creditCardNo,price).toCreditCardDto();
     }
+    @GetMapping("/{creditCardNo}/debt")
+    public String creditCardDebtInquiry(@PathVariable("creditCardNo") long creditCardNo){
+        CreditCard creditCard = creditCardService.getCreditCard(creditCardNo);
+        double debt = creditCard.getExtractOfAccount().getTermDebt();
+        double minimumPaymentAmount = creditCard.getExtractOfAccount().getMinimumPaymentAmount();
+        String nameSurname = creditCard.getCardNameSurname();
+        return nameSurname +" named customer debt : "+ debt +" and minimum payment amount "+ minimumPaymentAmount;
+    }
 }
