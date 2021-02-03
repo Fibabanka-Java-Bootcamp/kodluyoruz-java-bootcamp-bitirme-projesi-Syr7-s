@@ -21,15 +21,15 @@ public class ShoppingController {
 
     @PostMapping("/{creditCardNo}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ShoppingDto doShopping(@PathVariable("creditCardNo") long creditCardNo,@RequestParam("password") int password, @RequestBody ShoppingDto shoppingDto) {
+    public ShoppingDto doShopping(@PathVariable("creditCardNo") long creditCardNo, @RequestParam("password") int password, @RequestBody ShoppingDto shoppingDto) {
         CreditCard creditCard = creditCardService.getCreditCard(creditCardNo);
-        if (creditCard.getCardPassword() == password){
-            creditCard.setCardDebt(creditCard.getCardDebt()+shoppingDto.getProductPrice());
+        if (creditCard.getCardPassword() == password) {
+            creditCard.setCardDebt(creditCard.getCardDebt() + shoppingDto.getProductPrice());
             creditCardService.updateCard(creditCard);
             shoppingDto.setCreditCard(creditCard);
             return shoppingService.create(shoppingDto.toShopping()).toShoppingDto();
-        }else{
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"CreditCard is not found.");
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CreditCard password is not correct.");
         }
     }
 }
