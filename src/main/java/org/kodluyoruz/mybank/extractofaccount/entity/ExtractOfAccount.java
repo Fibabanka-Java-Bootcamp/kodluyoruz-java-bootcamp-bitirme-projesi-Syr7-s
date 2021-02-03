@@ -1,10 +1,10 @@
-package org.kodluyoruz.mybank.ekstre.entity;
+package org.kodluyoruz.mybank.extractofaccount.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.kodluyoruz.mybank.card.creditcard.entity.CreditCard;
-import org.kodluyoruz.mybank.ekstre.dto.ExtractOfAccountDto;
+import org.kodluyoruz.mybank.extractofaccount.dto.ExtractOfAccountDto;
 
 import javax.persistence.*;
 import java.time.LocalDate;

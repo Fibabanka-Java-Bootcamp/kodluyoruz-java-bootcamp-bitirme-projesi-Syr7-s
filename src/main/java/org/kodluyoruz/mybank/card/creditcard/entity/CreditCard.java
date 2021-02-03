@@ -6,7 +6,7 @@ import lombok.*;
 import org.kodluyoruz.mybank.card.creditcard.dto.CreditCardDto;
 import org.kodluyoruz.mybank.creditcardshopping.entity.Shopping;
 import org.kodluyoruz.mybank.customer.entity.Customer;
-import org.kodluyoruz.mybank.ekstre.entity.ExtractOfAccount;
+import org.kodluyoruz.mybank.extractofaccount.entity.ExtractOfAccount;
 
 import javax.persistence.*;
 import java.time.LocalDate;

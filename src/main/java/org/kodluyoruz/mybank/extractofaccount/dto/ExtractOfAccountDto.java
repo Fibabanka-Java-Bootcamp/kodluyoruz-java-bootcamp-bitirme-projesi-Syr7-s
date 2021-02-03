@@ -1,9 +1,9 @@
-package org.kodluyoruz.mybank.ekstre.dto;
+package org.kodluyoruz.mybank.extractofaccount.dto;
 
 import lombok.Builder;
 import lombok.Data;
 import org.kodluyoruz.mybank.card.creditcard.entity.CreditCard;
-import org.kodluyoruz.mybank.ekstre.entity.ExtractOfAccount;
+import org.kodluyoruz.mybank.extractofaccount.entity.ExtractOfAccount;
 
 import java.time.LocalDate;
 
