@@ -14,11 +14,15 @@ public class ExtractOfAccountService {
         this.extractOfAccountRepository = extractOfAccountRepository;
     }
 
-    public ExtractOfAccount create(ExtractOfAccount extractOfAccount){
+    public ExtractOfAccount create(ExtractOfAccount extractOfAccount) {
         return extractOfAccountRepository.save(extractOfAccount);
     }
 
-    public Optional<ExtractOfAccount> get(int extractNo){
+    public Optional<ExtractOfAccount> get(int extractNo) {
         return extractOfAccountRepository.findById(extractNo);
+    }
+
+    public ExtractOfAccount update(ExtractOfAccount extractOfAccount) {
+        return extractOfAccountRepository.save(extractOfAccount);
     }
 }
