@@ -5,9 +5,9 @@ import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDeposi
 import org.kodluyoruz.mybank.account.demanddepositaccount.service.DemandDepositAccountService;
 import org.kodluyoruz.mybank.account.savingsaccount.dto.SavingsAccountDto;
 import org.kodluyoruz.mybank.account.savingsaccount.service.SavingsAccountService;
-import org.kodluyoruz.mybank.bankcard.dto.BankCardDto;
-import org.kodluyoruz.mybank.bankcard.exception.BankCardNotMatchException;
-import org.kodluyoruz.mybank.bankcard.service.BankCardService;
+import org.kodluyoruz.mybank.card.bankcard.dto.BankCardDto;
+import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotMatchException;
+import org.kodluyoruz.mybank.card.bankcard.service.BankCardService;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import org.kodluyoruz.mybank.customer.service.CustomerService;
 import org.kodluyoruz.mybank.exchange.Exchange;

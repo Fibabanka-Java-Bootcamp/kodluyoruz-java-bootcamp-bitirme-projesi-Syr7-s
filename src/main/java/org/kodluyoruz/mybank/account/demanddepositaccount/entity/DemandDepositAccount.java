@@ -4,12 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.kodluyoruz.mybank.account.demanddepositaccount.dto.DemandDepositAccountDto;
-import org.kodluyoruz.mybank.bankcard.entity.BankCard;
+import org.kodluyoruz.mybank.card.bankcard.entity.BankCard;
 import org.kodluyoruz.mybank.customer.entity.Customer;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @Table

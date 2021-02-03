@@ -5,13 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.kodluyoruz.mybank.account.demanddepositaccount.entity.DemandDepositAccount;
 import org.kodluyoruz.mybank.account.savingsaccount.entity.SavingsAccount;
-import org.kodluyoruz.mybank.creditcard.entity.CreditCard;
+import org.kodluyoruz.mybank.card.creditcard.entity.CreditCard;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
-import java.util.List;
 
 @Entity
 @Getter
