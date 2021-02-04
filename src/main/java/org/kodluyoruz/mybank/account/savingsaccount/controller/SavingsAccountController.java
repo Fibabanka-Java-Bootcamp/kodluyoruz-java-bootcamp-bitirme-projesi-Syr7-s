@@ -47,7 +47,7 @@ public class SavingsAccountController {
     @PostMapping("/{customerID}/account/{bankCardAccountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public SavingsAccountDto create(@PathVariable("customerID") long customerID, @PathVariable("bankCardAccountNumber") long bankCardAccountNumber, @RequestBody SavingsAccountDto savingsAccountDto) {
-        String accountNumber = AccountGenerate.accountGenerate.get();
+        String accountNumber = AccountGenerate.generateAccount.get();
         savingsAccountDto.setSavingsAccountNumber(Long.parseLong(accountNumber));
         savingsAccountDto.setSavingsAccountIBAN(IbanGenerate.ibanGenerate.apply(accountNumber));
         CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();

@@ -45,7 +45,7 @@ public class DemandDepositAccountController {
     @PostMapping("/{customerID}/account/{bankCardAccountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto create(@PathVariable("customerID") long customerID, @PathVariable("bankCardAccountNumber") long bankCardAccountNumber, @RequestBody DemandDepositAccountDto demandDepositAccountDto) {
-        String accountNumber = AccountGenerate.accountGenerate.get();
+        String accountNumber = AccountGenerate.generateAccount.get();
         demandDepositAccountDto.setDemandDepositAccountNumber(Long.parseLong(accountNumber));
         demandDepositAccountDto.setDemandDepositAccountIBAN(IbanGenerate.ibanGenerate.apply(accountNumber));
         CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();

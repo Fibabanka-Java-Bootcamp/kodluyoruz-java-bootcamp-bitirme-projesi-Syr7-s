@@ -4,13 +4,14 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 public class AccountGenerate {
-    public static Supplier<String> accountGenerate = () -> {
-        Random rand = new Random();
+    private AccountGenerate() {
+    }
+
+    public static final Supplier<String> generateAccount = () -> {
         StringBuilder accountNumber = new StringBuilder();
-        accountNumber.append("8500"); //i<14
-        for (int i=0;i<12;i++) {
-            Integer value = rand.nextInt(10);
-            accountNumber.append(value);
+        accountNumber.append("8500");
+        for (int i = 0; i < 12; i++) {
+            accountNumber.append(new Random().nextInt(10));
         }
         return accountNumber.toString();
     };

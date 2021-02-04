@@ -32,7 +32,7 @@ public class BankCardController {
     @ResponseStatus(HttpStatus.CREATED)
     public BankCardDto create(@PathVariable("customerID") long customerID, @RequestBody BankCardDto bankCardDto) {
         CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
-        bankCardDto.setBankCardAccountNumber(Long.parseLong(AccountGenerate.accountGenerate.get()));
+        bankCardDto.setBankCardAccountNumber(Long.parseLong(AccountGenerate.generateAccount.get()));
         bankCardDto.setBankCardNameSurname(customerDto.getCustomerName() + " " + customerDto.getCustomerLastname());
         bankCardDto.setSecurityCode(SecurityCodeGenerate.securityCode.get());
         return bankCardService.create(bankCardDto.toBankCard()).toBankCardDto();

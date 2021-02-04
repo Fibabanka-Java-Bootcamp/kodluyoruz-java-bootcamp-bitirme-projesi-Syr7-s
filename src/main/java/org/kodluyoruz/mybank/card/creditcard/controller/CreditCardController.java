@@ -40,7 +40,7 @@ public class CreditCardController {
     @PostMapping("/{customerID}/creditCard")
     public CreditCardDto create(@PathVariable("customerID") long customerID
             , @RequestBody CreditCardDto creditCardDto) {
-        creditCardDto.setCreditCardAccountNumber(Long.parseLong(AccountGenerate.accountGenerate.get()));
+        creditCardDto.setCreditCardAccountNumber(Long.parseLong(AccountGenerate.generateAccount.get()));
         CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
         creditCardDto.setCardNameSurname(customerDto.getCustomerName() + " " + customerDto.getCustomerLastname());
         creditCardDto.setCustomer(customerDto.toCustomer());
