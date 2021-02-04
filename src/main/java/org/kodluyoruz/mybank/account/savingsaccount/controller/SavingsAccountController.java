@@ -7,8 +7,14 @@ import org.kodluyoruz.mybank.account.savingsaccount.service.SavingsAccountServic
 import org.kodluyoruz.mybank.card.bankcard.dto.BankCardDto;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotMatchException;
 import org.kodluyoruz.mybank.card.bankcard.service.BankCardService;
+import org.kodluyoruz.mybank.card.creditcard.entity.CreditCard;
+import org.kodluyoruz.mybank.card.creditcard.service.CreditCardService;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import org.kodluyoruz.mybank.customer.service.CustomerService;
+import org.kodluyoruz.mybank.exchange.Exchange;
+import org.kodluyoruz.mybank.exchange.ExchangeDto;
+import org.kodluyoruz.mybank.extractofaccount.entity.ExtractOfAccount;
+import org.kodluyoruz.mybank.extractofaccount.service.ExtractOfAccountService;
 import org.kodluyoruz.mybank.generate.accountgenerate.AccountGenerate;
 import org.kodluyoruz.mybank.generate.ibangenerate.IbanGenerate;
 import org.springframework.data.domain.PageRequest;
@@ -26,11 +32,15 @@ public class SavingsAccountController {
     private final SavingsAccountService savingsAccountService;
     private final CustomerService customerService;
     private final BankCardService bankCardService;
+    private final CreditCardService creditCardService;
+    private final ExtractOfAccountService extractOfAccountService;
 
-    public SavingsAccountController(SavingsAccountService savingsAccountService, CustomerService customerService, BankCardService bankCardService) {
+    public SavingsAccountController(SavingsAccountService savingsAccountService, CustomerService customerService, BankCardService bankCardService, CreditCardService creditCardService, ExtractOfAccountService extractOfAccountService) {
         this.savingsAccountService = savingsAccountService;
         this.customerService = customerService;
         this.bankCardService = bankCardService;
+        this.creditCardService = creditCardService;
+        this.extractOfAccountService = extractOfAccountService;
     }
 
     @PostMapping("/{customerID}/account/{bankCardAccountNumber}")
@@ -94,5 +104,29 @@ public class SavingsAccountController {
             throw new BankCardNotMatchException("BankCard not matched to the accountIBAN.");
         }
     }
+    @PutMapping("/{accountNumber}/payDebt/{creditCardNumber}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public SavingsAccountDto payDebtWithSaving(@PathVariable("accountNumber") long accountNumber,
+                                               @PathVariable("creditCardNumber") long creditCardNumber,
+                                               @RequestParam("creditCardDebt") int creditCardDebt,
+                                               @RequestParam("minimumPaymentAmount") int minimumPaymentAmount){
+        SavingsAccountDto savingsAccountDto = savingsAccountService.get(accountNumber).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toSavingsAccountDto();
+        CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
+        ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
 
+        if (savingsAccountDto.getSavingsAccountCurrency().equals(creditCard.getCurrency())){
+            savingsAccountDto.setSavingsAccountBalance(savingsAccountDto.getSavingsAccountBalance()-creditCardDebt-minimumPaymentAmount);
+        }else{
+            ExchangeDto exchangeDto = Exchange.getConvert.apply(savingsAccountDto.getSavingsAccountCurrency());
+            savingsAccountDto.setSavingsAccountBalance((int) (savingsAccountDto.getSavingsAccountBalance()- ((creditCardDebt+minimumPaymentAmount) *
+                    exchangeDto.getRates().get(savingsAccountDto.getSavingsAccountCurrency()))));
+        }
+        creditCard.setCardDebt(creditCard.getCardDebt() - creditCardDebt);
+        extractOfAccount.setTermDebt(extractOfAccount.getTermDebt() - creditCardDebt);
+        extractOfAccount.setMinimumPaymentAmount(extractOfAccount.getMinimumPaymentAmount() - minimumPaymentAmount);
+        creditCardService.updateCard(creditCard);
+        extractOfAccountService.update(extractOfAccount);
+        return savingsAccountService.updateBalance(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
+    }
 }
