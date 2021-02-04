@@ -8,10 +8,14 @@ import org.kodluyoruz.mybank.account.savingsaccount.service.SavingsAccountServic
 import org.kodluyoruz.mybank.card.bankcard.dto.BankCardDto;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotMatchException;
 import org.kodluyoruz.mybank.card.bankcard.service.BankCardService;
+import org.kodluyoruz.mybank.card.creditcard.entity.CreditCard;
+import org.kodluyoruz.mybank.card.creditcard.service.CreditCardService;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import org.kodluyoruz.mybank.customer.service.CustomerService;
 import org.kodluyoruz.mybank.exchange.Exchange;
 import org.kodluyoruz.mybank.exchange.ExchangeDto;
+import org.kodluyoruz.mybank.extractofaccount.entity.ExtractOfAccount;
+import org.kodluyoruz.mybank.extractofaccount.service.ExtractOfAccountService;
 import org.kodluyoruz.mybank.generate.accountgenerate.AccountGenerate;
 import org.kodluyoruz.mybank.generate.ibangenerate.IbanGenerate;
 import org.springframework.http.HttpStatus;
@@ -25,12 +29,16 @@ public class DemandDepositAccountController {
     private final CustomerService customerService;
     private final BankCardService bankCardService;
     private final SavingsAccountService savingsAccountService;
+    private final CreditCardService creditCardService;
+    private final ExtractOfAccountService extractOfAccountService;
 
-    public DemandDepositAccountController(DemandDepositAccountService demandDepositAccountService, CustomerService customerService, BankCardService bankCardService, SavingsAccountService savingsAccountService) {
+    public DemandDepositAccountController(DemandDepositAccountService demandDepositAccountService, CustomerService customerService, BankCardService bankCardService, SavingsAccountService savingsAccountService, CreditCardService creditCardService, ExtractOfAccountService extractOfAccountService) {
         this.demandDepositAccountService = demandDepositAccountService;
         this.customerService = customerService;
         this.bankCardService = bankCardService;
         this.savingsAccountService = savingsAccountService;
+        this.creditCardService = creditCardService;
+        this.extractOfAccountService = extractOfAccountService;
     }
 
     @PostMapping("/{customerID}/account/{bankCardAccountNumber}")
@@ -135,5 +143,32 @@ public class DemandDepositAccountController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Same account.");
         }
+    }
+
+    @PutMapping("/{accountNumber}/payDebt/{creditCardNumber}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public DemandDepositAccountDto payDebtWithDemandDeposit(@PathVariable("accountNumber") long accountNumber,
+                                                            @PathVariable("creditCardNumber") long creditCardNumber,
+                                                            @RequestParam("creditCardDebt") int creditCardDebt,
+                                                            @RequestParam("minimumPaymentAmount") int minimumPaymentAmount) {
+        DemandDepositAccountDto demandDepositAccountDto = demandDepositAccountService.get(accountNumber).
+                orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toDemandDepositAccountDto();
+        CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
+        ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
+        if (demandDepositAccountDto.getDemandDepositAccountCurrency().equals(creditCard.getCurrency())) {
+            demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() - creditCardDebt - minimumPaymentAmount);
+        } else {
+            ExchangeDto exchangeDto = Exchange.getConvert.apply(creditCard.getCurrency());
+            demandDepositAccountDto.setDemandDepositAccountBalance((int) (
+                    demandDepositAccountDto.getDemandDepositAccountBalance() - ((creditCardDebt + minimumPaymentAmount) *
+                            exchangeDto.getRates().get(demandDepositAccountDto.getDemandDepositAccountCurrency()))));
+        }
+        creditCard.setCardDebt(creditCard.getCardDebt() - creditCardDebt);
+        extractOfAccount.setTermDebt(extractOfAccount.getTermDebt() - creditCardDebt);
+        extractOfAccount.setMinimumPaymentAmount(extractOfAccount.getMinimumPaymentAmount() - minimumPaymentAmount);
+        creditCardService.updateCard(creditCard);
+        extractOfAccountService.update(extractOfAccount);
+        return demandDepositAccountService.update(demandDepositAccountDto.toDemandDepositAccount()).toDemandDepositAccountDto();
     }
 }
