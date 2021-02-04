@@ -1,7 +1,7 @@
 package org.kodluyoruz.mybank.account.demanddepositaccount.service;
 
-import org.kodluyoruz.mybank.account.demanddepositaccount.dto.DemandDepositAccountDto;
 import org.kodluyoruz.mybank.account.demanddepositaccount.entity.DemandDepositAccount;
+import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotDeletedException;
 import org.kodluyoruz.mybank.account.demanddepositaccount.repository.DemandDepositAccountRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -38,5 +38,15 @@ public class DemandDepositAccountService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found.(AccountIBAN)");
         }
 
+    }
+
+    public void delete(long accountNumber) {
+        DemandDepositAccount demandDepositAccount = get(accountNumber).
+                orElseThrow(() -> (new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")));
+        if (demandDepositAccount.getDemandDepositAccountBalance() > 0) {
+            throw new DemandDepositAccountNotDeletedException("Demand Deposit Account is not deleted. Because have money in your account");
+        } else {
+            demandDepositAccountRepository.delete(demandDepositAccount);
+        }
     }
 }

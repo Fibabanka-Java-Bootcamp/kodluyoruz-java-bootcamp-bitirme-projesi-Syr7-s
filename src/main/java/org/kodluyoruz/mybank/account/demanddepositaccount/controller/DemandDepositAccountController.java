@@ -1,6 +1,7 @@
 package org.kodluyoruz.mybank.account.demanddepositaccount.controller;
 
 import org.kodluyoruz.mybank.account.demanddepositaccount.dto.DemandDepositAccountDto;
+import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotDeletedException;
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotEnoughMoneyException;
 import org.kodluyoruz.mybank.account.demanddepositaccount.service.DemandDepositAccountService;
 import org.kodluyoruz.mybank.account.savingsaccount.dto.SavingsAccountDto;
@@ -170,5 +171,16 @@ public class DemandDepositAccountController {
         creditCardService.updateCard(creditCard);
         extractOfAccountService.update(extractOfAccount);
         return demandDepositAccountService.update(demandDepositAccountDto.toDemandDepositAccount()).toDemandDepositAccountDto();
+    }
+
+    @DeleteMapping("/{accountNumber}/process")
+    public void demandDepositAccountDelete(@PathVariable("accountNumber") long accountNumber) {
+        try {
+            demandDepositAccountService.delete(accountNumber);
+        } catch (DemandDepositAccountNotDeletedException exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
+        } catch (RuntimeException exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
+        }
     }
 }
