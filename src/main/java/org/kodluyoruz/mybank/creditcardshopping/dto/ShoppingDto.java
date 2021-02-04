@@ -14,6 +14,7 @@ public class ShoppingDto {
     private String productType;
     private String productName;
     private int productPrice;
+    private String currency;
     private LocalDate productReceiveDate;
     private CreditCard creditCard;
 
@@ -23,6 +24,7 @@ public class ShoppingDto {
                 .productType(this.productType)
                 .productName(this.productName)
                 .productPrice(this.productPrice)
+                .currency(this.currency)
                 .productReceiveDate(this.productReceiveDate)
                 .creditCard(this.creditCard)
                 .build();

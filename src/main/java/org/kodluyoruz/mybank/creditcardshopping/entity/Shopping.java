@@ -22,6 +22,7 @@ public class Shopping {
     private String productType;
     private String productName;
     private int productPrice;
+    private String currency;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate productReceiveDate;
     @ManyToOne
@@ -35,6 +36,7 @@ public class Shopping {
                 .productType(this.productType)
                 .productName(this.productName)
                 .productPrice(this.productPrice)
+                .currency(this.currency)
                 .productReceiveDate(this.productReceiveDate)
                 .creditCard(this.creditCard)
                 .build();
