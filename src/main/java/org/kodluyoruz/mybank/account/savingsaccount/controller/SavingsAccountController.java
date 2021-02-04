@@ -49,7 +49,7 @@ public class SavingsAccountController {
     public SavingsAccountDto create(@PathVariable("customerID") long customerID, @PathVariable("bankCardAccountNumber") long bankCardAccountNumber, @RequestBody SavingsAccountDto savingsAccountDto) {
         String accountNumber = AccountGenerate.generateAccount.get();
         savingsAccountDto.setSavingsAccountNumber(Long.parseLong(accountNumber));
-        savingsAccountDto.setSavingsAccountIBAN(IbanGenerate.ibanGenerate.apply(accountNumber));
+        savingsAccountDto.setSavingsAccountIBAN(IbanGenerate.generateIban.apply(accountNumber));
         CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
         savingsAccountDto.setCustomer(customerDto.toCustomer());
         BankCardDto bankCardDto = bankCardService.findBankCard(bankCardAccountNumber).toBankCardDto();

@@ -47,7 +47,7 @@ public class DemandDepositAccountController {
     public DemandDepositAccountDto create(@PathVariable("customerID") long customerID, @PathVariable("bankCardAccountNumber") long bankCardAccountNumber, @RequestBody DemandDepositAccountDto demandDepositAccountDto) {
         String accountNumber = AccountGenerate.generateAccount.get();
         demandDepositAccountDto.setDemandDepositAccountNumber(Long.parseLong(accountNumber));
-        demandDepositAccountDto.setDemandDepositAccountIBAN(IbanGenerate.ibanGenerate.apply(accountNumber));
+        demandDepositAccountDto.setDemandDepositAccountIBAN(IbanGenerate.generateIban.apply(accountNumber));
         CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
         demandDepositAccountDto.setCustomer(customerDto.toCustomer());
         BankCardDto bankCardDto = bankCardService.findBankCard(bankCardAccountNumber).toBankCardDto();
@@ -66,7 +66,8 @@ public class DemandDepositAccountController {
     public DemandDepositAccountDto getUpdatedDeposit(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
                                                      @PathVariable("accountNumber") long accountNumber, @RequestParam("depositMoney") int depositMoney) {
         DemandDepositAccountDto demandDepositAccountDto = demandDepositAccountService.get(accountNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toDemandDepositAccountDto();
+                new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Account is not found")).toDemandDepositAccountDto();
         long cardAccountNumber = demandDepositAccountDto.getBankCard().getBankCardAccountNumber();
         if (cardAccountNumber == bankCardAccountNumber) {
             int balance = demandDepositAccountDto.getDemandDepositAccountBalance();
