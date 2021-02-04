@@ -1,6 +1,7 @@
 package org.kodluyoruz.mybank.card.bankcard.service;
 
 import org.kodluyoruz.mybank.card.bankcard.entity.BankCard;
+import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotDeletedException;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotFoundException;
 import org.kodluyoruz.mybank.card.bankcard.repository.BankCardRepository;
 import org.springframework.data.domain.Page;
@@ -31,5 +32,10 @@ public class BankCardService {
 
     public Page<BankCard> bankCardPage(Pageable pageable) {
         return bankCardRepository.findAll(pageable);
+    }
+
+    public void delete(long bankCardNo) throws BankCardNotDeletedException {
+        BankCard bankCard = findBankCard(bankCardNo);
+        bankCardRepository.delete(bankCard);
     }
 }
