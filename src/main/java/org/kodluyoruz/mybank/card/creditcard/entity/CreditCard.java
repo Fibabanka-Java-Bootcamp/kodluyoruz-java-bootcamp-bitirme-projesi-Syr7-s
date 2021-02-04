@@ -38,7 +38,7 @@ public class CreditCard {
     @JsonIgnore
     private Set<Shopping> shoppings;
 
-    @OneToOne(mappedBy = "creditCard")
+    @OneToOne(mappedBy = "creditCard",cascade = CascadeType.ALL)
     @JsonIgnore
     private ExtractOfAccount extractOfAccount;
 

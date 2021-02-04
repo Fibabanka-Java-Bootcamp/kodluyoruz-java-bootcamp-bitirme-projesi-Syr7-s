@@ -55,12 +55,25 @@ public class CustomerService {
     public void deleteCustomer(long id) {
         Customer deletedCustomer = customerRepository.findCustomerByCustomerID(id);
         List<Integer> debts = deletedCustomer.getCreditCards().stream().map(CreditCard::getCardDebt).collect(Collectors.toList());
+        boolean isCreditCardDelete = isZero(debts);
         List<Integer> demandAccountBalance = deletedCustomer.getDemandDepositAccounts().stream().map(DemandDepositAccount::getDemandDepositAccountBalance).collect(Collectors.toList());
+        boolean isDemandAccountDelete = isZero(demandAccountBalance);
         List<Integer> savingsAccountBalance = deletedCustomer.getSavingsAccounts().stream().map(SavingsAccount::getSavingsAccountBalance).collect(Collectors.toList());
-        if (deletedCustomer != null && debts.contains(0) && demandAccountBalance.contains(0) && savingsAccountBalance.contains(null)) {
+        boolean isSavingsAccountDelete = isZero(savingsAccountBalance);
+        if (isCreditCardDelete && isDemandAccountDelete && isSavingsAccountDelete) {
             customerRepository.delete(deletedCustomer);
         } else {
             throw new CustomerCouldNotDeletedException("Customer could not deleted .");
         }
+    }
+
+    private boolean isZero(List<Integer> debts) {
+        int counter = 0;
+        for (Integer debt : debts) {
+            if (debt == 0) {
+                counter++;
+            }
+        }
+        return counter == debts.size();
     }
 }
