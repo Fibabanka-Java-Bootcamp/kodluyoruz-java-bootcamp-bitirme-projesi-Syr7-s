@@ -7,6 +7,7 @@ import org.kodluyoruz.mybank.card.bankcard.service.BankCardService;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import org.kodluyoruz.mybank.customer.service.CustomerService;
 import org.kodluyoruz.mybank.generate.accountgenerate.AccountGenerate;
+import org.kodluyoruz.mybank.generate.securitycodegenerate.SecurityCodeGenerate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,7 @@ public class BankCardController {
         CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
         bankCardDto.setBankCardAccountNumber(Long.parseLong(AccountGenerate.accountGenerate.get()));
         bankCardDto.setBankCardNameSurname(customerDto.getCustomerName() + " " + customerDto.getCustomerLastname());
+        bankCardDto.setSecurityCode(SecurityCodeGenerate.securityCode.get());
         return bankCardService.create(bankCardDto.toBankCard()).toBankCardDto();
     }
 
