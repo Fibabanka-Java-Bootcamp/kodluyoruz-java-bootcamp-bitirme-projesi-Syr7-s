@@ -28,6 +28,7 @@ public class CreditCard {
     private String securityCode;
     private int cardLimit;
     private int cardDebt;
+    private String currency;
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "customer_id")
@@ -50,6 +51,7 @@ public class CreditCard {
                 .securityCode(this.securityCode)
                 .cardLimit(this.cardLimit)
                 .cardDebt(this.cardDebt)
+                .currency(this.currency)
                 .customer(this.customer)
                 .build();
     }

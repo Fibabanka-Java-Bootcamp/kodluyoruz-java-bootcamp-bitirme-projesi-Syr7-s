@@ -17,6 +17,7 @@ public class CreditCardDto {
     private String securityCode;
     private int cardLimit;
     private int cardDebt;
+    private String currency;
     private Customer customer;
 
     public CreditCard toCreditCard(){
@@ -28,6 +29,7 @@ public class CreditCardDto {
                 .securityCode(this.securityCode)
                 .cardLimit(this.cardLimit)
                 .cardDebt(this.cardDebt)
+                .currency(this.currency)
                 .customer(this.customer)
                 .build();
     }
