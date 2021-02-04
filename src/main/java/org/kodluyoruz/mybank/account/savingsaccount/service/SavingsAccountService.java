@@ -1,6 +1,7 @@
 package org.kodluyoruz.mybank.account.savingsaccount.service;
 
 import org.kodluyoruz.mybank.account.savingsaccount.entity.SavingsAccount;
+import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingAccountNotDeletedException;
 import org.kodluyoruz.mybank.account.savingsaccount.repository.SavingsAccountRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,10 +37,21 @@ public class SavingsAccountService {
 
     public SavingsAccount getByAccountIban(String accountIBAN) {
         SavingsAccount savingsAccount = savingsAccountRepository.findSavingsAccountBySavingsAccountIBAN(accountIBAN);
-        if (savingsAccount != null){
+        if (savingsAccount != null) {
             return savingsAccount;
-        }else{
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Savings Account is not found!(AccountIBAN)");
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Savings Account is not found!(AccountIBAN)");
         }
+    }
+
+    public void delete(long accountNumber) {
+        SavingsAccount savingsAccount = get(accountNumber)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found"));
+        if (savingsAccount.getSavingsAccountBalance() != 0) {
+            throw new SavingAccountNotDeletedException("Savings Account is not deleted.Because you have money in your account.");
+        } else {
+            savingsAccountRepository.delete(savingsAccount);
+        }
+
     }
 }
