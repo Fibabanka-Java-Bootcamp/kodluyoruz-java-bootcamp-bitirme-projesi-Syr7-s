@@ -2,6 +2,7 @@ package org.kodluyoruz.mybank.account.savingsaccount.controller;
 
 import org.kodluyoruz.mybank.account.savingsaccount.dto.SavingsAccountDto;
 import org.kodluyoruz.mybank.account.savingsaccount.entity.SavingsAccount;
+import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingAccountNotDeletedException;
 import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingsAccountNotEnoughMoneyException;
 import org.kodluyoruz.mybank.account.savingsaccount.service.SavingsAccountService;
 import org.kodluyoruz.mybank.card.bankcard.dto.BankCardDto;
@@ -129,5 +130,15 @@ public class SavingsAccountController {
         creditCardService.updateCard(creditCard);
         extractOfAccountService.update(extractOfAccount);
         return savingsAccountService.updateBalance(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
+    }
+    @DeleteMapping("/{accountNumber}/process")
+    public void savingAccountDelete(@PathVariable("accountNumber") long accountNumber){
+        try{
+            savingsAccountService.delete(accountNumber);
+        }catch (SavingAccountNotDeletedException exception){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,exception.getMessage());
+        }catch (RuntimeException exception){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Server Error");
+        }
     }
 }
