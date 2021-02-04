@@ -2,6 +2,7 @@ package org.kodluyoruz.mybank.card.bankcard.controller;
 
 import org.kodluyoruz.mybank.card.bankcard.dto.BankCardDto;
 import org.kodluyoruz.mybank.card.bankcard.entity.BankCard;
+import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotDeletedException;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotFoundException;
 import org.kodluyoruz.mybank.card.bankcard.service.BankCardService;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.Min;
 import java.util.List;
@@ -53,6 +55,16 @@ public class BankCardController {
             return ResponseEntity.notFound().build();
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    @DeleteMapping("/{bankCardNo}/process")
+    public void bankCardDelete(@PathVariable("bankCardNo") long bankCardNo){
+        try{
+            bankCardService.delete(bankCardNo);
+        }catch (BankCardNotDeletedException exception){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"BankCard is not deleted");
+        }catch (RuntimeException exception){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Server Error");
         }
     }
 }
