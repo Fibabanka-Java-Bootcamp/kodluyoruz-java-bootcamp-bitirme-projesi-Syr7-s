@@ -104,22 +104,23 @@ public class SavingsAccountController {
             throw new BankCardNotMatchException("BankCard not matched to the accountIBAN.");
         }
     }
+
     @PutMapping("/{accountNumber}/payDebt/{creditCardNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public SavingsAccountDto payDebtWithSaving(@PathVariable("accountNumber") long accountNumber,
                                                @PathVariable("creditCardNumber") long creditCardNumber,
                                                @RequestParam("creditCardDebt") int creditCardDebt,
-                                               @RequestParam("minimumPaymentAmount") int minimumPaymentAmount){
+                                               @RequestParam("minimumPaymentAmount") int minimumPaymentAmount) {
         SavingsAccountDto savingsAccountDto = savingsAccountService.get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toSavingsAccountDto();
         CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
         ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
 
-        if (savingsAccountDto.getSavingsAccountCurrency().equals(creditCard.getCurrency())){
-            savingsAccountDto.setSavingsAccountBalance(savingsAccountDto.getSavingsAccountBalance()-creditCardDebt-minimumPaymentAmount);
-        }else{
-            ExchangeDto exchangeDto = Exchange.getConvert.apply(savingsAccountDto.getSavingsAccountCurrency());
-            savingsAccountDto.setSavingsAccountBalance((int) (savingsAccountDto.getSavingsAccountBalance()- ((creditCardDebt+minimumPaymentAmount) *
+        if (savingsAccountDto.getSavingsAccountCurrency().equals(creditCard.getCurrency())) {
+            savingsAccountDto.setSavingsAccountBalance(savingsAccountDto.getSavingsAccountBalance() - creditCardDebt - minimumPaymentAmount);
+        } else {
+            ExchangeDto exchangeDto = Exchange.getConvert.apply(creditCard.getCurrency());
+            savingsAccountDto.setSavingsAccountBalance((int) (savingsAccountDto.getSavingsAccountBalance() - ((creditCardDebt + minimumPaymentAmount) *
                     exchangeDto.getRates().get(savingsAccountDto.getSavingsAccountCurrency()))));
         }
         creditCard.setCardDebt(creditCard.getCardDebt() - creditCardDebt);
