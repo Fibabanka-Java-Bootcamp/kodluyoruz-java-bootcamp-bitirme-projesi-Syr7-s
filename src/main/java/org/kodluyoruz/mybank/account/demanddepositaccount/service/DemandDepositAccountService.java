@@ -112,7 +112,7 @@ public class DemandDepositAccountService {
                 demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositMoney - transferMoney);
                 savingsAccountDto.setSavingsAccountBalance((int) (savingsMoney + (transferMoney * exchangeDto.getRates().get(savingsAccountDto.getSavingsAccountCurrency()))));
             }
-            savingsAccountService.updateBalance(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
+            savingsAccountService.update(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
             return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
         }
     }

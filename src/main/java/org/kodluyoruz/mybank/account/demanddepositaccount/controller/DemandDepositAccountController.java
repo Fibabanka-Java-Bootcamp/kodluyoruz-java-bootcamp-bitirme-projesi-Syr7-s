@@ -22,17 +22,13 @@ public class DemandDepositAccountController {
     private final DemandDepositAccountService demandDepositAccountService;
     private final CustomerService customerService;
     private final BankCardService bankCardService;
-    private final SavingsAccountService savingsAccountService;
-    private final CreditCardService creditCardService;
-    private final ExtractOfAccountService extractOfAccountService;
 
-    public DemandDepositAccountController(DemandDepositAccountService demandDepositAccountService, CustomerService customerService, BankCardService bankCardService, SavingsAccountService savingsAccountService, CreditCardService creditCardService, ExtractOfAccountService extractOfAccountService) {
+
+    public DemandDepositAccountController(DemandDepositAccountService demandDepositAccountService, CustomerService customerService, BankCardService bankCardService) {
         this.demandDepositAccountService = demandDepositAccountService;
         this.customerService = customerService;
         this.bankCardService = bankCardService;
-        this.savingsAccountService = savingsAccountService;
-        this.creditCardService = creditCardService;
-        this.extractOfAccountService = extractOfAccountService;
+
     }
 
     @PostMapping("/{customerID}/account/{bankCardAccountNumber}")
