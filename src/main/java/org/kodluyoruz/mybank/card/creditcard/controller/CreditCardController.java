@@ -12,6 +12,7 @@ import org.kodluyoruz.mybank.customer.service.CustomerService;
 import org.kodluyoruz.mybank.extractofaccount.entity.ExtractOfAccount;
 import org.kodluyoruz.mybank.extractofaccount.service.ExtractOfAccountService;
 import org.kodluyoruz.mybank.generate.accountgenerate.AccountGenerate;
+import org.kodluyoruz.mybank.generate.securitycodegenerate.SecurityCodeGenerate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,7 @@ public class CreditCardController {
         creditCardDto.setCreditCardAccountNumber(Long.parseLong(AccountGenerate.generateAccount.get()));
         CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
         creditCardDto.setCardNameSurname(customerDto.getCustomerName() + " " + customerDto.getCustomerLastname());
+        creditCardDto.setSecurityCode(SecurityCodeGenerate.securityCode.get());
         creditCardDto.setCustomer(customerDto.toCustomer());
         return creditCardService.create(creditCardDto.toCreditCard()).toCreditCardDto();
     }
