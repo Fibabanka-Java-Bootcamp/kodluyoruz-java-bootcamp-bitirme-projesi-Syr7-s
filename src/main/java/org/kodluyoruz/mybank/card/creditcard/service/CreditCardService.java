@@ -18,6 +18,7 @@ public class CreditCardService {
     private final CreditCardRepository creditCardRepository;
     private final BankCardService bankCardService;
     private final ExtractOfAccountService extractOfAccountService;
+
     public CreditCardService(CreditCardRepository creditCardRepository, BankCardService bankCardService, ExtractOfAccountService extractOfAccountService) {
         this.creditCardRepository = creditCardRepository;
         this.bankCardService = bankCardService;
@@ -34,32 +35,19 @@ public class CreditCardService {
 
     public CreditCard getCreditCard(long creditCardNo) {
         CreditCard creditCard = creditCardRepository.findCreditCardByCardAccountNumber(creditCardNo);
-        if (creditCard != null){
+        if (creditCard != null) {
             return creditCard;
-        }else{
+        } else {
             throw new CreditCardNotCreatedException("CreditCard is not created.");
         }
     }
-    public CreditCard updateCard(CreditCard creditCard){
-        return creditCardRepository.save(creditCard);
-    }
-    public CreditCard update(long creditCardNo,int price){
-        CreditCard creditCard = getCreditCard(creditCardNo);
-        int money = creditCard.getCardLimit();
-        if (money - price < 0) {
-            int debtMoney = money - price;
-            //Credit Card Limit asildi.
-            //creditCard.setCardLimit(10000);
-            creditCard.setCardDebt(Math.abs(debtMoney));
-        } else {
-            //int cardLimitMoney = creditCard.getCardLimit();
-            //creditCard.setCardLimit(cardLimitMoney - (money - price));
-            creditCard.setCardDebt(money - price);
-        }
+
+    public CreditCard updateCard(CreditCard creditCard) {
         return creditCardRepository.save(creditCard);
     }
 
-    public CreditCard payCreditCardDebt(long bankCardNo,long creditCardNo,int password,int payMoney,double minimumPayment){
+
+    public CreditCard payCreditCardDebt(long bankCardNo, long creditCardNo, int password, int payMoney, double minimumPayment) {
 
         BankCard bankCard = bankCardService.findBankCard(bankCardNo);
         CreditCard creditCard = getCreditCard(creditCardNo);
@@ -71,8 +59,8 @@ public class CreditCardService {
             extractOfAccount.setMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPayment));
             extractOfAccountService.update(extractOfAccount);
             return creditCardRepository.save(creditCard);
-        }else{
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"BankCard info is not correct.");
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BankCard info is not correct.");
         }
     }
 }

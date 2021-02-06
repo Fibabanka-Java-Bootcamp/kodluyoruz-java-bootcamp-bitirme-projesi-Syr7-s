@@ -67,12 +67,7 @@ public class CreditCardController {
         }
     }
 
-    @PutMapping("/{creditCardNo}")
-    @ResponseStatus(HttpStatus.OK)
-    public CreditCardDto doShopping(@PathVariable("creditCardNo") long creditCardNo,
-                                    @RequestParam("productPrice") int price) {
-        return creditCardService.update(creditCardNo, price).toCreditCardDto();
-    }
+
 
     @GetMapping("/{creditCardNo}/debt")
     public String creditCardDebtInquiry(@PathVariable("creditCardNo") long creditCardNo) {
