@@ -5,10 +5,6 @@ import org.kodluyoruz.mybank.card.bankcard.entity.BankCard;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotDeletedException;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotFoundException;
 import org.kodluyoruz.mybank.card.bankcard.service.BankCardService;
-import org.kodluyoruz.mybank.customer.dto.CustomerDto;
-import org.kodluyoruz.mybank.customer.service.CustomerService;
-import org.kodluyoruz.mybank.utilities.generate.accountgenerate.AccountGenerate;
-import org.kodluyoruz.mybank.utilities.generate.securitycodegenerate.SecurityCodeGenerate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,21 +19,18 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/bankcard")
 public class BankCardController {
     private final BankCardService bankCardService;
-    private final CustomerService customerService;
 
-    public BankCardController(BankCardService bankCardService, CustomerService customerService) {
+
+    public BankCardController(BankCardService bankCardService) {
         this.bankCardService = bankCardService;
-        this.customerService = customerService;
+
     }
 
     @PostMapping("/{customerID}")
     @ResponseStatus(HttpStatus.CREATED)
     public BankCardDto create(@PathVariable("customerID") long customerID, @RequestBody BankCardDto bankCardDto) {
-        CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
-        bankCardDto.setBankCardAccountNumber(Long.parseLong(AccountGenerate.generateAccount.get()));
-        bankCardDto.setBankCardNameSurname(customerDto.getCustomerName() + " " + customerDto.getCustomerLastname());
-        bankCardDto.setSecurityCode(SecurityCodeGenerate.securityCode.get());
-        return bankCardService.create(bankCardDto.toBankCard()).toBankCardDto();
+
+        return bankCardService.create(customerID,bankCardDto).toBankCardDto();
     }
 
     @GetMapping(value = "/cards", params = {"page", "size"})
