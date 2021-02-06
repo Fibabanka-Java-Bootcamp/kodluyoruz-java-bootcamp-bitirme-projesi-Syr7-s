@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class BankCardService {
     private final BankCardRepository bankCardRepository;
     private final CustomerService customerService;
+
     public BankCardService(BankCardRepository bankCardRepository, CustomerService customerService) {
         this.bankCardRepository = bankCardRepository;
         this.customerService = customerService;
@@ -25,6 +26,14 @@ public class BankCardService {
 
     public BankCard create(BankCard bankCard) {
         return bankCardRepository.save(bankCard);
+    }
+
+    public BankCard create(long customerID, BankCardDto bankCardDto) {
+        CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
+        bankCardDto.setBankCardAccountNumber(Long.parseLong(AccountGenerate.generateAccount.get()));
+        bankCardDto.setBankCardNameSurname(customerDto.getCustomerName() + " " + customerDto.getCustomerLastname());
+        bankCardDto.setSecurityCode(SecurityCodeGenerate.securityCode.get());
+        return bankCardRepository.save(bankCardDto.toBankCard());
     }
 
     public BankCard findBankCard(long bankCardNO) {
@@ -44,16 +53,10 @@ public class BankCardService {
         BankCard bankCard = findBankCard(bankCardNo);
         try {
             bankCardRepository.delete(bankCard);
-        }catch (BankCardNotDeletedException exception){
+        } catch (BankCardNotDeletedException exception) {
             throw new BankCardNotDeletedException("BankCard not deleted.");
         }
     }
 
-    public BankCard create(long customerID, BankCardDto bankCardDto){
-        CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
-        bankCardDto.setBankCardAccountNumber(Long.parseLong(AccountGenerate.generateAccount.get()));
-        bankCardDto.setBankCardNameSurname(customerDto.getCustomerName() + " " + customerDto.getCustomerLastname());
-        bankCardDto.setSecurityCode(SecurityCodeGenerate.securityCode.get());
-        return bankCardRepository.save(bankCardDto.toBankCard());
-    }
+
 }
