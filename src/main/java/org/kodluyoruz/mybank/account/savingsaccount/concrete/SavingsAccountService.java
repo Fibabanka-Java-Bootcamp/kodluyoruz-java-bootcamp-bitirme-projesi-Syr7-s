@@ -8,7 +8,6 @@ import org.kodluyoruz.mybank.card.bankcard.abstrct.IBankCardService;
 import org.kodluyoruz.mybank.card.bankcard.concrete.BankCard;
 import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardDto;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotMatchException;
-import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardService;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
 import org.kodluyoruz.mybank.customer.abstrct.ICustomService;
