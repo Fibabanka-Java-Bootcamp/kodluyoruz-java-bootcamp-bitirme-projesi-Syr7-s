@@ -12,7 +12,7 @@ import org.kodluyoruz.mybank.card.bankcard.concrete.BankCard;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotMatchException;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
-import org.kodluyoruz.mybank.customer.abstrct.ICustomService;
+import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.exchange.Exchange;
 import org.kodluyoruz.mybank.exchange.ExchangeDto;
@@ -30,13 +30,13 @@ import java.util.Optional;
 @Service
 public class DemandDepositAccountService implements IDemandDepositAccountService<DemandDepositAccount> {
     private final DemandDepositAccountRepository demandDepositAccountRepository;
-    private final ICustomService<Customer> customerService;
+    private final ICustomerService<Customer> customerService;
     private final ISavingsAccountService<SavingsAccount> savingsAccountService;
     private final ICreditCardService<CreditCard> creditCardService;
     private final IExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
     private final IBankCardService<BankCard> bankCardService;
 
-    public DemandDepositAccountService(DemandDepositAccountRepository demandDepositAccountRepository, ICustomService<Customer> customerService, ISavingsAccountService<SavingsAccount> savingsAccountService, ICreditCardService<CreditCard> creditCardService, IExtractOfAccountService<ExtractOfAccount> extractOfAccountService, IBankCardService<BankCard> bankCardService) {
+    public DemandDepositAccountService(DemandDepositAccountRepository demandDepositAccountRepository, ICustomerService<Customer> customerService, ISavingsAccountService<SavingsAccount> savingsAccountService, ICreditCardService<CreditCard> creditCardService, IExtractOfAccountService<ExtractOfAccount> extractOfAccountService, IBankCardService<BankCard> bankCardService) {
         this.demandDepositAccountRepository = demandDepositAccountRepository;
         this.customerService = customerService;
         this.savingsAccountService = savingsAccountService;

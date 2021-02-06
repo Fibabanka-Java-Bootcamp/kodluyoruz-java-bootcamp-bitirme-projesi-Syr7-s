@@ -10,7 +10,7 @@ import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardDto;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotMatchException;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
-import org.kodluyoruz.mybank.customer.abstrct.ICustomService;
+import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
 import org.kodluyoruz.mybank.exchange.Exchange;
@@ -32,10 +32,10 @@ public class SavingsAccountService implements ISavingsAccountService<SavingsAcco
     private final SavingsAccountRepository savingsAccountRepository;
     private final ICreditCardService<CreditCard> creditCardService;
     private final IExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
-    private final ICustomService<Customer> customerService;
+    private final ICustomerService<Customer> customerService;
     private final IBankCardService<BankCard> bankCardService;
 
-    public SavingsAccountService(SavingsAccountRepository savingsAccountRepository, ICreditCardService<CreditCard> creditCardService, IExtractOfAccountService<ExtractOfAccount> extractOfAccountService, ICustomService<Customer> customerService, IBankCardService<BankCard> bankCardService) {
+    public SavingsAccountService(SavingsAccountRepository savingsAccountRepository, ICreditCardService<CreditCard> creditCardService, IExtractOfAccountService<ExtractOfAccount> extractOfAccountService, ICustomerService<Customer> customerService, IBankCardService<BankCard> bankCardService) {
         this.savingsAccountRepository = savingsAccountRepository;
         this.creditCardService = creditCardService;
         this.extractOfAccountService = extractOfAccountService;

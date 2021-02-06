@@ -4,8 +4,10 @@ import org.kodluyoruz.mybank.card.bankcard.abstrct.IBankCardService;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotDeletedException;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotFoundException;
 import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardRepository;
+import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
+import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
-import org.kodluyoruz.mybank.customer.concrete.CustomerService;
+
 import org.kodluyoruz.mybank.utilities.generate.accountgenerate.AccountGenerate;
 import org.kodluyoruz.mybank.utilities.generate.securitycodegenerate.SecurityCodeGenerate;
 import org.springframework.data.domain.Page;
@@ -16,9 +18,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class BankCardService implements IBankCardService<BankCard> {
     private final BankCardRepository bankCardRepository;
-    private final CustomerService customerService;
+    private final ICustomerService<Customer> customerService;
 
-    public BankCardService(BankCardRepository bankCardRepository, CustomerService customerService) {
+    public BankCardService(BankCardRepository bankCardRepository, ICustomerService<Customer> customerService) {
         this.bankCardRepository = bankCardRepository;
         this.customerService = customerService;
     }

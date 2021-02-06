@@ -4,7 +4,7 @@ import org.kodluyoruz.mybank.account.demanddepositaccount.concrete.DemandDeposit
 import org.kodluyoruz.mybank.account.savingsaccount.concrete.SavingsAccount;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
 import org.kodluyoruz.mybank.customer.abstrct.CustomerRepository;
-import org.kodluyoruz.mybank.customer.abstrct.ICustomService;
+import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
 import org.kodluyoruz.mybank.customer.exception.CustomerCouldNotDeletedException;
 import org.kodluyoruz.mybank.customer.exception.CustomerNotFoundException;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomerService implements ICustomService<Customer> {
+public class CustomerService implements ICustomerService<Customer> {
     private final CustomerRepository customerRepository;
 
     public CustomerService(CustomerRepository customerRepository) {
