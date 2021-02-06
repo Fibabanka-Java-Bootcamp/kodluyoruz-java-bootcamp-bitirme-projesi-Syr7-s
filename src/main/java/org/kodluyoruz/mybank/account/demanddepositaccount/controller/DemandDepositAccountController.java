@@ -16,23 +16,18 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api/deposit")
 public class DemandDepositAccountController {
+
     private final DemandDepositAccountService demandDepositAccountService;
-    private final CustomerService customerService;
-    private final BankCardService bankCardService;
 
-
-    public DemandDepositAccountController(DemandDepositAccountService demandDepositAccountService, CustomerService customerService, BankCardService bankCardService) {
+    public DemandDepositAccountController(DemandDepositAccountService demandDepositAccountService) {
         this.demandDepositAccountService = demandDepositAccountService;
-        this.customerService = customerService;
-        this.bankCardService = bankCardService;
-
     }
 
     @PostMapping("/{customerID}/account/{bankCardAccountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto create(@PathVariable("customerID") long customerID, @PathVariable("bankCardAccountNumber") long bankCardAccountNumber, @RequestBody DemandDepositAccountDto demandDepositAccountDto) {
 
-        return demandDepositAccountService.create(customerID,bankCardAccountNumber,demandDepositAccountDto).toDemandDepositAccountDto();
+        return demandDepositAccountService.create(customerID, bankCardAccountNumber, demandDepositAccountDto).toDemandDepositAccountDto();
     }
 
     @GetMapping("/{accountNumber}")
@@ -46,7 +41,7 @@ public class DemandDepositAccountController {
     public DemandDepositAccountDto getUpdatedDeposit(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
                                                      @PathVariable("accountNumber") long accountNumber, @RequestParam("depositMoney") int depositMoney) {
 
-        return demandDepositAccountService.depositMoney(bankCardAccountNumber,accountNumber,depositMoney).toDemandDepositAccountDto();
+        return demandDepositAccountService.depositMoney(bankCardAccountNumber, accountNumber, depositMoney).toDemandDepositAccountDto();
     }
 
     @PutMapping("/{bankCardAccountNumber}/withDrawMoney/{accountNumber}")
@@ -54,7 +49,7 @@ public class DemandDepositAccountController {
     public DemandDepositAccountDto getUpdateDepositWithDrawMoney(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
                                                                  @PathVariable("accountNumber") long accountNumber, @RequestParam("withDrawMoney") int withDrawMoney) {
 
-        return demandDepositAccountService.withDrawMoney(bankCardAccountNumber,accountNumber,withDrawMoney).toDemandDepositAccountDto();
+        return demandDepositAccountService.withDrawMoney(bankCardAccountNumber, accountNumber, withDrawMoney).toDemandDepositAccountDto();
     }
 
     @PutMapping("/{depositAccountIBAN}/transfer/{savingsAccountIBAN}")
@@ -63,7 +58,7 @@ public class DemandDepositAccountController {
                                                     @PathVariable("savingsAccountIBAN") String savingsAccountIBAN,
                                                     @RequestParam("transferMoney") int transferMoney) {
 
-        return demandDepositAccountService.moneyTransferBetweenDifferentAccounts(depositAccountIBAN,savingsAccountIBAN,transferMoney).toDemandDepositAccountDto();
+        return demandDepositAccountService.moneyTransferBetweenDifferentAccounts(depositAccountIBAN, savingsAccountIBAN, transferMoney).toDemandDepositAccountDto();
     }
 
     @PutMapping("/{fromAccountIBAN}/betweenAccountMoneyTransfer/{toAccountIBAN}")
@@ -72,7 +67,7 @@ public class DemandDepositAccountController {
                                                                   @PathVariable("toAccountIBAN") String toAccountIBAN,
                                                                   @RequestParam("transferMoney") int transferMoney) {
 
-        return demandDepositAccountService.moneyTransferBetweenAccounts(fromAccountIBAN,toAccountIBAN,transferMoney).toDemandDepositAccountDto();
+        return demandDepositAccountService.moneyTransferBetweenAccounts(fromAccountIBAN, toAccountIBAN, transferMoney).toDemandDepositAccountDto();
     }
 
     @PutMapping("/{accountNumber}/payDebt/{creditCardNumber}")
@@ -82,7 +77,7 @@ public class DemandDepositAccountController {
                                                             @RequestParam("creditCardDebt") int creditCardDebt,
                                                             @RequestParam("minimumPaymentAmount") int minimumPaymentAmount) {
 
-        return demandDepositAccountService.payDebtWithDemandDeposit(accountNumber,creditCardNumber,creditCardDebt,minimumPaymentAmount).toDemandDepositAccountDto();
+        return demandDepositAccountService.payDebtWithDemandDeposit(accountNumber, creditCardNumber, creditCardDebt, minimumPaymentAmount).toDemandDepositAccountDto();
     }
 
     @DeleteMapping("/{accountNumber}/process")
