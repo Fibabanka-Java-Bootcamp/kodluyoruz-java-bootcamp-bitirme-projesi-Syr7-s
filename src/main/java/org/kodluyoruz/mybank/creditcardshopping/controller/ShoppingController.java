@@ -26,23 +26,7 @@ public class ShoppingController {
     @PostMapping("/{creditCardNo}")
     @ResponseStatus(HttpStatus.CREATED)
     public ShoppingDto doShopping(@PathVariable("creditCardNo") long creditCardNo, @RequestParam("password") int password, @RequestBody ShoppingDto shoppingDto) {
-        CreditCard creditCard = creditCardService.getCreditCard(creditCardNo);
-        ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
-        if (creditCard.getCardPassword() == password) {
-            creditCard.setCardDebt(creditCard.getCardDebt() + shoppingDto.getProductPrice());
-            if (creditCard.getCardDebt() <= creditCard.getCardLimit()) {
-                creditCardService.updateCard(creditCard);
-                extractOfAccount.setTermDebt(creditCard.getCardDebt());
-                extractOfAccount.setMinimumPaymentAmount(extractOfAccount.getTermDebt() * 0.3);
-                extractOfAccountService.update(extractOfAccount);
-                shoppingDto.setCreditCard(creditCard);
-                return shoppingService.create(shoppingDto.toShopping()).toShoppingDto();
-            } else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CreditLimit is over.");
-            }
 
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CreditCard password is not correct.");
-        }
+        return shoppingService.doShoppingByCreditCard(creditCardNo,password,shoppingDto).toShoppingDto();
     }
 }
