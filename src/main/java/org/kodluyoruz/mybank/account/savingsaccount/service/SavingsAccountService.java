@@ -5,14 +5,19 @@ import org.kodluyoruz.mybank.account.savingsaccount.entity.SavingsAccount;
 import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingAccountNotDeletedException;
 import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingsAccountNotEnoughMoneyException;
 import org.kodluyoruz.mybank.account.savingsaccount.repository.SavingsAccountRepository;
+import org.kodluyoruz.mybank.card.bankcard.dto.BankCardDto;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotMatchException;
+import org.kodluyoruz.mybank.card.bankcard.service.BankCardService;
 import org.kodluyoruz.mybank.card.creditcard.entity.CreditCard;
 import org.kodluyoruz.mybank.card.creditcard.service.CreditCardService;
+import org.kodluyoruz.mybank.customer.dto.CustomerDto;
+import org.kodluyoruz.mybank.customer.service.CustomerService;
 import org.kodluyoruz.mybank.exchange.Exchange;
 import org.kodluyoruz.mybank.exchange.ExchangeDto;
 import org.kodluyoruz.mybank.extractofaccount.entity.ExtractOfAccount;
 import org.kodluyoruz.mybank.extractofaccount.service.ExtractOfAccountService;
-import org.kodluyoruz.mybank.utilities.enums.currency.Currency;
+import org.kodluyoruz.mybank.utilities.generate.accountgenerate.AccountGenerate;
+import org.kodluyoruz.mybank.utilities.generate.ibangenerate.IbanGenerate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -26,14 +31,29 @@ public class SavingsAccountService {
     private final SavingsAccountRepository savingsAccountRepository;
     private final CreditCardService creditCardService;
     private final ExtractOfAccountService extractOfAccountService;
-    public SavingsAccountService(SavingsAccountRepository savingsAccountRepository, CreditCardService creditCardService, ExtractOfAccountService extractOfAccountService) {
+    private final CustomerService customerService;
+    private final BankCardService bankCardService;
+    public SavingsAccountService(SavingsAccountRepository savingsAccountRepository, CreditCardService creditCardService, ExtractOfAccountService extractOfAccountService, CustomerService customerService, BankCardService bankCardService) {
         this.savingsAccountRepository = savingsAccountRepository;
         this.creditCardService = creditCardService;
         this.extractOfAccountService = extractOfAccountService;
+        this.customerService = customerService;
+        this.bankCardService = bankCardService;
     }
 
     public SavingsAccount create(SavingsAccount savingsAccount) {
         return savingsAccountRepository.save(savingsAccount);
+    }
+
+    public SavingsAccount create(long customerID,long bankCardAccountNumber,SavingsAccountDto savingsAccountDto){
+        String accountNumber = AccountGenerate.generateAccount.get();
+        savingsAccountDto.setSavingsAccountNumber(Long.parseLong(accountNumber));
+        savingsAccountDto.setSavingsAccountIBAN(IbanGenerate.generateIban.apply(accountNumber));
+        CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
+        savingsAccountDto.setCustomer(customerDto.toCustomer());
+        BankCardDto bankCardDto = bankCardService.findBankCard(bankCardAccountNumber).toBankCardDto();
+        savingsAccountDto.setBankCard(bankCardDto.toBankCard());
+        return  savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
     }
 
     public Optional<SavingsAccount> get(long accountIBAN) {

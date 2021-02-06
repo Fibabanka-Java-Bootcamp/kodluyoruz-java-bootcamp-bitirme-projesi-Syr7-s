@@ -4,12 +4,6 @@ import org.kodluyoruz.mybank.account.savingsaccount.dto.SavingsAccountDto;
 import org.kodluyoruz.mybank.account.savingsaccount.entity.SavingsAccount;
 import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingAccountNotDeletedException;
 import org.kodluyoruz.mybank.account.savingsaccount.service.SavingsAccountService;
-import org.kodluyoruz.mybank.card.bankcard.dto.BankCardDto;
-import org.kodluyoruz.mybank.card.bankcard.service.BankCardService;
-import org.kodluyoruz.mybank.customer.dto.CustomerDto;
-import org.kodluyoruz.mybank.customer.service.CustomerService;
-import org.kodluyoruz.mybank.utilities.generate.accountgenerate.AccountGenerate;
-import org.kodluyoruz.mybank.utilities.generate.ibangenerate.IbanGenerate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,26 +17,16 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/savings")
 public class SavingsAccountController {
     private final SavingsAccountService savingsAccountService;
-    private final CustomerService customerService;
-    private final BankCardService bankCardService;
 
-    public SavingsAccountController(SavingsAccountService savingsAccountService, CustomerService customerService, BankCardService bankCardService) {
+    public SavingsAccountController(SavingsAccountService savingsAccountService) {
         this.savingsAccountService = savingsAccountService;
-        this.customerService = customerService;
-        this.bankCardService = bankCardService;
     }
 
     @PostMapping("/{customerID}/account/{bankCardAccountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public SavingsAccountDto create(@PathVariable("customerID") long customerID, @PathVariable("bankCardAccountNumber") long bankCardAccountNumber, @RequestBody SavingsAccountDto savingsAccountDto) {
-        String accountNumber = AccountGenerate.generateAccount.get();
-        savingsAccountDto.setSavingsAccountNumber(Long.parseLong(accountNumber));
-        savingsAccountDto.setSavingsAccountIBAN(IbanGenerate.generateIban.apply(accountNumber));
-        CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
-        savingsAccountDto.setCustomer(customerDto.toCustomer());
-        BankCardDto bankCardDto = bankCardService.findBankCard(bankCardAccountNumber).toBankCardDto();
-        savingsAccountDto.setBankCard(bankCardDto.toBankCard());
-        return savingsAccountService.create(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
+
+        return savingsAccountService.create(customerID, bankCardAccountNumber, savingsAccountDto).toSavingsAccountDto();
     }
 
     @GetMapping("/{accountIBAN}")
@@ -63,7 +47,7 @@ public class SavingsAccountController {
     public SavingsAccountDto getUpdateSavings(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
                                               @PathVariable("accountNumber") long accountNumber, @RequestParam("depositMoney") int depositMoney) {
 
-        return savingsAccountService.depositMoney(bankCardAccountNumber,accountNumber,depositMoney).toSavingsAccountDto();
+        return savingsAccountService.depositMoney(bankCardAccountNumber, accountNumber, depositMoney).toSavingsAccountDto();
     }
 
     @PutMapping("/{bankCardAccountNumber}/withDrawMoney/{accountNumber}")
@@ -71,7 +55,7 @@ public class SavingsAccountController {
     public SavingsAccountDto getUpdateSavingsWithDrawMoney(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
                                                            @PathVariable("accountNumber") long accountNumber, @RequestParam("withDrawMoney") int withDrawMoney) {
 
-        return savingsAccountService.withDrawMoney(bankCardAccountNumber,accountNumber,withDrawMoney).toSavingsAccountDto();
+        return savingsAccountService.withDrawMoney(bankCardAccountNumber, accountNumber, withDrawMoney).toSavingsAccountDto();
     }
 
     @PutMapping("/{accountNumber}/payDebt/{creditCardNumber}")
@@ -81,16 +65,17 @@ public class SavingsAccountController {
                                                @RequestParam("creditCardDebt") int creditCardDebt,
                                                @RequestParam("minimumPaymentAmount") int minimumPaymentAmount) {
 
-        return savingsAccountService.payDebtWithSavingAccount(accountNumber,creditCardNumber,creditCardDebt,minimumPaymentAmount).toSavingsAccountDto();
+        return savingsAccountService.payDebtWithSavingAccount(accountNumber, creditCardNumber, creditCardDebt, minimumPaymentAmount).toSavingsAccountDto();
     }
+
     @DeleteMapping("/{accountNumber}/process")
-    public void savingAccountDelete(@PathVariable("accountNumber") long accountNumber){
-        try{
+    public void savingAccountDelete(@PathVariable("accountNumber") long accountNumber) {
+        try {
             savingsAccountService.delete(accountNumber);
-        }catch (SavingAccountNotDeletedException exception){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,exception.getMessage());
-        }catch (RuntimeException exception){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Server Error");
+        } catch (SavingAccountNotDeletedException exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
+        } catch (RuntimeException exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
         }
     }
 }
