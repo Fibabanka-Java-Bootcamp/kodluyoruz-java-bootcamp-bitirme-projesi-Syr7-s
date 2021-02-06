@@ -1,8 +1,7 @@
 package org.kodluyoruz.mybank.creditcardshopping.controller;
 
-
 import org.kodluyoruz.mybank.creditcardshopping.dto.ShoppingDto;
-import org.kodluyoruz.mybank.creditcardshopping.service.ShoppingService;;
+import org.kodluyoruz.mybank.creditcardshopping.service.ShoppingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
