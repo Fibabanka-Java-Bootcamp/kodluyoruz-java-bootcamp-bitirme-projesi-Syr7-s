@@ -20,6 +20,7 @@ public class CustomerController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CustomerDto create(@RequestBody CustomerDto customerDto) {
         try {
             return customerService.create(customerDto.toCustomer()).toCustomerDto();
@@ -40,6 +41,7 @@ public class CustomerController {
     }
 
     @PutMapping("/update")
+    @ResponseStatus(HttpStatus.CREATED)
     public CustomerDto update(@RequestBody CustomerDto customerDto){
         try{
             return customerService.updateCustomer(customerDto.toCustomer()).toCustomerDto();
