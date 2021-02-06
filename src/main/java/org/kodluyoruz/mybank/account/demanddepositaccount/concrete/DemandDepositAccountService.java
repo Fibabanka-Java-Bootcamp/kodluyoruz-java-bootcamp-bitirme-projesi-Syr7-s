@@ -97,8 +97,7 @@ public class DemandDepositAccountService implements IDemandDepositAccountService
                         "Account is not found")).toDemandDepositAccountDto();
         long cardAccountNumber = demandDepositAccountDto.getBankCard().getBankCardAccountNumber();
         if (cardAccountNumber == bankCardAccountNumber) {
-            int balance = demandDepositAccountDto.getDemandDepositAccountBalance();
-            demandDepositAccountDto.setDemandDepositAccountBalance(balance + depositMoney);
+            demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() + depositMoney);
             return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
         } else {
             throw new BankCardNotMatchException("BankCard not matched to the accountIBAN.");
@@ -132,14 +131,11 @@ public class DemandDepositAccountService implements IDemandDepositAccountService
         if (demandDepositMoney - transferMoney < 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not enough money in your demandDepositAccount");
         } else {
-            if (String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()).equals(String.valueOf(savingAccount.getSavingsAccountCurrency()))) {
-                demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositMoney - transferMoney);
-                savingAccount.setSavingsAccountBalance(savingsMoney + transferMoney);
-            } else {
-                ExchangeDto exchangeDto = Exchange.getConvert.apply(String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()));
-                demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositMoney - transferMoney);
-                savingAccount.setSavingsAccountBalance((int) (savingsMoney + (transferMoney * exchangeDto.getRates().get(savingAccount.getSavingsAccountCurrency()))));
-            }
+            double money = String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()).equals(String.valueOf(savingAccount.getSavingsAccountCurrency())) ?
+                    transferMoney : transferMoney * Exchange.getConvert.apply(String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()))
+                    .getRates().get(String.valueOf(savingAccount.getSavingsAccountCurrency()));
+            demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositMoney-transferMoney);
+            savingAccount.setSavingsAccountBalance((int) (savingsMoney+money));
             savingsAccountService.update(savingAccount);
             return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
         }
