@@ -2,7 +2,7 @@ package org.kodluyoruz.mybank.customer.dto;
 
 import lombok.*;
 import org.kodluyoruz.mybank.customer.entity.Customer;
-import org.kodluyoruz.mybank.customer.enums.Gender;
+import org.kodluyoruz.mybank.utilities.enums.gender.Gender;
 
 import java.time.LocalDate;
 

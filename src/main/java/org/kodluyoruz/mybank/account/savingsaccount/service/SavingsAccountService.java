@@ -12,6 +12,7 @@ import org.kodluyoruz.mybank.exchange.Exchange;
 import org.kodluyoruz.mybank.exchange.ExchangeDto;
 import org.kodluyoruz.mybank.extractofaccount.entity.ExtractOfAccount;
 import org.kodluyoruz.mybank.extractofaccount.service.ExtractOfAccountService;
+import org.kodluyoruz.mybank.utilities.enums.currency.Currency;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -103,9 +104,9 @@ public class SavingsAccountService {
         if (savingsAccountDto.getSavingsAccountCurrency().equals(creditCard.getCurrency())) {
             savingsAccountDto.setSavingsAccountBalance(savingsAccountDto.getSavingsAccountBalance() - creditCardDebt - minimumPaymentAmount);
         } else {
-            ExchangeDto exchangeDto = Exchange.getConvert.apply(creditCard.getCurrency());
+            ExchangeDto exchangeDto = Exchange.getConvert.apply(String.valueOf(creditCard.getCurrency()));
             savingsAccountDto.setSavingsAccountBalance((int) (savingsAccountDto.getSavingsAccountBalance() - ((creditCardDebt + minimumPaymentAmount) *
-                    exchangeDto.getRates().get(savingsAccountDto.getSavingsAccountCurrency()))));
+                    exchangeDto.getRates().get(String.valueOf(savingsAccountDto.getSavingsAccountCurrency())))));
         }
         creditCard.setCardDebt(creditCard.getCardDebt() - creditCardDebt);
         extractOfAccount.setTermDebt(extractOfAccount.getTermDebt() - creditCardDebt);

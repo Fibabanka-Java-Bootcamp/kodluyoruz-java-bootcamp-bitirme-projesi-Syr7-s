@@ -6,6 +6,7 @@ import lombok.*;
 import org.kodluyoruz.mybank.account.demanddepositaccount.dto.DemandDepositAccountDto;
 import org.kodluyoruz.mybank.card.bankcard.entity.BankCard;
 import org.kodluyoruz.mybank.customer.entity.Customer;
+import org.kodluyoruz.mybank.utilities.enums.currency.Currency;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -22,7 +23,8 @@ public class DemandDepositAccount {
     private long demandDepositAccountNumber;
     private String demandDepositAccountIBAN;
     private int demandDepositAccountBalance;
-    private String demandDepositAccountCurrency;
+    @Enumerated(EnumType.STRING)
+    private Currency demandDepositAccountCurrency;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate demandDepositAccountCreationDate;
     @ManyToOne

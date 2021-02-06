@@ -1,4 +1,4 @@
-package org.kodluyoruz.mybank.generate.ibangenerate;
+package org.kodluyoruz.mybank.utilities.generate.ibangenerate;
 
 import java.util.function.Function;
 

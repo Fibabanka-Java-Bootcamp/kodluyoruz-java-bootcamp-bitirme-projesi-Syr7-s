@@ -4,6 +4,7 @@ import lombok.*;
 import org.kodluyoruz.mybank.account.demanddepositaccount.entity.DemandDepositAccount;
 import org.kodluyoruz.mybank.card.bankcard.entity.BankCard;
 import org.kodluyoruz.mybank.customer.entity.Customer;
+import org.kodluyoruz.mybank.utilities.enums.currency.Currency;
 
 import java.time.LocalDate;
 
@@ -14,7 +15,7 @@ public class DemandDepositAccountDto {
     private long demandDepositAccountNumber;
     private String demandDepositAccountIBAN;
     private int demandDepositAccountBalance;
-    private String demandDepositAccountCurrency;
+    private Currency demandDepositAccountCurrency;
     private LocalDate demandDepositAccountCreationDate;
     private Customer customer;
     private BankCard bankCard;

@@ -1,4 +1,4 @@
-package org.kodluyoruz.mybank.generate.accountgenerate;
+package org.kodluyoruz.mybank.utilities.generate.accountgenerate;
 
 import java.util.Random;
 import java.util.function.Supplier;

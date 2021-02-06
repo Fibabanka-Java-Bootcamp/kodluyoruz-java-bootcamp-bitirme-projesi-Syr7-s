@@ -1,4 +1,4 @@
-package org.kodluyoruz.mybank.generate.securitycodegenerate;
+package org.kodluyoruz.mybank.utilities.generate.securitycodegenerate;
 
 
 import java.util.Random;

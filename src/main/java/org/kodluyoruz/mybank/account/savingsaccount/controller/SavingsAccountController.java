@@ -6,12 +6,10 @@ import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingAccountNotDe
 import org.kodluyoruz.mybank.account.savingsaccount.service.SavingsAccountService;
 import org.kodluyoruz.mybank.card.bankcard.dto.BankCardDto;
 import org.kodluyoruz.mybank.card.bankcard.service.BankCardService;
-import org.kodluyoruz.mybank.card.creditcard.service.CreditCardService;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import org.kodluyoruz.mybank.customer.service.CustomerService;
-import org.kodluyoruz.mybank.extractofaccount.service.ExtractOfAccountService;
-import org.kodluyoruz.mybank.generate.accountgenerate.AccountGenerate;
-import org.kodluyoruz.mybank.generate.ibangenerate.IbanGenerate;
+import org.kodluyoruz.mybank.utilities.generate.accountgenerate.AccountGenerate;
+import org.kodluyoruz.mybank.utilities.generate.ibangenerate.IbanGenerate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

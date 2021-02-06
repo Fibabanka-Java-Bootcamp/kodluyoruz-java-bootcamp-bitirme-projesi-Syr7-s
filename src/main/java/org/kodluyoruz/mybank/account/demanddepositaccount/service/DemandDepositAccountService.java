@@ -14,6 +14,7 @@ import org.kodluyoruz.mybank.exchange.Exchange;
 import org.kodluyoruz.mybank.exchange.ExchangeDto;
 import org.kodluyoruz.mybank.extractofaccount.entity.ExtractOfAccount;
 import org.kodluyoruz.mybank.extractofaccount.service.ExtractOfAccountService;
+import org.kodluyoruz.mybank.utilities.enums.currency.Currency;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -104,11 +105,11 @@ public class DemandDepositAccountService {
         if (demandDepositMoney - transferMoney < 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not enough money in your demandDepositAccount");
         } else {
-            if (demandDepositAccountDto.getDemandDepositAccountCurrency().equals(savingsAccountDto.getSavingsAccountCurrency())) {
+            if (String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()).equals(String.valueOf(savingsAccountDto.getSavingsAccountCurrency()))) {
                 demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositMoney - transferMoney);
                 savingsAccountDto.setSavingsAccountBalance(savingsMoney + transferMoney);
             } else {
-                ExchangeDto exchangeDto = Exchange.getConvert.apply(demandDepositAccountDto.getDemandDepositAccountCurrency());
+                ExchangeDto exchangeDto = Exchange.getConvert.apply(String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()));
                 demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositMoney - transferMoney);
                 savingsAccountDto.setSavingsAccountBalance((int) (savingsMoney + (transferMoney * exchangeDto.getRates().get(savingsAccountDto.getSavingsAccountCurrency()))));
             }
@@ -125,9 +126,9 @@ public class DemandDepositAccountService {
             if (fromMoney - transferMoney < 0) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not enough money in your demandDepositAccount");
             } else {
-                ExchangeDto exchangeDto = Exchange.getConvert.apply(fromAccount.getDemandDepositAccountCurrency());
+                ExchangeDto exchangeDto = Exchange.getConvert.apply(String.valueOf(fromAccount.getDemandDepositAccountCurrency()));
                 fromAccount.setDemandDepositAccountBalance(fromMoney - transferMoney);
-                toAccount.setDemandDepositAccountBalance((int) (toMoney + (transferMoney * exchangeDto.getRates().get(toAccount.getDemandDepositAccountCurrency()))));
+                toAccount.setDemandDepositAccountBalance((int) (toMoney + (transferMoney * exchangeDto.getRates().get(String.valueOf(toAccount.getDemandDepositAccountCurrency())))));
                 update(toAccount.toDemandDepositAccount()).toDemandDepositAccountDto();
                 return update(fromAccount.toDemandDepositAccount());
             }
@@ -140,13 +141,13 @@ public class DemandDepositAccountService {
                         new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toDemandDepositAccountDto();
         CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
         ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
-        if (demandDepositAccountDto.getDemandDepositAccountCurrency().equals(creditCard.getCurrency())) {
+        if (String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()).equals(String.valueOf(creditCard.getCurrency()))) {
             demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() - creditCardDebt - minimumPaymentAmount);
         } else {
-            ExchangeDto exchangeDto = Exchange.getConvert.apply(creditCard.getCurrency());
+            ExchangeDto exchangeDto = Exchange.getConvert.apply(String.valueOf(Currency.valueOf(creditCard.getCurrency())));
             demandDepositAccountDto.setDemandDepositAccountBalance((int) (
                     demandDepositAccountDto.getDemandDepositAccountBalance() - ((creditCardDebt + minimumPaymentAmount) *
-                            exchangeDto.getRates().get(demandDepositAccountDto.getDemandDepositAccountCurrency()))));
+                            exchangeDto.getRates().get(String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency())))));
         }
         creditCard.setCardDebt(creditCard.getCardDebt() - creditCardDebt);
         extractOfAccount.setTermDebt(extractOfAccount.getTermDebt() - creditCardDebt);
