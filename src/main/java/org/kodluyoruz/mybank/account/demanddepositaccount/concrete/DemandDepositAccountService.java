@@ -9,11 +9,13 @@ import org.kodluyoruz.mybank.account.savingsaccount.abtrct.ISavingsAccountServic
 import org.kodluyoruz.mybank.account.savingsaccount.concrete.SavingsAccount;
 import org.kodluyoruz.mybank.card.bankcard.abstrct.IBankCardService;
 import org.kodluyoruz.mybank.card.bankcard.concrete.BankCard;
+import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardDto;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotMatchException;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
 import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
+import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
 import org.kodluyoruz.mybank.exchange.Exchange;
 import org.kodluyoruz.mybank.exchange.ExchangeDto;
 import org.kodluyoruz.mybank.extractofaccount.abstrct.IExtractOfAccountService;
@@ -55,10 +57,10 @@ public class DemandDepositAccountService implements IDemandDepositAccountService
         String accountNumber = AccountGenerate.generateAccount.get();
         demandDepositAccountDto.setDemandDepositAccountNumber(Long.parseLong(accountNumber));
         demandDepositAccountDto.setDemandDepositAccountIBAN(IbanGenerate.generateIban.apply(accountNumber));
-        Customer customer = customerService.getCustomerById(customerID);
-        demandDepositAccountDto.setCustomer(customer);
-        BankCard bankCard = bankCardService.findBankCard(bankCardAccountNumber);
-        demandDepositAccountDto.setBankCard(bankCard);
+        CustomerDto customerDto = customerService.getCustomerById(customerID).toCustomerDto();
+        demandDepositAccountDto.setCustomer(customerDto.toCustomer());
+        BankCardDto bankCardDto = bankCardService.findBankCard(bankCardAccountNumber).toBankCardDto();
+        demandDepositAccountDto.setBankCard(bankCardDto.toBankCard());
         return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
     }
 
