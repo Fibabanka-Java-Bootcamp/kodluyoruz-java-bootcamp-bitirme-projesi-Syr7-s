@@ -2,6 +2,7 @@ package org.kodluyoruz.mybank.customer.dto;
 
 import lombok.*;
 import org.kodluyoruz.mybank.customer.entity.Customer;
+import org.kodluyoruz.mybank.customer.enums.Gender;
 
 import java.time.LocalDate;
 
@@ -12,6 +13,7 @@ public class CustomerDto {
     private String customerTC;
     private String customerName;
     private String customerLastname;
+    private Gender customerGender;
     private String customerPhone;
     private String customerEmail;
     private String customerAddress;
@@ -24,6 +26,7 @@ public class CustomerDto {
                 .customerTC(this.customerTC)
                 .customerName(this.customerName)
                 .customerLastname(this.customerLastname)
+                .customerGender(this.customerGender)
                 .customerPhone(this.customerPhone)
                 .customerEmail(this.customerEmail)
                 .customerAddress(this.customerAddress)

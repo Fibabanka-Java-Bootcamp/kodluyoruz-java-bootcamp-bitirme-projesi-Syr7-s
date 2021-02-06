@@ -7,6 +7,7 @@ import org.kodluyoruz.mybank.account.demanddepositaccount.entity.DemandDepositAc
 import org.kodluyoruz.mybank.account.savingsaccount.entity.SavingsAccount;
 import org.kodluyoruz.mybank.card.creditcard.entity.CreditCard;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
+import org.kodluyoruz.mybank.customer.enums.Gender;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -26,6 +27,8 @@ public class Customer {
     private String customerTC;
     private String customerName;
     private String customerLastname;
+    @Enumerated(EnumType.STRING)
+    private Gender customerGender;
     private String customerPhone;
     private String customerEmail;
     private String customerAddress;
@@ -50,6 +53,7 @@ public class Customer {
                 .customerTC(this.customerTC)
                 .customerName(this.customerName)
                 .customerLastname(this.customerLastname)
+                .customerGender(this.customerGender)
                 .customerPhone(this.customerPhone)
                 .customerEmail(this.customerEmail)
                 .customerAddress(this.customerAddress)
