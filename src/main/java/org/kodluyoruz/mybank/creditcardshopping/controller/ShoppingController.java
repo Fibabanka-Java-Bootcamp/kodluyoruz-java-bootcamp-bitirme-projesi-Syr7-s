@@ -30,12 +30,17 @@ public class ShoppingController {
         ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
         if (creditCard.getCardPassword() == password) {
             creditCard.setCardDebt(creditCard.getCardDebt() + shoppingDto.getProductPrice());
-            creditCardService.updateCard(creditCard);
-            extractOfAccount.setTermDebt(creditCard.getCardDebt());
-            extractOfAccount.setMinimumPaymentAmount(extractOfAccount.getTermDebt() * 0.3);
-            extractOfAccountService.update(extractOfAccount);
-            shoppingDto.setCreditCard(creditCard);
-            return shoppingService.create(shoppingDto.toShopping()).toShoppingDto();
+            if (creditCard.getCardDebt() <= creditCard.getCardLimit()) {
+                creditCardService.updateCard(creditCard);
+                extractOfAccount.setTermDebt(creditCard.getCardDebt());
+                extractOfAccount.setMinimumPaymentAmount(extractOfAccount.getTermDebt() * 0.3);
+                extractOfAccountService.update(extractOfAccount);
+                shoppingDto.setCreditCard(creditCard);
+                return shoppingService.create(shoppingDto.toShopping()).toShoppingDto();
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CreditLimit is over.");
+            }
+
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CreditCard password is not correct.");
         }
