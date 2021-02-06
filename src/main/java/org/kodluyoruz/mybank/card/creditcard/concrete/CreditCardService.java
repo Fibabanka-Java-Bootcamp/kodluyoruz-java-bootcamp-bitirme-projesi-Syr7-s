@@ -1,10 +1,12 @@
 package org.kodluyoruz.mybank.card.creditcard.concrete;
 
+import org.kodluyoruz.mybank.card.bankcard.abstrct.IBankCardService;
 import org.kodluyoruz.mybank.card.bankcard.concrete.BankCard;
 import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardService;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.exception.CreditCardNotCreatedException;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardRepository;
+import org.kodluyoruz.mybank.extractofaccount.abstrct.IExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccountService;
 import org.springframework.data.domain.Page;
@@ -16,10 +18,10 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class CreditCardService implements ICreditCardService<CreditCard> {
     private final CreditCardRepository creditCardRepository;
-    private final BankCardService bankCardService;
-    private final ExtractOfAccountService extractOfAccountService;
+    private final IBankCardService<BankCard> bankCardService;
+    private final IExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
 
-    public CreditCardService(CreditCardRepository creditCardRepository, BankCardService bankCardService, ExtractOfAccountService extractOfAccountService) {
+    public CreditCardService(CreditCardRepository creditCardRepository, IBankCardService<BankCard> bankCardService, ExtractOfAccountService extractOfAccountService) {
         this.creditCardRepository = creditCardRepository;
         this.bankCardService = bankCardService;
         this.extractOfAccountService = extractOfAccountService;
