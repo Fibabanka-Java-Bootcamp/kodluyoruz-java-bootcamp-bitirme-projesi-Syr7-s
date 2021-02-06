@@ -1,6 +1,5 @@
 package org.kodluyoruz.mybank.customer.controller;
 
-import lombok.Getter;
 import org.kodluyoruz.mybank.customer.dto.CustomerDto;
 import org.kodluyoruz.mybank.customer.exception.CustomerCouldNotDeletedException;
 import org.kodluyoruz.mybank.customer.exception.CustomerNotFoundException;
