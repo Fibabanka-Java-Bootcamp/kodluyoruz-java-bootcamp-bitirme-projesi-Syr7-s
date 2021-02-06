@@ -1,6 +1,6 @@
 package org.kodluyoruz.mybank.exchange;
 
-import org.kodluyoruz.mybank.utilities.enums.currency.Currency;
+
 import org.springframework.web.client.RestTemplate;
 import java.util.function.Function;
 
