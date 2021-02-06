@@ -7,14 +7,19 @@ import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDeposi
 import org.kodluyoruz.mybank.account.demanddepositaccount.repository.DemandDepositAccountRepository;
 import org.kodluyoruz.mybank.account.savingsaccount.dto.SavingsAccountDto;
 import org.kodluyoruz.mybank.account.savingsaccount.service.SavingsAccountService;
+import org.kodluyoruz.mybank.card.bankcard.dto.BankCardDto;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotMatchException;
+import org.kodluyoruz.mybank.card.bankcard.service.BankCardService;
 import org.kodluyoruz.mybank.card.creditcard.entity.CreditCard;
 import org.kodluyoruz.mybank.card.creditcard.service.CreditCardService;
+import org.kodluyoruz.mybank.customer.dto.CustomerDto;
+import org.kodluyoruz.mybank.customer.service.CustomerService;
 import org.kodluyoruz.mybank.exchange.Exchange;
 import org.kodluyoruz.mybank.exchange.ExchangeDto;
 import org.kodluyoruz.mybank.extractofaccount.entity.ExtractOfAccount;
 import org.kodluyoruz.mybank.extractofaccount.service.ExtractOfAccountService;
-import org.kodluyoruz.mybank.utilities.enums.currency.Currency;
+import org.kodluyoruz.mybank.utilities.generate.accountgenerate.AccountGenerate;
+import org.kodluyoruz.mybank.utilities.generate.ibangenerate.IbanGenerate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,20 +30,33 @@ import java.util.Optional;
 @Service
 public class DemandDepositAccountService {
     private final DemandDepositAccountRepository demandDepositAccountRepository;
+    private final CustomerService customerService;
     private final SavingsAccountService savingsAccountService;
     private final CreditCardService creditCardService;
     private final ExtractOfAccountService extractOfAccountService;
-    public DemandDepositAccountService(DemandDepositAccountRepository demandDepositAccountRepository, SavingsAccountService savingsAccountService, CreditCardService creditCardService, ExtractOfAccountService extractOfAccountService) {
+    private final BankCardService bankCardService;
+    public DemandDepositAccountService(DemandDepositAccountRepository demandDepositAccountRepository, CustomerService customerService, SavingsAccountService savingsAccountService, CreditCardService creditCardService, ExtractOfAccountService extractOfAccountService, BankCardService bankCardService) {
         this.demandDepositAccountRepository = demandDepositAccountRepository;
+        this.customerService = customerService;
         this.savingsAccountService = savingsAccountService;
         this.creditCardService = creditCardService;
         this.extractOfAccountService = extractOfAccountService;
+        this.bankCardService = bankCardService;
     }
 
     public DemandDepositAccount create(DemandDepositAccount demandDepositAccount) {
         return demandDepositAccountRepository.save(demandDepositAccount);
     }
-
+    public DemandDepositAccount create(long customerID,long bankCardAccountNumber,DemandDepositAccountDto demandDepositAccountDto){
+        String accountNumber = AccountGenerate.generateAccount.get();
+        demandDepositAccountDto.setDemandDepositAccountNumber(Long.parseLong(accountNumber));
+        demandDepositAccountDto.setDemandDepositAccountIBAN(IbanGenerate.generateIban.apply(accountNumber));
+        CustomerDto customerDto = customerService.getCustomerByID(customerID).toCustomerDto();
+        demandDepositAccountDto.setCustomer(customerDto.toCustomer());
+        BankCardDto bankCardDto = bankCardService.findBankCard(bankCardAccountNumber).toBankCardDto();
+        demandDepositAccountDto.setBankCard(bankCardDto.toBankCard());
+        return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
+    }
     public Optional<DemandDepositAccount> get(long accountIBAN) {
         return demandDepositAccountRepository.findById(accountIBAN);
     }
