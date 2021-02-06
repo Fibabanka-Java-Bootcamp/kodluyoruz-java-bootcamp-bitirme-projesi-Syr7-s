@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.kodluyoruz.mybank.card.creditcard.entity.CreditCard;
 import org.kodluyoruz.mybank.customer.entity.Customer;
+import org.kodluyoruz.mybank.utilities.enums.currency.Currency;
 
 import java.time.LocalDate;
 
@@ -17,7 +18,7 @@ public class CreditCardDto {
     private String securityCode;
     private int cardLimit;
     private int cardDebt;
-    private String currency;
+    private Currency currency;
     private Customer customer;
 
     public CreditCard toCreditCard(){

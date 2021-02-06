@@ -7,6 +7,7 @@ import org.kodluyoruz.mybank.card.creditcard.dto.CreditCardDto;
 import org.kodluyoruz.mybank.creditcardshopping.entity.Shopping;
 import org.kodluyoruz.mybank.customer.entity.Customer;
 import org.kodluyoruz.mybank.extractofaccount.entity.ExtractOfAccount;
+import org.kodluyoruz.mybank.utilities.enums.currency.Currency;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -28,7 +29,8 @@ public class CreditCard {
     private String securityCode;
     private int cardLimit;
     private int cardDebt;
-    private String currency;
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "customer_id")

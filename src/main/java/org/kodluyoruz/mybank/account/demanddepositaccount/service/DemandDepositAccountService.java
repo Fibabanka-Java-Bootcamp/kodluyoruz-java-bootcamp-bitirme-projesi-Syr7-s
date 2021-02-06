@@ -144,7 +144,7 @@ public class DemandDepositAccountService {
         if (String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()).equals(String.valueOf(creditCard.getCurrency()))) {
             demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() - creditCardDebt - minimumPaymentAmount);
         } else {
-            ExchangeDto exchangeDto = Exchange.getConvert.apply(String.valueOf(Currency.valueOf(creditCard.getCurrency())));
+            ExchangeDto exchangeDto = Exchange.getConvert.apply(String.valueOf(creditCard.getCurrency()));
             demandDepositAccountDto.setDemandDepositAccountBalance((int) (
                     demandDepositAccountDto.getDemandDepositAccountBalance() - ((creditCardDebt + minimumPaymentAmount) *
                             exchangeDto.getRates().get(String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency())))));
