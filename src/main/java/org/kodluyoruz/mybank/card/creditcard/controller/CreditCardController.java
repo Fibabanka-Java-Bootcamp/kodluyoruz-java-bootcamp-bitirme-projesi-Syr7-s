@@ -85,12 +85,12 @@ public class CreditCardController {
 
     @PutMapping("/{bankCardNO}/debt/{creditCardNO}")
     @ResponseStatus(HttpStatus.CREATED)
-    public CreditCardDto payCreditCardDebt(@PathVariable("bankCardNO") long bankCardNO,
-                                           @PathVariable("creditCardNO") long creditCardNO,
+    public CreditCardDto payCreditCardDebt(@PathVariable("bankCardNO") long bankCardNo,
+                                           @PathVariable("creditCardNO") long creditCardNo,
                                            @Min(value = 4) @RequestParam("password") int password,
                                            @RequestParam("payMoney") int payMoney, @RequestParam("minimumPayment") double minimumPayment) {
-        BankCard bankCard = bankCardService.findBankCard(bankCardNO);
-        CreditCard creditCard = creditCardService.getCreditCard(creditCardNO);
+      /*  BankCard bankCard = bankCardService.findBankCard(bankCardNo);
+        CreditCard creditCard = creditCardService.getCreditCard(creditCardNo);
         ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
         if (bankCard.getBankCardPassword() == password) {
             creditCard.setCardDebt(creditCard.getCardDebt() - payMoney);
@@ -102,6 +102,7 @@ public class CreditCardController {
         }else{
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"BankCard info is not correct.");
         }
-
+*/
+        return creditCardService.payCreditCardDebt(bankCardNo,creditCardNo,password,payMoney,minimumPayment).toCreditCardDto();
     }
 }
