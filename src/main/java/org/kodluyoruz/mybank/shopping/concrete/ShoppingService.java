@@ -1,9 +1,10 @@
 package org.kodluyoruz.mybank.shopping.concrete;
 
+import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCardService;
+import org.kodluyoruz.mybank.extractofaccount.abstrct.IExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
-import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccountService;
 import org.kodluyoruz.mybank.shopping.abstrct.IShoppingService;
 import org.kodluyoruz.mybank.shopping.abstrct.ShoppingRepository;
 import org.springframework.http.HttpStatus;
@@ -13,9 +14,10 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class ShoppingService implements IShoppingService<Shopping> {
     private final ShoppingRepository shoppingRepository;
-    private final CreditCardService creditCardService;
-    private final ExtractOfAccountService extractOfAccountService;
-    public ShoppingService(ShoppingRepository shoppingRepository, CreditCardService creditCardService, ExtractOfAccountService extractOfAccountService) {
+    private final ICreditCardService<CreditCard> creditCardService;
+    private final IExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
+
+    public ShoppingService(ShoppingRepository shoppingRepository, CreditCardService creditCardService, IExtractOfAccountService<ExtractOfAccount> extractOfAccountService) {
         this.shoppingRepository = shoppingRepository;
         this.creditCardService = creditCardService;
         this.extractOfAccountService = extractOfAccountService;
