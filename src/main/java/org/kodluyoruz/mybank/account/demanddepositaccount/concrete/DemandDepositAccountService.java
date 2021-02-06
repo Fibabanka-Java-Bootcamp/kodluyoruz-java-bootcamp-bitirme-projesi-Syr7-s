@@ -5,19 +5,19 @@ import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositA
 import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.IDemandDepositAccountService;
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotDeletedException;
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotEnoughMoneyException;
-import org.kodluyoruz.mybank.account.savingsaccount.concrete.SavingsAccountDto;
-import org.kodluyoruz.mybank.account.savingsaccount.concrete.SavingsAccountService;
-import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardDto;
+import org.kodluyoruz.mybank.account.savingsaccount.abtrct.ISavingsAccountService;
+import org.kodluyoruz.mybank.account.savingsaccount.concrete.SavingsAccount;
+import org.kodluyoruz.mybank.card.bankcard.abstrct.IBankCardService;
+import org.kodluyoruz.mybank.card.bankcard.concrete.BankCard;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotMatchException;
-import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardService;
+import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
-import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCardService;
-import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
-import org.kodluyoruz.mybank.customer.concrete.CustomerService;
+import org.kodluyoruz.mybank.customer.abstrct.ICustomService;
+import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.exchange.Exchange;
 import org.kodluyoruz.mybank.exchange.ExchangeDto;
+import org.kodluyoruz.mybank.extractofaccount.abstrct.IExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
-import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccountService;
 import org.kodluyoruz.mybank.utilities.generate.accountgenerate.AccountGenerate;
 import org.kodluyoruz.mybank.utilities.generate.ibangenerate.IbanGenerate;
 import org.springframework.http.HttpStatus;
@@ -30,12 +30,13 @@ import java.util.Optional;
 @Service
 public class DemandDepositAccountService implements IDemandDepositAccountService<DemandDepositAccount> {
     private final DemandDepositAccountRepository demandDepositAccountRepository;
-    private final CustomerService customerService;
-    private final SavingsAccountService savingsAccountService;
-    private final CreditCardService creditCardService;
-    private final ExtractOfAccountService extractOfAccountService;
-    private final BankCardService bankCardService;
-    public DemandDepositAccountService(DemandDepositAccountRepository demandDepositAccountRepository, CustomerService customerService, SavingsAccountService savingsAccountService, CreditCardService creditCardService, ExtractOfAccountService extractOfAccountService, BankCardService bankCardService) {
+    private final ICustomService<Customer> customerService;
+    private final ISavingsAccountService<SavingsAccount> savingsAccountService;
+    private final ICreditCardService<CreditCard> creditCardService;
+    private final IExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
+    private final IBankCardService<BankCard> bankCardService;
+
+    public DemandDepositAccountService(DemandDepositAccountRepository demandDepositAccountRepository, ICustomService<Customer> customerService, ISavingsAccountService<SavingsAccount> savingsAccountService, ICreditCardService<CreditCard> creditCardService, IExtractOfAccountService<ExtractOfAccount> extractOfAccountService, IBankCardService<BankCard> bankCardService) {
         this.demandDepositAccountRepository = demandDepositAccountRepository;
         this.customerService = customerService;
         this.savingsAccountService = savingsAccountService;
@@ -54,10 +55,10 @@ public class DemandDepositAccountService implements IDemandDepositAccountService
         String accountNumber = AccountGenerate.generateAccount.get();
         demandDepositAccountDto.setDemandDepositAccountNumber(Long.parseLong(accountNumber));
         demandDepositAccountDto.setDemandDepositAccountIBAN(IbanGenerate.generateIban.apply(accountNumber));
-        CustomerDto customerDto = customerService.getCustomerById(customerID).toCustomerDto();
-        demandDepositAccountDto.setCustomer(customerDto.toCustomer());
-        BankCardDto bankCardDto = bankCardService.findBankCard(bankCardAccountNumber).toBankCardDto();
-        demandDepositAccountDto.setBankCard(bankCardDto.toBankCard());
+        Customer customer = customerService.getCustomerById(customerID);
+        demandDepositAccountDto.setCustomer(customer);
+        BankCard bankCard = bankCardService.findBankCard(bankCardAccountNumber);
+        demandDepositAccountDto.setBankCard(bankCard);
         return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
     }
 
@@ -123,21 +124,21 @@ public class DemandDepositAccountService implements IDemandDepositAccountService
     @Override
     public DemandDepositAccount moneyTransferBetweenDifferentAccounts(String depositAccountIBAN, String savingsAccountIBAN, int transferMoney) {
         DemandDepositAccountDto demandDepositAccountDto = getByAccountIban(depositAccountIBAN).toDemandDepositAccountDto();
-        SavingsAccountDto savingsAccountDto = savingsAccountService.getByAccountIban(savingsAccountIBAN).toSavingsAccountDto();
+        SavingsAccount savingAccount = savingsAccountService.getByAccountIban(savingsAccountIBAN);
         int demandDepositMoney = demandDepositAccountDto.getDemandDepositAccountBalance();
-        int savingsMoney = savingsAccountDto.getSavingsAccountBalance();
+        int savingsMoney = savingAccount.getSavingsAccountBalance();
         if (demandDepositMoney - transferMoney < 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not enough money in your demandDepositAccount");
         } else {
-            if (String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()).equals(String.valueOf(savingsAccountDto.getSavingsAccountCurrency()))) {
+            if (String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()).equals(String.valueOf(savingAccount.getSavingsAccountCurrency()))) {
                 demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositMoney - transferMoney);
-                savingsAccountDto.setSavingsAccountBalance(savingsMoney + transferMoney);
+                savingAccount.setSavingsAccountBalance(savingsMoney + transferMoney);
             } else {
                 ExchangeDto exchangeDto = Exchange.getConvert.apply(String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()));
                 demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositMoney - transferMoney);
-                savingsAccountDto.setSavingsAccountBalance((int) (savingsMoney + (transferMoney * exchangeDto.getRates().get(savingsAccountDto.getSavingsAccountCurrency()))));
+                savingAccount.setSavingsAccountBalance((int) (savingsMoney + (transferMoney * exchangeDto.getRates().get(savingAccount.getSavingsAccountCurrency()))));
             }
-            savingsAccountService.update(savingsAccountDto.toSavingsAccount()).toSavingsAccountDto();
+            savingsAccountService.update(savingAccount);
             return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
         }
     }

@@ -62,10 +62,12 @@ public class SavingsAccountService implements ISavingsAccountService<SavingsAcco
     public Optional<SavingsAccount> get(long accountNumber) {
         return savingsAccountRepository.findById(accountNumber);
     }
+
     @Override
     public SavingsAccount update(SavingsAccount savingsAccount) {
         return savingsAccountRepository.save(savingsAccount);
     }
+
     @Override
     public Page<SavingsAccount> accounts(Pageable pageable) {
         return savingsAccountRepository.findAll(pageable);
