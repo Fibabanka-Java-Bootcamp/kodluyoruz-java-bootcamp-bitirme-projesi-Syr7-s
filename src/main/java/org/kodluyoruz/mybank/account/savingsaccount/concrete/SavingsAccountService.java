@@ -4,17 +4,20 @@ import org.kodluyoruz.mybank.account.savingsaccount.abtrct.ISavingsAccountServic
 import org.kodluyoruz.mybank.account.savingsaccount.abtrct.SavingsAccountRepository;
 import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingAccountNotDeletedException;
 import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingsAccountNotEnoughMoneyException;
+import org.kodluyoruz.mybank.card.bankcard.abstrct.IBankCardService;
+import org.kodluyoruz.mybank.card.bankcard.concrete.BankCard;
 import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardDto;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotMatchException;
 import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardService;
+import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
-import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCardService;
+import org.kodluyoruz.mybank.customer.abstrct.ICustomService;
+import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
-import org.kodluyoruz.mybank.customer.concrete.CustomerService;
 import org.kodluyoruz.mybank.exchange.Exchange;
 import org.kodluyoruz.mybank.exchange.ExchangeDto;
+import org.kodluyoruz.mybank.extractofaccount.abstrct.IExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
-import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccountService;
 import org.kodluyoruz.mybank.utilities.generate.accountgenerate.AccountGenerate;
 import org.kodluyoruz.mybank.utilities.generate.ibangenerate.IbanGenerate;
 import org.springframework.data.domain.Page;
@@ -28,12 +31,12 @@ import java.util.Optional;
 @Service
 public class SavingsAccountService implements ISavingsAccountService<SavingsAccount> {
     private final SavingsAccountRepository savingsAccountRepository;
-    private final CreditCardService creditCardService;
-    private final ExtractOfAccountService extractOfAccountService;
-    private final CustomerService customerService;
-    private final BankCardService bankCardService;
+    private final ICreditCardService<CreditCard> creditCardService;
+    private final IExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
+    private final ICustomService<Customer> customerService;
+    private final IBankCardService<BankCard> bankCardService;
 
-    public SavingsAccountService(SavingsAccountRepository savingsAccountRepository, CreditCardService creditCardService, ExtractOfAccountService extractOfAccountService, CustomerService customerService, BankCardService bankCardService) {
+    public SavingsAccountService(SavingsAccountRepository savingsAccountRepository, ICreditCardService<CreditCard> creditCardService, IExtractOfAccountService<ExtractOfAccount> extractOfAccountService, ICustomService<Customer> customerService, IBankCardService<BankCard> bankCardService) {
         this.savingsAccountRepository = savingsAccountRepository;
         this.creditCardService = creditCardService;
         this.extractOfAccountService = extractOfAccountService;
