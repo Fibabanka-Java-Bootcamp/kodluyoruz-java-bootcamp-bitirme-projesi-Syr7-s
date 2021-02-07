@@ -10,12 +10,10 @@ import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardDto;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotMatchException;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
-import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCardService;
 import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
 import org.kodluyoruz.mybank.exchange.Exchange;
-import org.kodluyoruz.mybank.exchange.ExchangeDto;
 import org.kodluyoruz.mybank.extractofaccount.abstrct.IExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.utilities.debtprocess.Debt;
@@ -102,8 +100,7 @@ public class SavingsAccountService implements ISavingsAccountService<SavingsAcco
     public SavingsAccount depositMoney(long bankCardAccountNumber, long accountNumber, int depositMoney) {
         SavingsAccountDto savingsAccountDto = get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toSavingsAccountDto();
-        long cardAccountNumber = savingsAccountDto.getBankCard().getBankCardAccountNumber();
-        if (cardAccountNumber == bankCardAccountNumber) {
+        if ( savingsAccountDto.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber) {
             int balance = savingsAccountDto.getSavingsAccountBalance();
             savingsAccountDto.setSavingsAccountBalance(balance + depositMoney);
             return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
@@ -116,13 +113,11 @@ public class SavingsAccountService implements ISavingsAccountService<SavingsAcco
     public SavingsAccount withDrawMoney(long bankCardAccountNumber, long accountNumber, int withDrawMoney) {
         SavingsAccountDto savingsAccountDto = get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toSavingsAccountDto();
-        long cardAccountNumber = savingsAccountDto.getBankCard().getBankCardAccountNumber();
-        if (cardAccountNumber == bankCardAccountNumber) {
-            int balance = savingsAccountDto.getSavingsAccountBalance();
-            if (balance < withDrawMoney) {
+        if (savingsAccountDto.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber) {
+            if (savingsAccountDto.getSavingsAccountBalance() < withDrawMoney) {
                 throw new SavingsAccountNotEnoughMoneyException("Not enough money in your account.");
             } else {
-                savingsAccountDto.setSavingsAccountBalance(balance - withDrawMoney);
+                savingsAccountDto.setSavingsAccountBalance(savingsAccountDto.getSavingsAccountBalance() - withDrawMoney);
                 return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
             }
         } else {
@@ -136,14 +131,11 @@ public class SavingsAccountService implements ISavingsAccountService<SavingsAcco
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toSavingsAccountDto();
         CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
         ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
-        if (String.valueOf(savingsAccountDto.getSavingsAccountCurrency()).equals(String.valueOf(creditCard.getCurrency()))) {
-            savingsAccountDto.setSavingsAccountBalance(savingsAccountDto.getSavingsAccountBalance() - creditCardDebt - minimumPaymentAmount);
-        } else {
-            ExchangeDto exchangeDto = Exchange.getConvert.apply(String.valueOf(creditCard.getCurrency()));
-            savingsAccountDto.setSavingsAccountBalance((int) (savingsAccountDto.getSavingsAccountBalance() - ((creditCardDebt + minimumPaymentAmount) *
-                    exchangeDto.getRates().get(String.valueOf(savingsAccountDto.getSavingsAccountCurrency())))));
-        }
-        Debt.debtProcess(creditCardDebt,minimumPaymentAmount,creditCard,extractOfAccount);
+        double money = String.valueOf(savingsAccountDto.getSavingsAccountCurrency()).equals(String.valueOf(creditCard.getCurrency())) ?
+                (creditCardDebt + minimumPaymentAmount) : (creditCardDebt + minimumPaymentAmount) * Exchange.getConvert.apply(String.valueOf(creditCard.getCurrency()))
+                .getRates().get(String.valueOf(savingsAccountDto.getSavingsAccountCurrency()));
+        savingsAccountDto.setSavingsAccountBalance((int) (savingsAccountDto.getSavingsAccountBalance()-money));
+        Debt.debtProcess(creditCardDebt, minimumPaymentAmount, creditCard, extractOfAccount);
         extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
         extractOfAccount.setMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPaymentAmount));
         creditCardService.updateCard(creditCard);

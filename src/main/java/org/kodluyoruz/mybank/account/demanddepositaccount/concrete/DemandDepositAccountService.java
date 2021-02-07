@@ -13,12 +13,10 @@ import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardDto;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotMatchException;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
-import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCardService;
 import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
 import org.kodluyoruz.mybank.exchange.Exchange;
-import org.kodluyoruz.mybank.exchange.ExchangeDto;
 import org.kodluyoruz.mybank.extractofaccount.abstrct.IExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.utilities.debtprocess.Debt;
@@ -95,10 +93,8 @@ public class DemandDepositAccountService implements IDemandDepositAccountService
     @Override
     public DemandDepositAccount depositMoney(long bankCardAccountNumber, long accountNumber, int depositMoney) {
         DemandDepositAccountDto demandDepositAccountDto = get(accountNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Account is not found")).toDemandDepositAccountDto();
-        long cardAccountNumber = demandDepositAccountDto.getBankCard().getBankCardAccountNumber();
-        if (cardAccountNumber == bankCardAccountNumber) {
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toDemandDepositAccountDto();
+        if (demandDepositAccountDto.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber) {
             demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() + depositMoney);
             return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
         } else {
@@ -110,13 +106,11 @@ public class DemandDepositAccountService implements IDemandDepositAccountService
     public DemandDepositAccount withDrawMoney(long bankCardAccountNumber, long accountNumber, int withDrawMoney) {
         DemandDepositAccountDto demandDepositAccountDto = get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toDemandDepositAccountDto();
-        long cardAccountNumber = demandDepositAccountDto.getBankCard().getBankCardAccountNumber();
-        if (cardAccountNumber == bankCardAccountNumber) {
-            int balance = demandDepositAccountDto.getDemandDepositAccountBalance();
-            if (balance < withDrawMoney) {
+        if (demandDepositAccountDto.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber) {
+            if (demandDepositAccountDto.getDemandDepositAccountBalance() < withDrawMoney) {
                 throw new DemandDepositAccountNotEnoughMoneyException("Not enough money in your account");
             } else {
-                demandDepositAccountDto.setDemandDepositAccountBalance(balance - withDrawMoney);
+                demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() - withDrawMoney);
                 return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
             }
         } else {
@@ -128,16 +122,14 @@ public class DemandDepositAccountService implements IDemandDepositAccountService
     public DemandDepositAccount moneyTransferBetweenDifferentAccounts(String depositAccountIBAN, String savingsAccountIBAN, int transferMoney) {
         DemandDepositAccountDto demandDepositAccountDto = getByAccountIban(depositAccountIBAN).toDemandDepositAccountDto();
         SavingsAccount savingAccount = savingsAccountService.getByAccountIban(savingsAccountIBAN);
-        int demandDepositMoney = demandDepositAccountDto.getDemandDepositAccountBalance();
-        int savingsMoney = savingAccount.getSavingsAccountBalance();
-        if (demandDepositMoney - transferMoney < 0) {
+        if (demandDepositAccountDto.getDemandDepositAccountBalance() - transferMoney < 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not enough money in your demandDepositAccount");
         } else {
             double money = String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()).equals(String.valueOf(savingAccount.getSavingsAccountCurrency())) ?
                     transferMoney : transferMoney * Exchange.getConvert.apply(String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()))
                     .getRates().get(String.valueOf(savingAccount.getSavingsAccountCurrency()));
-            demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositMoney - transferMoney);
-            savingAccount.setSavingsAccountBalance((int) (savingsMoney + money));
+            demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() - transferMoney);
+            savingAccount.setSavingsAccountBalance((int) (savingAccount.getSavingsAccountBalance() + money));
             savingsAccountService.update(savingAccount);
             return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
         }
@@ -148,16 +140,14 @@ public class DemandDepositAccountService implements IDemandDepositAccountService
         if (!fromAccountIBAN.equals(toAccountIBAN)) {
             DemandDepositAccountDto fromAccount = getByAccountIban(fromAccountIBAN).toDemandDepositAccountDto();
             DemandDepositAccountDto toAccount = getByAccountIban(toAccountIBAN).toDemandDepositAccountDto();
-            int fromMoney = fromAccount.getDemandDepositAccountBalance();
-            int toMoney = toAccount.getDemandDepositAccountBalance();
-            if (fromMoney - transferMoney < 0) {
+            if (fromAccount.getDemandDepositAccountBalance() - transferMoney < 0) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not enough money in your demandDepositAccount");
             } else {
                 double money = String.valueOf(fromAccount.getDemandDepositAccountCurrency()).equals(String.valueOf(toAccount.getDemandDepositAccountCurrency())) ?
                         transferMoney : transferMoney * Exchange.getConvert.apply(String.valueOf(fromAccount.getDemandDepositAccountCurrency()))
                         .getRates().get(String.valueOf(toAccount.getDemandDepositAccountCurrency()));
-                fromAccount.setDemandDepositAccountBalance(fromMoney - transferMoney);
-                toAccount.setDemandDepositAccountBalance((int) (toMoney + money));
+                fromAccount.setDemandDepositAccountBalance(fromAccount.getDemandDepositAccountBalance() - transferMoney);
+                toAccount.setDemandDepositAccountBalance((int) (toAccount.getDemandDepositAccountBalance() + money));
                 demandDepositAccountRepository.save(toAccount.toDemandDepositAccount()).toDemandDepositAccountDto();
                 return demandDepositAccountRepository.save(fromAccount.toDemandDepositAccount());
             }
@@ -176,7 +166,7 @@ public class DemandDepositAccountService implements IDemandDepositAccountService
                 (creditCardDebt + minimumPaymentAmount) : (creditCardDebt + minimumPaymentAmount) *
                 Exchange.getConvert.apply(String.valueOf(creditCard.getCurrency()))
                         .getRates().get(String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()));
-        demandDepositAccountDto.setDemandDepositAccountBalance((int) (demandDepositAccountDto.getDemandDepositAccountBalance()-money));
+        demandDepositAccountDto.setDemandDepositAccountBalance((int) (demandDepositAccountDto.getDemandDepositAccountBalance() - money));
         Debt.debtProcess(creditCardDebt, minimumPaymentAmount, creditCard, extractOfAccount);
         extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
         extractOfAccount.setMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPaymentAmount));
