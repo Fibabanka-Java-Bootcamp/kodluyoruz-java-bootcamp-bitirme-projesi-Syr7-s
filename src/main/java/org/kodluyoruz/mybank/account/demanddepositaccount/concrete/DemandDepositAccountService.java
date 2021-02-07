@@ -136,8 +136,8 @@ public class DemandDepositAccountService implements IDemandDepositAccountService
             double money = String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()).equals(String.valueOf(savingAccount.getSavingsAccountCurrency())) ?
                     transferMoney : transferMoney * Exchange.getConvert.apply(String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()))
                     .getRates().get(String.valueOf(savingAccount.getSavingsAccountCurrency()));
-            demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositMoney-transferMoney);
-            savingAccount.setSavingsAccountBalance((int) (savingsMoney+money));
+            demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositMoney - transferMoney);
+            savingAccount.setSavingsAccountBalance((int) (savingsMoney + money));
             savingsAccountService.update(savingAccount);
             return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
         }
@@ -172,15 +172,12 @@ public class DemandDepositAccountService implements IDemandDepositAccountService
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toDemandDepositAccountDto();
         CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
         ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
-        if (String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()).equals(String.valueOf(creditCard.getCurrency()))) {
-            demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() - creditCardDebt - minimumPaymentAmount);
-        } else {
-            ExchangeDto exchangeDto = Exchange.getConvert.apply(String.valueOf(creditCard.getCurrency()));
-            demandDepositAccountDto.setDemandDepositAccountBalance((int) (
-                    demandDepositAccountDto.getDemandDepositAccountBalance() - ((creditCardDebt + minimumPaymentAmount) *
-                            exchangeDto.getRates().get(String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency())))));
-        }
-        Debt.debtProcess(creditCardDebt,minimumPaymentAmount,creditCard,extractOfAccount);
+        double money = String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()).equals(String.valueOf(creditCard.getCurrency())) ?
+                (creditCardDebt + minimumPaymentAmount) : (creditCardDebt + minimumPaymentAmount) *
+                Exchange.getConvert.apply(String.valueOf(creditCard.getCurrency()))
+                        .getRates().get(String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()));
+        demandDepositAccountDto.setDemandDepositAccountBalance((int) (demandDepositAccountDto.getDemandDepositAccountBalance()-money));
+        Debt.debtProcess(creditCardDebt, minimumPaymentAmount, creditCard, extractOfAccount);
         extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
         extractOfAccount.setMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPaymentAmount));
         creditCardService.updateCard(creditCard);
