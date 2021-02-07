@@ -13,6 +13,7 @@ import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardDto;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotMatchException;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
+import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCardService;
 import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
@@ -20,6 +21,7 @@ import org.kodluyoruz.mybank.exchange.Exchange;
 import org.kodluyoruz.mybank.exchange.ExchangeDto;
 import org.kodluyoruz.mybank.extractofaccount.abstrct.IExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
+import org.kodluyoruz.mybank.utilities.debtprocess.Debt;
 import org.kodluyoruz.mybank.utilities.generate.accountgenerate.AccountGenerate;
 import org.kodluyoruz.mybank.utilities.generate.ibangenerate.IbanGenerate;
 import org.springframework.http.HttpStatus;
@@ -178,11 +180,13 @@ public class DemandDepositAccountService implements IDemandDepositAccountService
                     demandDepositAccountDto.getDemandDepositAccountBalance() - ((creditCardDebt + minimumPaymentAmount) *
                             exchangeDto.getRates().get(String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency())))));
         }
-        creditCard.setCardDebt(creditCard.getCardDebt() - creditCardDebt);
-        extractOfAccount.setTermDebt(extractOfAccount.getTermDebt() - creditCardDebt);
-        extractOfAccount.setMinimumPaymentAmount(extractOfAccount.getMinimumPaymentAmount() - minimumPaymentAmount);
+        Debt.debtProcess(creditCardDebt,minimumPaymentAmount,creditCard,extractOfAccount);
+        extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
+        extractOfAccount.setMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPaymentAmount));
         creditCardService.updateCard(creditCard);
         extractOfAccountService.update(extractOfAccount);
         return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
     }
+
+
 }

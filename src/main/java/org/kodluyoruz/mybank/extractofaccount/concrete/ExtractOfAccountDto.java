@@ -17,6 +17,7 @@ public class ExtractOfAccountDto {
     private double shoppingInterestRate;
     private double lateInterestRate;
     private double shoppingInterestAmount;
+    private double shoppingInterestAmountNext;
     private double lateInterestAmount;
     private double totalInterestAmount;
     private LocalDate accountCutOffTime;
@@ -34,6 +35,7 @@ public class ExtractOfAccountDto {
                 .shoppingInterestRate(this.shoppingInterestRate)
                 .lateInterestRate(this.lateInterestRate)
                 .shoppingInterestAmount(this.shoppingInterestAmount)
+                .shoppingInterestAmountNext(this.shoppingInterestAmountNext)
                 .lateInterestAmount(this.lateInterestAmount)
                 .totalInterestAmount(this.totalInterestAmount)
                 .accountCutOffTime(this.accountCutOffTime)

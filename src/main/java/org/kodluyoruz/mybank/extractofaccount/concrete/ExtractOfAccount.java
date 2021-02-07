@@ -25,6 +25,7 @@ public class ExtractOfAccount {
     private double shoppingInterestRate;
     private double lateInterestRate;
     private double shoppingInterestAmount;
+    private double shoppingInterestAmountNext;
     private double lateInterestAmount;
     private double totalInterestAmount;
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -47,6 +48,7 @@ public class ExtractOfAccount {
                 .shoppingInterestRate(this.shoppingInterestRate)
                 .lateInterestRate(this.lateInterestRate)
                 .shoppingInterestAmount(this.shoppingInterestAmount)
+                .shoppingInterestAmountNext(this.shoppingInterestAmountNext)
                 .lateInterestAmount(this.lateInterestAmount)
                 .totalInterestAmount(this.totalInterestAmount)
                 .accountCutOffTime(this.accountCutOffTime)

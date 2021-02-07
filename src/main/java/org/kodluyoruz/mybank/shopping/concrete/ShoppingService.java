@@ -36,7 +36,7 @@ public class ShoppingService implements IShoppingService<Shopping> {
             creditCard.setCardDebt(creditCard.getCardDebt() + shoppingDto.getProductPrice());
             if (creditCard.getCardDebt() <= creditCard.getCardLimit()) {
                 creditCardService.updateCard(creditCard);
-                extractOfAccount.setTermDebt(creditCard.getCardDebt());
+                extractOfAccount.setTermDebt(creditCard.getCardDebt() + extractOfAccount.getTotalInterestAmount());
                 extractOfAccount.setMinimumPaymentAmount(extractOfAccount.getTermDebt() * 0.3);
                 extractOfAccountService.update(extractOfAccount);
                 shoppingDto.setCreditCard(creditCard);
