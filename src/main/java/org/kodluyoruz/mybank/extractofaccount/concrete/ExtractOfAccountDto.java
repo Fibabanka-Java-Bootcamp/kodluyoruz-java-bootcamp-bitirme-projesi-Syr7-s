@@ -13,6 +13,12 @@ public class ExtractOfAccountDto {
     private double termDebt;
     private double oldDebt;
     private double minimumPaymentAmount;
+    private double oldMinimumPaymentAmount;
+    private double shoppingInterestRate;
+    private double lateInterestRate;
+    private double shoppingInterestAmount;
+    private double lateInterestAmount;
+    private double totalInterestAmount;
     private LocalDate accountCutOffTime;
     private LocalDate paymentDueTo;
     private double bankRate;
@@ -24,6 +30,12 @@ public class ExtractOfAccountDto {
                 .termDebt(this.termDebt)
                 .oldDebt(this.oldDebt)
                 .minimumPaymentAmount(this.minimumPaymentAmount)
+                .oldMinimumPaymentAmount(this.oldMinimumPaymentAmount)
+                .shoppingInterestRate(this.shoppingInterestRate)
+                .lateInterestRate(this.lateInterestRate)
+                .shoppingInterestAmount(this.shoppingInterestAmount)
+                .lateInterestAmount(this.lateInterestAmount)
+                .totalInterestAmount(this.totalInterestAmount)
                 .accountCutOffTime(this.accountCutOffTime)
                 .paymentDueTo(this.paymentDueTo)
                 .bankRate(this.bankRate)

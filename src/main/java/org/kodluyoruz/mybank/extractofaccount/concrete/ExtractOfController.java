@@ -23,9 +23,6 @@ public class ExtractOfController {
                                    @RequestBody ExtractOfAccountDto extractOfAccountDto) {
         CreditCard creditCard = creditCardService.getCreditCard(creditCardNo);
         if (creditCard.getCardPassword() == password) {
-            extractOfAccountDto.setTermDebt(creditCard.getCardDebt());
-            extractOfAccountDto.setOldDebt(extractOfAccountDto.getMinimumPaymentAmount());
-            extractOfAccountDto.setMinimumPaymentAmount(creditCard.getCardDebt() * 0.3);
             extractOfAccountDto.setCreditCard(creditCard);
             return extractOfAccountService.create(extractOfAccountDto.toExtractOfAccount()).toExtractOfAccountDto();
         } else {
