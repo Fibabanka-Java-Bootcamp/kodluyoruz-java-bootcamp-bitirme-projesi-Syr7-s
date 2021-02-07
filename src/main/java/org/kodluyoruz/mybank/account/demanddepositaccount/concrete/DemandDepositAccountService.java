@@ -20,8 +20,8 @@ import org.kodluyoruz.mybank.exchange.Exchange;
 import org.kodluyoruz.mybank.extractofaccount.abstrct.IExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.utilities.debtprocess.Debt;
-import org.kodluyoruz.mybank.utilities.generate.accountgenerate.AccountGenerate;
-import org.kodluyoruz.mybank.utilities.generate.ibangenerate.IbanGenerate;
+import org.kodluyoruz.mybank.utilities.generate.accountgenerate.Account;
+import org.kodluyoruz.mybank.utilities.generate.ibangenerate.Iban;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -53,11 +53,11 @@ public class DemandDepositAccountService implements IDemandDepositAccountService
     }
 
     @Override
-    public DemandDepositAccount create(long customerID, long bankCardAccountNumber, DemandDepositAccountDto demandDepositAccountDto) {
-        String accountNumber = AccountGenerate.generateAccount.get();
+    public DemandDepositAccount create(long customerTC, long bankCardAccountNumber, DemandDepositAccountDto demandDepositAccountDto) {
+        String accountNumber = Account.generateAccount.get();
         demandDepositAccountDto.setDemandDepositAccountNumber(Long.parseLong(accountNumber));
-        demandDepositAccountDto.setDemandDepositAccountIBAN(IbanGenerate.generateIban.apply(accountNumber));
-        CustomerDto customerDto = customerService.getCustomerById(customerID).toCustomerDto();
+        demandDepositAccountDto.setDemandDepositAccountIBAN(Iban.generateIban.apply(accountNumber));
+        CustomerDto customerDto = customerService.getCustomerById(customerTC).toCustomerDto();
         demandDepositAccountDto.setCustomer(customerDto.toCustomer());
         BankCardDto bankCardDto = bankCardService.findBankCard(bankCardAccountNumber).toBankCardDto();
         demandDepositAccountDto.setBankCard(bankCardDto.toBankCard());

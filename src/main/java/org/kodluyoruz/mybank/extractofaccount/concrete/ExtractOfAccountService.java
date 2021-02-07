@@ -21,8 +21,8 @@ public class ExtractOfAccountService implements IExtractOfAccountService<Extract
     }
 
     @Override
-    public Optional<ExtractOfAccount> get(int extractNo) {
-        return extractOfAccountRepository.findById(extractNo);
+    public Optional<ExtractOfAccount> get(int extractNO) {
+        return extractOfAccountRepository.findById(extractNO);
     }
 
     @Override

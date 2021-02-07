@@ -1,5 +1,6 @@
 package org.kodluyoruz.mybank.customer.concrete;
 
+import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
 import org.kodluyoruz.mybank.customer.exception.CustomerCouldNotDeletedException;
 import org.kodluyoruz.mybank.customer.exception.CustomerNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -10,9 +11,9 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerController {
-    private final CustomerService customerService;
+    private final ICustomerService<Customer> customerService;
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(ICustomerService<Customer> customerService) {
         this.customerService = customerService;
     }
 
@@ -26,10 +27,10 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CustomerDto> getCustomerByID(@PathVariable("id") long id) {
+    @GetMapping("/{customerTC}")
+    public ResponseEntity<CustomerDto> getCustomerByID(@PathVariable("customerTC") long customerTC) {
         try{
-            return ResponseEntity.ok(customerService.getCustomerById(id).toCustomerDto());
+            return ResponseEntity.ok(customerService.getCustomerById(customerTC).toCustomerDto());
         }catch (CustomerNotFoundException exception){
             return ResponseEntity.notFound().build();
         }catch (Exception exception){
@@ -48,10 +49,10 @@ public class CustomerController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Server Error");
         }
     }
-    @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable("id") long id){
+    @DeleteMapping("/delete/{customerTC}")
+    public void delete(@PathVariable("customerTC") long customerTC){
         try{
-            customerService.delete(id);
+            customerService.delete(customerTC);
         }catch (CustomerCouldNotDeletedException exception){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"An error occurred");
         }catch (Exception exception){

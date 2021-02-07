@@ -38,8 +38,8 @@ public class CreditCardService implements ICreditCardService<CreditCard> {
     }
 
     @Override
-    public CreditCard getCreditCard(long creditCardNo) {
-        CreditCard creditCard = creditCardRepository.findCreditCardByCardAccountNumber(creditCardNo);
+    public CreditCard getCreditCard(long creditCardNO) {
+        CreditCard creditCard = creditCardRepository.findCreditCardByCardAccountNumber(creditCardNO);
         if (creditCard != null) {
             return creditCard;
         } else {
@@ -53,9 +53,9 @@ public class CreditCardService implements ICreditCardService<CreditCard> {
     }
 
     @Override
-    public CreditCard payCreditCardDebt(long bankCardNo, long creditCardNo, int password, int payMoney, double minimumPayment) {
-        BankCard bankCard = bankCardService.findBankCard(bankCardNo);
-        CreditCard creditCard = getCreditCard(creditCardNo);
+    public CreditCard payCreditCardDebt(long bankCardNO, long creditCardNO, int password, int payMoney, double minimumPayment) {
+        BankCard bankCard = bankCardService.findBankCard(bankCardNO);
+        CreditCard creditCard = getCreditCard(creditCardNO);
         ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
         if (bankCard.getBankCardPassword() == password) {
             Debt.debtProcess(payMoney, minimumPayment, creditCard, extractOfAccount);
@@ -67,38 +67,4 @@ public class CreditCardService implements ICreditCardService<CreditCard> {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BankCard info is not correct.");
         }
     }
-/*
-    public static void debtProcess(int payMoney, double minimumPayment, CreditCard creditCard, ExtractOfAccount extractOfAccount) {
-        if (payMoney == 0) {
-            extracted(minimumPayment, extractOfAccount);
-            creditCard.setCardDebt((int) (creditCard.getCardDebt() + extractOfAccount.getTotalInterestAmount()));
-            extractOfAccount.setTermDebt(creditCard.getCardDebt());
-            extractOfAccount.setOldMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPayment));
-        } else {
-            creditCard.setCardDebt((int) ((creditCard.getCardDebt() + extractOfAccount.getTotalInterestAmount()) - payMoney));
-            extractOfAccount.setTermDebt(Math.abs(extractOfAccount.getTermDebt() - payMoney));
-            zeroSet(extractOfAccount);
-        }
-    }
-
-    public static void zeroSet(ExtractOfAccount extractOfAccount) {
-        extractOfAccount.setShoppingInterestAmount(0);
-        extractOfAccount.setShoppingInterestAmountNext(0);
-        extractOfAccount.setLateInterestAmount(0);
-        extractOfAccount.setTotalInterestAmount(0);
-        extractOfAccount.setOldMinimumPaymentAmount(0);
-    }
-
-    public static void extracted(double minimumPayment, ExtractOfAccount extractOfAccount) {
-        double shoppingInterestAmount = ((extractOfAccount.getTermDebt() - minimumPayment) *
-                extractOfAccount.getShoppingInterestRate() * (10 / 30.0)) / 100;
-        double lateInterestAmount = ((extractOfAccount.getMinimumPaymentAmount() - minimumPayment) *
-                extractOfAccount.getLateInterestRate() * (20 / 30.0)) / 100;
-        double shoppingInterestAmountNext = ((extractOfAccount.getTermDebt() - extractOfAccount.getMinimumPaymentAmount()) *
-                extractOfAccount.getShoppingInterestRate() * (20 / 30.0) / 100);
-        extractOfAccount.setShoppingInterestAmount(shoppingInterestAmount);
-        extractOfAccount.setLateInterestAmount(lateInterestAmount);
-        extractOfAccount.setShoppingInterestAmountNext(shoppingInterestAmountNext);
-        extractOfAccount.setTotalInterestAmount(shoppingInterestAmount + lateInterestAmount + shoppingInterestAmountNext);
-    }*/
 }

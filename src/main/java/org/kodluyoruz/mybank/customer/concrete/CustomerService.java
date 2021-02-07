@@ -7,6 +7,7 @@ import org.kodluyoruz.mybank.customer.abstrct.CustomerRepository;
 import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
 import org.kodluyoruz.mybank.customer.exception.CustomerCouldNotDeletedException;
 import org.kodluyoruz.mybank.customer.exception.CustomerNotFoundException;
+import org.kodluyoruz.mybank.utilities.generate.tcgenerate.TC;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,12 +22,13 @@ public class CustomerService implements ICustomerService<Customer> {
     }
     @Override
     public Customer create(Customer customer) {
+        customer.setCustomerTC(Long.parseLong(TC.generateTC.get()));
         return customerRepository.save(customer);
     }
 
     @Override
-    public Customer getCustomerById(long id) {
-        Customer customer = customerRepository.findCustomerByCustomerID(id);
+    public Customer getCustomerById(long customerTC) {
+        Customer customer = customerRepository.findCustomerByCustomerTC(customerTC);
         if (customer != null) {
             return customer;
         } else {
@@ -36,10 +38,9 @@ public class CustomerService implements ICustomerService<Customer> {
 
     @Override
     public Customer update(Customer customer) {
-        Customer updatedCustomer = customerRepository.findCustomerByCustomerID(customer.getCustomerID());
+        Customer updatedCustomer = customerRepository.findCustomerByCustomerTC(customer.getCustomerTC());
 
         if (updatedCustomer != null) {
-            updatedCustomer.setCustomerTC(customer.getCustomerTC());
             updatedCustomer.setCustomerName(customer.getCustomerName());
             updatedCustomer.setCustomerLastname(customer.getCustomerLastname());
             updatedCustomer.setCustomerPhone(customer.getCustomerPhone());
@@ -55,8 +56,8 @@ public class CustomerService implements ICustomerService<Customer> {
     }
 
     @Override
-    public void delete(long customerId) {
-        Customer deletedCustomer = customerRepository.findCustomerByCustomerID(customerId);
+    public void delete(long customerTC) {
+        Customer deletedCustomer = customerRepository.findCustomerByCustomerTC(customerTC);
         List<Integer> debts = deletedCustomer.getCreditCards().stream().map(CreditCard::getCardDebt).collect(Collectors.toList());
         boolean isCreditCardDelete = isZero(debts);
         List<Integer> demandAccountBalance = deletedCustomer.getDemandDepositAccounts().stream().map(DemandDepositAccount::getDemandDepositAccountBalance).collect(Collectors.toList());

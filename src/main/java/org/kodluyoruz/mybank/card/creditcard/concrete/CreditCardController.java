@@ -1,12 +1,13 @@
 package org.kodluyoruz.mybank.card.creditcard.concrete;
 
 
-import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardService;
+
+import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.exception.CreditCardNotCreatedException;
+import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
+import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
-import org.kodluyoruz.mybank.customer.concrete.CustomerService;
-import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccountService;
-import org.kodluyoruz.mybank.utilities.generate.accountgenerate.AccountGenerate;
+import org.kodluyoruz.mybank.utilities.generate.accountgenerate.Account;
 import org.kodluyoruz.mybank.utilities.generate.securitycodegenerate.SecurityCodeGenerate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -20,23 +21,20 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/card")
 public class CreditCardController {
-    private final CreditCardService creditCardService;
-    private final CustomerService customerService;
-    private final BankCardService bankCardService;
-    private final ExtractOfAccountService extractOfAccountService;
+    private final ICreditCardService<CreditCard> creditCardService;
+    private final ICustomerService<Customer> customerService;
 
-    public CreditCardController(CreditCardService creditCardService, CustomerService customerService, BankCardService bankCardService, ExtractOfAccountService extractOfAccountService) {
+
+    public CreditCardController(ICreditCardService<CreditCard> creditCardService, ICustomerService<Customer> customerService) {
         this.creditCardService = creditCardService;
         this.customerService = customerService;
-        this.bankCardService = bankCardService;
-        this.extractOfAccountService = extractOfAccountService;
     }
 
-    @PostMapping("/{customerID}/creditCard")
-    public CreditCardDto create(@PathVariable("customerID") long customerID
+    @PostMapping("/{customerTC}/creditCard")
+    public CreditCardDto create(@PathVariable("customerTC") long customerTC
             , @RequestBody CreditCardDto creditCardDto) {
-        creditCardDto.setCreditCardAccountNumber(Long.parseLong(AccountGenerate.generateAccount.get()));
-        CustomerDto customerDto = customerService.getCustomerById(customerID).toCustomerDto();
+        creditCardDto.setCreditCardAccountNumber(Long.parseLong(Account.generateAccount.get()));
+        CustomerDto customerDto = customerService.getCustomerById(customerTC).toCustomerDto();
         creditCardDto.setCardNameSurname(customerDto.getCustomerName() + " " + customerDto.getCustomerLastname());
         creditCardDto.setSecurityCode(SecurityCodeGenerate.securityCode.get());
         creditCardDto.setCustomer(customerDto.toCustomer());
@@ -62,10 +60,9 @@ public class CreditCardController {
     }
 
 
-
-    @GetMapping("/{creditCardNo}/debt")
-    public String creditCardDebtInquiry(@PathVariable("creditCardNo") long creditCardNo) {
-        CreditCard creditCard = creditCardService.getCreditCard(creditCardNo);
+    @GetMapping("/{creditCardNO}/debt")
+    public String creditCardDebtInquiry(@PathVariable("creditCardNO") long creditCardNO) {
+        CreditCard creditCard = creditCardService.getCreditCard(creditCardNO);
         double debt = creditCard.getExtractOfAccount().getTermDebt();
         double minimumPaymentAmount = creditCard.getExtractOfAccount().getMinimumPaymentAmount();
         String nameSurname = creditCard.getCardNameSurname();
@@ -74,11 +71,11 @@ public class CreditCardController {
 
     @PutMapping("/{bankCardNO}/debt/{creditCardNO}")
     @ResponseStatus(HttpStatus.CREATED)
-    public CreditCardDto payCreditCardDebt(@PathVariable("bankCardNO") long bankCardNo,
-                                           @PathVariable("creditCardNO") long creditCardNo,
+    public CreditCardDto payCreditCardDebt(@PathVariable("bankCardNO") long bankCardNO,
+                                           @PathVariable("creditCardNO") long creditCardNO,
                                            @Min(value = 4) @RequestParam("password") int password,
                                            @RequestParam("payMoney") int payMoney, @RequestParam("minimumPayment") double minimumPayment) {
 
-        return creditCardService.payCreditCardDebt(bankCardNo,creditCardNo,password,payMoney,minimumPayment).toCreditCardDto();
+        return creditCardService.payCreditCardDebt(bankCardNO, creditCardNO, password, payMoney, minimumPayment).toCreditCardDto();
     }
 }

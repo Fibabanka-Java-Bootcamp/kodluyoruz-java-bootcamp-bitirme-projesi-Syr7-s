@@ -1,5 +1,6 @@
 package org.kodluyoruz.mybank.card.bankcard.concrete;
 
+import org.kodluyoruz.mybank.card.bankcard.abstrct.IBankCardService;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotDeletedException;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotFoundException;
 import org.springframework.data.domain.PageRequest;
@@ -15,19 +16,19 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/bankcard")
 public class BankCardController {
-    private final BankCardService bankCardService;
+    private final IBankCardService<BankCard> bankCardService;
 
 
-    public BankCardController(BankCardService bankCardService) {
+    public BankCardController(IBankCardService<BankCard> bankCardService) {
         this.bankCardService = bankCardService;
 
     }
 
-    @PostMapping("/{customerID}")
+    @PostMapping("/{customerTC}")
     @ResponseStatus(HttpStatus.CREATED)
-    public BankCardDto create(@PathVariable("customerID") long customerID, @RequestBody BankCardDto bankCardDto) {
+    public BankCardDto create(@PathVariable("customerTC") long customerTC, @RequestBody BankCardDto bankCardDto) {
 
-        return bankCardService.create(customerID,bankCardDto).toBankCardDto();
+        return bankCardService.create(customerTC, bankCardDto).toBankCardDto();
     }
 
     @GetMapping(value = "/cards", params = {"page", "size"})
@@ -47,14 +48,15 @@ public class BankCardController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    @DeleteMapping("/{bankCardNo}/process")
-    public void bankCardDelete(@PathVariable("bankCardNo") long bankCardNo){
-        try{
-            bankCardService.delete(bankCardNo);
-        }catch (BankCardNotDeletedException exception){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"BankCard is not deleted");
-        }catch (RuntimeException exception){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Server Error");
+
+    @DeleteMapping("/{bankCardNO}/process")
+    public void bankCardDelete(@PathVariable("bankCardNO") long bankCardNO) {
+        try {
+            bankCardService.delete(bankCardNO);
+        } catch (BankCardNotDeletedException exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "BankCard is not deleted");
+        } catch (RuntimeException exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
         }
     }
 }

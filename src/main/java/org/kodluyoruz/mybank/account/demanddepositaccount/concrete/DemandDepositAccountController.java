@@ -1,5 +1,6 @@
 package org.kodluyoruz.mybank.account.demanddepositaccount.concrete;
 
+import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.IDemandDepositAccountService;
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotDeletedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -9,17 +10,17 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/api/deposit")
 public class DemandDepositAccountController {
 
-    private final DemandDepositAccountService demandDepositAccountService;
+    private final IDemandDepositAccountService<DemandDepositAccount> demandDepositAccountService;
 
-    public DemandDepositAccountController(DemandDepositAccountService demandDepositAccountService) {
+    public DemandDepositAccountController(IDemandDepositAccountService<DemandDepositAccount> demandDepositAccountService) {
         this.demandDepositAccountService = demandDepositAccountService;
     }
 
-    @PostMapping("/{customerID}/account/{bankCardAccountNumber}")
+    @PostMapping("/{customerTC}/account/{bankCardAccountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
-    public DemandDepositAccountDto create(@PathVariable("customerID") long customerID, @PathVariable("bankCardAccountNumber") long bankCardAccountNumber, @RequestBody DemandDepositAccountDto demandDepositAccountDto) {
+    public DemandDepositAccountDto create(@PathVariable("customerTC") long customerTC, @PathVariable("bankCardAccountNumber") long bankCardAccountNumber, @RequestBody DemandDepositAccountDto demandDepositAccountDto) {
 
-        return demandDepositAccountService.create(customerID, bankCardAccountNumber, demandDepositAccountDto).toDemandDepositAccountDto();
+        return demandDepositAccountService.create(customerTC, bankCardAccountNumber, demandDepositAccountDto).toDemandDepositAccountDto();
     }
 
     @GetMapping("/{accountNumber}")

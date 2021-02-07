@@ -3,8 +3,8 @@ package org.kodluyoruz.mybank.utilities.generate.accountgenerate;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public class AccountGenerate {
-    private AccountGenerate() {
+public final class Account {
+    private Account() {
     }
 
     public static final Supplier<String> generateAccount = () -> {

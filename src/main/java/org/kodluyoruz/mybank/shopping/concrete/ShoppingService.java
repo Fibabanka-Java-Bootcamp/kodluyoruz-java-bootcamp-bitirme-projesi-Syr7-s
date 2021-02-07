@@ -29,8 +29,8 @@ public class ShoppingService implements IShoppingService<Shopping> {
     }
 
     @Override
-    public Shopping doShoppingByCreditCard(long creditCardNo, int password, ShoppingDto shoppingDto) {
-        CreditCard creditCard = creditCardService.getCreditCard(creditCardNo);
+    public Shopping doShoppingByCreditCard(long creditCardNO, int password, ShoppingDto shoppingDto) {
+        CreditCard creditCard = creditCardService.getCreditCard(creditCardNO);
         ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
         if (creditCard.getCardPassword() == password) {
             creditCard.setCardDebt(creditCard.getCardDebt() + shoppingDto.getProductPrice());

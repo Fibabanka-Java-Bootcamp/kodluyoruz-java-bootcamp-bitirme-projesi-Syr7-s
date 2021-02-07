@@ -21,9 +21,7 @@ import java.util.Set;
 @Builder
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long customerID;
-    private String customerTC;
+    private long customerTC;
     private String customerName;
     private String customerLastname;
     @Enumerated(EnumType.STRING)
@@ -48,7 +46,6 @@ public class Customer {
     private Set<SavingsAccount> savingsAccounts;
     public CustomerDto toCustomerDto() {
         return CustomerDto.builder()
-                .customerID(this.customerID)
                 .customerTC(this.customerTC)
                 .customerName(this.customerName)
                 .customerLastname(this.customerLastname)

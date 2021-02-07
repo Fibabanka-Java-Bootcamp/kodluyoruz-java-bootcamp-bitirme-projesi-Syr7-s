@@ -1,7 +1,9 @@
 package org.kodluyoruz.mybank.extractofaccount.concrete;
 
+import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCardService;
+import org.kodluyoruz.mybank.extractofaccount.abstrct.IExtractOfAccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -9,19 +11,19 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api/extractofaccount")
 public class ExtractOfController {
-    private final ExtractOfAccountService extractOfAccountService;
-    private final CreditCardService creditCardService;
+    private final IExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
+    private final ICreditCardService<CreditCard> creditCardService;
 
-    public ExtractOfController(ExtractOfAccountService extractOfAccountService,CreditCardService creditCardService) {
+    public ExtractOfController(IExtractOfAccountService<ExtractOfAccount> extractOfAccountService,ICreditCardService<CreditCard> creditCardService) {
         this.extractOfAccountService = extractOfAccountService;
         this.creditCardService = creditCardService;
     }
 
-    @PostMapping("/{creditCardNo}")
+    @PostMapping("/{creditCardNO}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ExtractOfAccountDto create(@PathVariable("creditCardNo") long creditCardNo, @RequestParam("password") int password,
+    public ExtractOfAccountDto create(@PathVariable("creditCardNO") long creditCardNO, @RequestParam("password") int password,
                                    @RequestBody ExtractOfAccountDto extractOfAccountDto) {
-        CreditCard creditCard = creditCardService.getCreditCard(creditCardNo);
+        CreditCard creditCard = creditCardService.getCreditCard(creditCardNO);
         if (creditCard.getCardPassword() == password) {
             extractOfAccountDto.setCreditCard(creditCard);
             return extractOfAccountService.create(extractOfAccountDto.toExtractOfAccount()).toExtractOfAccountDto();
@@ -31,8 +33,8 @@ public class ExtractOfController {
 
     }
 
-    @GetMapping("/{extractNo}/extract")
-    public ExtractOfAccountDto get(@PathVariable("extractNo") int extractNo) {
-        return extractOfAccountService.get(extractNo).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Extract is not found")).toExtractOfAccountDto();
+    @GetMapping("/{extractNO}/extract")
+    public ExtractOfAccountDto get(@PathVariable("extractNO") int extractNO) {
+        return extractOfAccountService.get(extractNO).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Extract is not found")).toExtractOfAccountDto();
     }
 }
