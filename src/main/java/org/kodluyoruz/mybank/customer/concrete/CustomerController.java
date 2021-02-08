@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -19,9 +22,14 @@ public class CustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CustomerDto create(@RequestBody CustomerDto customerDto) {
+    public ResponseEntity<URI> create(@RequestBody CustomerDto customerDto) {
         try {
-            return customerService.create(customerDto.toCustomer()).toCustomerDto();
+            CustomerDto editedCustomer = customerService.create(customerDto.toCustomer()).toCustomerDto();
+            URI location = ServletUriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/customer")
+                    .path("/{customerTC}")
+                    .buildAndExpand(editedCustomer.toCustomer().getCustomerTC())
+                    .toUri();
+            return ResponseEntity.created(location).build();
         } catch (Exception exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "An error occurred");
         }
