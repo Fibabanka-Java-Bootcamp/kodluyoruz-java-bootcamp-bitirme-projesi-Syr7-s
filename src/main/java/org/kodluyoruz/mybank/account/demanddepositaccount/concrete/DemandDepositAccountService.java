@@ -16,7 +16,7 @@ import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
 import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
-import org.kodluyoruz.mybank.exchange.Exchange;
+import org.kodluyoruz.mybank.exchange.concrete.Exchange;
 import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.utilities.debtprocess.Debt;

@@ -1,4 +1,4 @@
-package org.kodluyoruz.mybank.exchange;
+package org.kodluyoruz.mybank.exchange.concrete;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,4 +1,4 @@
-package org.kodluyoruz.mybank.exchange;
+package org.kodluyoruz.mybank.exchange.concrete;
 
 
 import org.springframework.web.client.RestTemplate;
