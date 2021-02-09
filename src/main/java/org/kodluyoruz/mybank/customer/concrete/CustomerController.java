@@ -1,6 +1,6 @@
 package org.kodluyoruz.mybank.customer.concrete;
 
-import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
+import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
 import org.kodluyoruz.mybank.customer.exception.CustomerCouldNotDeletedException;
 import org.kodluyoruz.mybank.customer.exception.CustomerNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -14,9 +14,9 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerController {
-    private final ICustomerService<Customer> customerService;
+    private final CustomerService<Customer> customerService;
 
-    public CustomerController(ICustomerService<Customer> customerService) {
+    public CustomerController(CustomerService<Customer> customerService) {
         this.customerService = customerService;
     }
 

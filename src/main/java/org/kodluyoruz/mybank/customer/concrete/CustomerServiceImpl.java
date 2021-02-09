@@ -4,7 +4,7 @@ import org.kodluyoruz.mybank.account.demanddepositaccount.concrete.DemandDeposit
 import org.kodluyoruz.mybank.account.savingsaccount.concrete.SavingsAccount;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
 import org.kodluyoruz.mybank.customer.abstrct.CustomerRepository;
-import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
+import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
 import org.kodluyoruz.mybank.customer.exception.CustomerCouldNotDeletedException;
 import org.kodluyoruz.mybank.customer.exception.CustomerNotFoundException;
 import org.kodluyoruz.mybank.utilities.generate.tcgenerate.TC;
@@ -14,12 +14,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomerService implements ICustomerService<Customer> {
+public class CustomerServiceImpl implements CustomerService<Customer> {
     private final CustomerRepository customerRepository;
 
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
+
+    /*  @Autowired
+      CustomerRepository customerRepository;*/
     @Override
     public Customer create(Customer customer) {
         customer.setCustomerTC(Long.parseLong(TC.generateTC.get()));

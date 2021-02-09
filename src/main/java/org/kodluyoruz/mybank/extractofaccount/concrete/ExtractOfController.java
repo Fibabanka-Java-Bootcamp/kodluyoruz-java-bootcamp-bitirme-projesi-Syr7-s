@@ -1,9 +1,8 @@
 package org.kodluyoruz.mybank.extractofaccount.concrete;
 
-import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
+import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
-import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCardService;
-import org.kodluyoruz.mybank.extractofaccount.abstrct.IExtractOfAccountService;
+import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,10 +10,10 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api/extractofaccount")
 public class ExtractOfController {
-    private final IExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
-    private final ICreditCardService<CreditCard> creditCardService;
+    private final ExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
+    private final CreditCardService<CreditCard> creditCardService;
 
-    public ExtractOfController(IExtractOfAccountService<ExtractOfAccount> extractOfAccountService,ICreditCardService<CreditCard> creditCardService) {
+    public ExtractOfController(ExtractOfAccountService<ExtractOfAccount> extractOfAccountService, CreditCardService<CreditCard> creditCardService) {
         this.extractOfAccountService = extractOfAccountService;
         this.creditCardService = creditCardService;
     }

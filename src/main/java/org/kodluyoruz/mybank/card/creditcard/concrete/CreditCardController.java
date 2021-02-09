@@ -2,9 +2,9 @@ package org.kodluyoruz.mybank.card.creditcard.concrete;
 
 
 
-import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
+import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.exception.CreditCardNotCreatedException;
-import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
+import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
 import org.kodluyoruz.mybank.utilities.generate.accountgenerate.Account;
@@ -21,11 +21,11 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/card")
 public class CreditCardController {
-    private final ICreditCardService<CreditCard> creditCardService;
-    private final ICustomerService<Customer> customerService;
+    private final CreditCardService<CreditCard> creditCardService;
+    private final CustomerService<Customer> customerService;
 
 
-    public CreditCardController(ICreditCardService<CreditCard> creditCardService, ICustomerService<Customer> customerService) {
+    public CreditCardController(CreditCardService<CreditCard> creditCardService, CustomerService<Customer> customerService) {
         this.creditCardService = creditCardService;
         this.customerService = customerService;
     }

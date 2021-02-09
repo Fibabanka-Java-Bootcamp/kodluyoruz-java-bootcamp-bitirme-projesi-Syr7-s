@@ -2,16 +2,16 @@ package org.kodluyoruz.mybank.extractofaccount.concrete;
 
 
 import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountRepository;
-import org.kodluyoruz.mybank.extractofaccount.abstrct.IExtractOfAccountService;
+import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class ExtractOfAccountService implements IExtractOfAccountService<ExtractOfAccount> {
+public class ExtractOfAccountServiceImpl implements ExtractOfAccountService<ExtractOfAccount> {
     private final ExtractOfAccountRepository extractOfAccountRepository;
 
-    public ExtractOfAccountService(ExtractOfAccountRepository extractOfAccountRepository) {
+    public ExtractOfAccountServiceImpl(ExtractOfAccountRepository extractOfAccountRepository) {
         this.extractOfAccountRepository = extractOfAccountRepository;
     }
 

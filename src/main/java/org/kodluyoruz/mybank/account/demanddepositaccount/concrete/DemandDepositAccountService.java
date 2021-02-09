@@ -7,17 +7,17 @@ import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDeposi
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotEnoughMoneyException;
 import org.kodluyoruz.mybank.account.savingsaccount.abtrct.ISavingsAccountService;
 import org.kodluyoruz.mybank.account.savingsaccount.concrete.SavingsAccount;
-import org.kodluyoruz.mybank.card.bankcard.abstrct.IBankCardService;
+import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardService;
 import org.kodluyoruz.mybank.card.bankcard.concrete.BankCard;
 import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardDto;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotMatchException;
-import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
+import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
-import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
+import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
 import org.kodluyoruz.mybank.exchange.Exchange;
-import org.kodluyoruz.mybank.extractofaccount.abstrct.IExtractOfAccountService;
+import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.utilities.debtprocess.Debt;
 import org.kodluyoruz.mybank.utilities.generate.accountgenerate.Account;
@@ -32,13 +32,13 @@ import java.util.Optional;
 @Service
 public class DemandDepositAccountService implements IDemandDepositAccountService<DemandDepositAccount> {
     private final DemandDepositAccountRepository demandDepositAccountRepository;
-    private final ICustomerService<Customer> customerService;
+    private final CustomerService<Customer> customerService;
     private final ISavingsAccountService<SavingsAccount> savingsAccountService;
-    private final ICreditCardService<CreditCard> creditCardService;
-    private final IExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
-    private final IBankCardService<BankCard> bankCardService;
+    private final CreditCardService<CreditCard> creditCardService;
+    private final ExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
+    private final BankCardService<BankCard> bankCardService;
 
-    public DemandDepositAccountService(DemandDepositAccountRepository demandDepositAccountRepository, ICustomerService<Customer> customerService, ISavingsAccountService<SavingsAccount> savingsAccountService, ICreditCardService<CreditCard> creditCardService, IExtractOfAccountService<ExtractOfAccount> extractOfAccountService, IBankCardService<BankCard> bankCardService) {
+    public DemandDepositAccountService(DemandDepositAccountRepository demandDepositAccountRepository, CustomerService<Customer> customerService, ISavingsAccountService<SavingsAccount> savingsAccountService, CreditCardService<CreditCard> creditCardService, ExtractOfAccountService<ExtractOfAccount> extractOfAccountService, BankCardService<BankCard> bankCardService) {
         this.demandDepositAccountRepository = demandDepositAccountRepository;
         this.customerService = customerService;
         this.savingsAccountService = savingsAccountService;

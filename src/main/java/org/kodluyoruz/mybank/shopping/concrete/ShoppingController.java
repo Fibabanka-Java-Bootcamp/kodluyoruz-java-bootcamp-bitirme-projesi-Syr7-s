@@ -1,15 +1,15 @@
 package org.kodluyoruz.mybank.shopping.concrete;
 
-import org.kodluyoruz.mybank.shopping.abstrct.IShoppingService;
+import org.kodluyoruz.mybank.shopping.abstrct.ShoppingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/shopping")
 public class ShoppingController {
-    private final IShoppingService<Shopping> shoppingService;
+    private final ShoppingService<Shopping> shoppingService;
 
-    public ShoppingController(IShoppingService<Shopping> shoppingService) {
+    public ShoppingController(ShoppingService<Shopping> shoppingService) {
         this.shoppingService = shoppingService;
     }
 

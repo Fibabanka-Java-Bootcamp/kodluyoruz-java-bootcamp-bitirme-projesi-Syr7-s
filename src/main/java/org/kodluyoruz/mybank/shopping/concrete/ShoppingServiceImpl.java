@@ -1,25 +1,25 @@
 package org.kodluyoruz.mybank.shopping.concrete;
 
-import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
+import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
-import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCardService;
-import org.kodluyoruz.mybank.extractofaccount.abstrct.IExtractOfAccountService;
+import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCardServiceImpl;
+import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
-import org.kodluyoruz.mybank.shopping.abstrct.IShoppingService;
+import org.kodluyoruz.mybank.shopping.abstrct.ShoppingService;
 import org.kodluyoruz.mybank.shopping.abstrct.ShoppingRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
-public class ShoppingService implements IShoppingService<Shopping> {
+public class ShoppingServiceImpl implements ShoppingService<Shopping> {
     private final ShoppingRepository shoppingRepository;
-    private final ICreditCardService<CreditCard> creditCardService;
-    private final IExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
+    private final CreditCardService<CreditCard> creditCardService;
+    private final ExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
 
-    public ShoppingService(ShoppingRepository shoppingRepository, CreditCardService creditCardService, IExtractOfAccountService<ExtractOfAccount> extractOfAccountService) {
+    public ShoppingServiceImpl(ShoppingRepository shoppingRepository, CreditCardServiceImpl creditCardServiceImpl, ExtractOfAccountService<ExtractOfAccount> extractOfAccountService) {
         this.shoppingRepository = shoppingRepository;
-        this.creditCardService = creditCardService;
+        this.creditCardService = creditCardServiceImpl;
         this.extractOfAccountService = extractOfAccountService;
     }
 

@@ -1,6 +1,6 @@
 package org.kodluyoruz.mybank.card.bankcard.concrete;
 
-import org.kodluyoruz.mybank.card.bankcard.abstrct.IBankCardService;
+import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardService;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotDeletedException;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotFoundException;
 import org.springframework.data.domain.PageRequest;
@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/bankcard")
 public class BankCardController {
-    private final IBankCardService<BankCard> bankCardService;
+    private final BankCardService<BankCard> bankCardService;
 
 
-    public BankCardController(IBankCardService<BankCard> bankCardService) {
+    public BankCardController(BankCardService<BankCard> bankCardService) {
         this.bankCardService = bankCardService;
 
     }
