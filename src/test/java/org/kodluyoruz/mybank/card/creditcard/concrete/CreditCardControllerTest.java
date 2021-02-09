@@ -10,21 +10,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class CreditCardControllerTest {
     RestTemplate restTemplate;
     CreditCard creditCard;
+
     @BeforeEach
-    void setUp(){
+    void setUp() {
         restTemplate = new RestTemplate();
         creditCard = restTemplate
-                .getForObject("http://localhost:8080/api/card/8500768641657976",CreditCard.class);
+                .getForObject("http://localhost:8080/api/card/8500768641657976", CreditCard.class);
     }
+
     @Test
     void get() {
         assert creditCard != null;
-        Assertions.assertEquals("Isa SAYAR",creditCard.getCardNameSurname());
+        Assertions.assertEquals("Isa SAYAR", creditCard.getCardNameSurname());
     }
+
     @Test
-    void debtIsZero(){
+    void debtIsZero() {
         assert creditCard != null;
-        Assertions.assertEquals(0,creditCard.getCardDebt());
+        Assertions.assertEquals(0, creditCard.getCardDebt());
     }
 
 }
