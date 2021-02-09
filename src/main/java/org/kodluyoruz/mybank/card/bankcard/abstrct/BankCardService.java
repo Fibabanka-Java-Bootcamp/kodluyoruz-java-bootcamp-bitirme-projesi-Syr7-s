@@ -4,7 +4,7 @@ import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface IBankCardService<T> {
+public interface BankCardService<T> {
     T create(T t);
     T create(long customerId, BankCardDto bankCardDto);
     T findBankCard(long bankCardNo);

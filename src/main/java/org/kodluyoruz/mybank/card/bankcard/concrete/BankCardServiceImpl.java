@@ -1,10 +1,10 @@
 package org.kodluyoruz.mybank.card.bankcard.concrete;
 
-import org.kodluyoruz.mybank.card.bankcard.abstrct.IBankCardService;
+import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardService;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotDeletedException;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotFoundException;
 import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardRepository;
-import org.kodluyoruz.mybank.customer.abstrct.ICustomerService;
+import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
 
@@ -16,11 +16,11 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class BankCardService implements IBankCardService<BankCard> {
+public class BankCardServiceImpl implements BankCardService<BankCard> {
     private final BankCardRepository bankCardRepository;
-    private final ICustomerService<Customer> customerService;
+    private final CustomerService<Customer> customerService;
 
-    public BankCardService(BankCardRepository bankCardRepository, ICustomerService<Customer> customerService) {
+    public BankCardServiceImpl(BankCardRepository bankCardRepository, CustomerService<Customer> customerService) {
         this.bankCardRepository = bankCardRepository;
         this.customerService = customerService;
     }

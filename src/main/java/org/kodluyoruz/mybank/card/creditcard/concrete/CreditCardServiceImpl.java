@@ -1,13 +1,13 @@
 package org.kodluyoruz.mybank.card.creditcard.concrete;
 
-import org.kodluyoruz.mybank.card.bankcard.abstrct.IBankCardService;
+import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardService;
 import org.kodluyoruz.mybank.card.bankcard.concrete.BankCard;
-import org.kodluyoruz.mybank.card.creditcard.abstrct.ICreditCardService;
+import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.exception.CreditCardNotCreatedException;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardRepository;
-import org.kodluyoruz.mybank.extractofaccount.abstrct.IExtractOfAccountService;
+import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
-import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccountService;
+import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccountServiceImpl;
 import org.kodluyoruz.mybank.utilities.debtprocess.Debt;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,15 +16,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
-public class CreditCardService implements ICreditCardService<CreditCard> {
+public class CreditCardServiceImpl implements CreditCardService<CreditCard> {
     private final CreditCardRepository creditCardRepository;
-    private final IBankCardService<BankCard> bankCardService;
-    private final IExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
+    private final BankCardService<BankCard> bankCardService;
+    private final ExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
 
-    public CreditCardService(CreditCardRepository creditCardRepository, IBankCardService<BankCard> bankCardService, ExtractOfAccountService extractOfAccountService) {
+    public CreditCardServiceImpl(CreditCardRepository creditCardRepository, BankCardService<BankCard> bankCardService, ExtractOfAccountServiceImpl extractOfAccountServiceImpl) {
         this.creditCardRepository = creditCardRepository;
         this.bankCardService = bankCardService;
-        this.extractOfAccountService = extractOfAccountService;
+        this.extractOfAccountService = extractOfAccountServiceImpl;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package org.kodluyoruz.mybank.customer.abstrct;
 
-public interface ICustomerService<T>{
+public interface CustomerService<T>{
     T create(T t);
     T getCustomerById(long id);
     T update(T t);
