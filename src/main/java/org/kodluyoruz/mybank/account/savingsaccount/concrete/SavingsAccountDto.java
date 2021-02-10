@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.kodluyoruz.mybank.card.bankcard.concrete.BankCard;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
+import org.kodluyoruz.mybank.utilities.enums.currency.Currency;
 
 import java.time.LocalDate;
 
@@ -13,7 +14,7 @@ public class SavingsAccountDto {
     private long savingsAccountNumber;
     private String savingsAccountIBAN;
     private int savingsAccountBalance;
-    private String savingsAccountCurrency;
+    private Currency savingsAccountCurrency;
     private LocalDate savingsAccountCreationDate;
     private double savingsAccountInterestRate;
     private Customer customer;

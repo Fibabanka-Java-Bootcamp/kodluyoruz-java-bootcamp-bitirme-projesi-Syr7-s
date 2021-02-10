@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.kodluyoruz.mybank.card.bankcard.concrete.BankCard;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
+import org.kodluyoruz.mybank.utilities.enums.currency.Currency;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ public class SavingsAccount {
     private long savingsAccountNumber;
     private String savingsAccountIBAN;
     private int savingsAccountBalance;
-    private String savingsAccountCurrency;
+    private Currency savingsAccountCurrency;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate savingsAccountCreationDate;
     private double savingsAccountInterestRate;
