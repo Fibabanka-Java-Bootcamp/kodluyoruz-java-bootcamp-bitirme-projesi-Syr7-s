@@ -50,12 +50,12 @@ class DemandDepositAccountServiceImplTest {
     @Test
     void getByAccountIban() {
         Mockito.when(demandDepositAccountRepository.findDemandDepositAccountByDemandDepositAccountIBAN(demandDepositAccount.getDemandDepositAccountIBAN())).thenReturn(demandDepositAccount);
-        assertEquals(Currency.TRY, demandDepositAccount.getDemandDepositAccountCurrency());
+        assertEquals(Currency.TRY, demandDepositAccountService.getByAccountIban(demandDepositAccount.getDemandDepositAccountIBAN()).getDemandDepositAccountCurrency());
     }
 
     @Test
     void theBalanceGreaterThan10000() {
         Mockito.when(demandDepositAccountRepository.findDemandDepositAccountByDemandDepositAccountIBAN(demandDepositAccount.getDemandDepositAccountIBAN())).thenReturn(demandDepositAccount);
-        assertTrue(demandDepositAccount.getDemandDepositAccountBalance() > 10000);
+        assertTrue(demandDepositAccountService.getByAccountIban(demandDepositAccount.getDemandDepositAccountIBAN()).getDemandDepositAccountBalance() > 10000);
     }
 }
