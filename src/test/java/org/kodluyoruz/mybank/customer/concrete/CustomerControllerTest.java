@@ -1,15 +1,12 @@
 package org.kodluyoruz.mybank.customer.concrete;
 
-import org.junit.Assert;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.kodluyoruz.mybank.customer.abstrct.CustomerRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.server.ResponseStatusException;
-import org.w3c.dom.html.HTMLTableCaptionElement;
+
 
 import java.net.URI;
 import java.util.HashMap;
