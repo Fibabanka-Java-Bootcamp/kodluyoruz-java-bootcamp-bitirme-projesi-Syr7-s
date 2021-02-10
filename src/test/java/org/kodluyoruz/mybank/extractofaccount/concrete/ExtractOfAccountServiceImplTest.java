@@ -54,13 +54,14 @@ class ExtractOfAccountServiceImplTest {
     void setMockOutput() {
         extractOfAccountService = new ExtractOfAccountServiceImpl(extractOfAccountRepository);
         extractOfAccountRepository.save(extractOfAccount);
+
+        Mockito.when(extractOfAccountRepository.findById(extractOfAccount.getId())).thenReturn(java.util.Optional.ofNullable(extractOfAccount));
+        assert extractOfAccount != null;
     }
 
     @Test()
     @DisplayName("ExtractOfAccount info will get with extractID and some of test will control.")
     void get() {
-        Mockito.when(extractOfAccountRepository.findById(extractOfAccount.getId())).thenReturn(java.util.Optional.ofNullable(extractOfAccount));
-        assert extractOfAccount != null;
         assertTrue(extractOfAccountService.get(extractOfAccount.getId())
                 .orElseThrow(() -> new ExtractOfAccountNotFound("Extract Of Account not found."))
                 .getMinimumPaymentAmount() > 0);
@@ -68,8 +69,6 @@ class ExtractOfAccountServiceImplTest {
 
     @Test
     void creditCardIsNull() {
-        Mockito.when(extractOfAccountRepository.findById(extractOfAccount.getId())).thenReturn(java.util.Optional.ofNullable(extractOfAccount));
-        assert extractOfAccount != null;
         assertNull(extractOfAccountService.get(extractOfAccount.getId())
                 .orElseThrow(() -> new ExtractOfAccountNotFound("Extract Of Account not found."))
                 .getCreditCard());
