@@ -49,4 +49,15 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CreditCard password is not correct.");
         }
     }
+
+    @Override
+    public Shopping getShoppingByProductID(int productID) {
+        Shopping shopping = shoppingRepository.findShoppingByProductID(productID);
+        if (shopping != null){
+            return shopping;
+        }else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Product not found");
+        }
+    }
+
 }

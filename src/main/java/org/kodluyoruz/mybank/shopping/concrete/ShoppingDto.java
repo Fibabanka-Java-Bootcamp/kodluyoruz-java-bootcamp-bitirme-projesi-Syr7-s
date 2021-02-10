@@ -3,6 +3,7 @@ package org.kodluyoruz.mybank.shopping.concrete;
 import lombok.Builder;
 import lombok.Data;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
+import org.kodluyoruz.mybank.utilities.enums.currency.Currency;
 
 import java.time.LocalDate;
 
@@ -13,11 +14,11 @@ public class ShoppingDto {
     private String productType;
     private String productName;
     private int productPrice;
-    private String currency;
+    private Currency currency;
     private LocalDate productReceiveDate;
     private CreditCard creditCard;
 
-    public Shopping toShopping(){
+    public Shopping toShopping() {
         return Shopping.builder()
                 .productID(this.productID)
                 .productType(this.productType)

@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
-public interface ISavingsAccountService<T> {
+public interface SavingsAccountService<T> {
     T create(T t);
     T create(long customerID, long bankCardAccountNumber, SavingsAccountDto savingsAccountDto);
     Optional<T> get(long accountNumber);

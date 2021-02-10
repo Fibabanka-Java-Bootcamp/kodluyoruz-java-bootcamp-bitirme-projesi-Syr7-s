@@ -6,7 +6,7 @@ import org.kodluyoruz.mybank.account.demanddepositaccount.concrete.DemandDeposit
 
 import java.util.Optional;
 
-public interface IDemandDepositAccountService<T> {
+public interface DemandDepositAccountService<T> {
     T create(T t);
     T create(long customerID, long bankCardAccountNumber, DemandDepositAccountDto demandDepositAccountDto);
     Optional<T> get(long accountNumber);
