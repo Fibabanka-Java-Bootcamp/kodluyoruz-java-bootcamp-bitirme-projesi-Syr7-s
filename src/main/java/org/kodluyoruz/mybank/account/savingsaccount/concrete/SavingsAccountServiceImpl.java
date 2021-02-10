@@ -1,6 +1,6 @@
 package org.kodluyoruz.mybank.account.savingsaccount.concrete;
 
-import org.kodluyoruz.mybank.account.savingsaccount.abtrct.ISavingsAccountService;
+import org.kodluyoruz.mybank.account.savingsaccount.abtrct.SavingsAccountService;
 import org.kodluyoruz.mybank.account.savingsaccount.abtrct.SavingsAccountRepository;
 import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingAccountNotDeletedException;
 import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingsAccountNotEnoughMoneyException;
@@ -28,14 +28,14 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 @Service
-public class SavingsAccountService implements ISavingsAccountService<SavingsAccount> {
+public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsAccount> {
     private final SavingsAccountRepository savingsAccountRepository;
     private final CreditCardService<CreditCard> creditCardService;
     private final ExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
     private final CustomerService<Customer> customerService;
     private final BankCardService<BankCard> bankCardService;
 
-    public SavingsAccountService(SavingsAccountRepository savingsAccountRepository, CreditCardService<CreditCard> creditCardService, ExtractOfAccountService<ExtractOfAccount> extractOfAccountService, CustomerService<Customer> customerService, BankCardService<BankCard> bankCardService) {
+    public SavingsAccountServiceImpl(SavingsAccountRepository savingsAccountRepository, CreditCardService<CreditCard> creditCardService, ExtractOfAccountService<ExtractOfAccount> extractOfAccountService, CustomerService<Customer> customerService, BankCardService<BankCard> bankCardService) {
         this.savingsAccountRepository = savingsAccountRepository;
         this.creditCardService = creditCardService;
         this.extractOfAccountService = extractOfAccountService;

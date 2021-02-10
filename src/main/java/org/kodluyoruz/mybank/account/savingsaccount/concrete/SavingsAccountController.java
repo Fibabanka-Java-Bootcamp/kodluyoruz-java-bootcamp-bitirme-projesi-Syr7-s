@@ -1,6 +1,6 @@
 package org.kodluyoruz.mybank.account.savingsaccount.concrete;
 
-import org.kodluyoruz.mybank.account.savingsaccount.abtrct.ISavingsAccountService;
+import org.kodluyoruz.mybank.account.savingsaccount.abtrct.SavingsAccountService;
 import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingAccountNotDeletedException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/savings")
 public class SavingsAccountController {
-    private final ISavingsAccountService<SavingsAccount> savingsAccountService;
+    private final SavingsAccountService<SavingsAccount> savingsAccountService;
 
-    public SavingsAccountController(ISavingsAccountService<SavingsAccount> savingsAccountService) {
+    public SavingsAccountController(SavingsAccountService<SavingsAccount> savingsAccountService) {
         this.savingsAccountService = savingsAccountService;
     }
 
@@ -27,9 +27,9 @@ public class SavingsAccountController {
         return savingsAccountService.create(customerTC, bankCardAccountNumber, savingsAccountDto).toSavingsAccountDto();
     }
 
-    @GetMapping("/{accountIBAN}")
-    public SavingsAccountDto get(@PathVariable("accountIBAN") long accountIBAN) {
-        return savingsAccountService.get(accountIBAN).orElseThrow(() ->
+    @GetMapping("/{accountNumber}")
+    public SavingsAccountDto get(@PathVariable("accountNumber") long accountNumber) {
+        return savingsAccountService.get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Savings Account is not found")).toSavingsAccountDto();
     }
 
