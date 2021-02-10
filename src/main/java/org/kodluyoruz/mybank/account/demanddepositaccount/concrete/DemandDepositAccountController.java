@@ -1,6 +1,6 @@
 package org.kodluyoruz.mybank.account.demanddepositaccount.concrete;
 
-import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.IDemandDepositAccountService;
+import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountService;
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotDeletedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +10,9 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/api/deposit")
 public class DemandDepositAccountController {
 
-    private final IDemandDepositAccountService<DemandDepositAccount> demandDepositAccountService;
+    private final DemandDepositAccountService<DemandDepositAccount> demandDepositAccountService;
 
-    public DemandDepositAccountController(IDemandDepositAccountService<DemandDepositAccount> demandDepositAccountService) {
+    public DemandDepositAccountController(DemandDepositAccountService<DemandDepositAccount> demandDepositAccountService) {
         this.demandDepositAccountService = demandDepositAccountService;
     }
 

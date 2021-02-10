@@ -2,7 +2,7 @@ package org.kodluyoruz.mybank.account.demanddepositaccount.concrete;
 
 
 import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountRepository;
-import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.IDemandDepositAccountService;
+import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountService;
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotDeletedException;
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotEnoughMoneyException;
 import org.kodluyoruz.mybank.account.savingsaccount.abtrct.ISavingsAccountService;
@@ -30,7 +30,7 @@ import java.util.Optional;
 
 
 @Service
-public class DemandDepositAccountService implements IDemandDepositAccountService<DemandDepositAccount> {
+public class DemandDepositAccountServiceImpl implements DemandDepositAccountService<DemandDepositAccount> {
     private final DemandDepositAccountRepository demandDepositAccountRepository;
     private final CustomerService<Customer> customerService;
     private final ISavingsAccountService<SavingsAccount> savingsAccountService;
@@ -38,7 +38,7 @@ public class DemandDepositAccountService implements IDemandDepositAccountService
     private final ExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
     private final BankCardService<BankCard> bankCardService;
 
-    public DemandDepositAccountService(DemandDepositAccountRepository demandDepositAccountRepository, CustomerService<Customer> customerService, ISavingsAccountService<SavingsAccount> savingsAccountService, CreditCardService<CreditCard> creditCardService, ExtractOfAccountService<ExtractOfAccount> extractOfAccountService, BankCardService<BankCard> bankCardService) {
+    public DemandDepositAccountServiceImpl(DemandDepositAccountRepository demandDepositAccountRepository, CustomerService<Customer> customerService, ISavingsAccountService<SavingsAccount> savingsAccountService, CreditCardService<CreditCard> creditCardService, ExtractOfAccountService<ExtractOfAccount> extractOfAccountService, BankCardService<BankCard> bankCardService) {
         this.demandDepositAccountRepository = demandDepositAccountRepository;
         this.customerService = customerService;
         this.savingsAccountService = savingsAccountService;
