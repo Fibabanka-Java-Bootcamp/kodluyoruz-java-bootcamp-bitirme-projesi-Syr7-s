@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
-import org.kodluyoruz.mybank.shopping.concrete.ShoppingDto;
 import org.kodluyoruz.mybank.utilities.enums.currency.Currency;
 
 import javax.persistence.*;
@@ -23,6 +22,7 @@ public class Shopping {
     private String productType;
     private String productName;
     private int productPrice;
+    @Enumerated(EnumType.STRING)
     private Currency currency;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate productReceiveDate;

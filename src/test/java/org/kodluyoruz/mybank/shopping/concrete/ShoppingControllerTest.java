@@ -21,10 +21,10 @@ class ShoppingControllerTest {
     void doShopping() {
         shopping.setProductType("Technology");
         shopping.setProductName("Laptop");
-        shopping.setProductPrice(4000);
+        shopping.setProductPrice(1000);
         shopping.setCurrency(Currency.TRY);
         shopping.setProductReceiveDate(LocalDate.of(2021, 2, 2));
-        URI location = restTemplate.postForLocation("http://localhost:8080/api/shopping/8500768641657976?password=1996", shopping);
+        URI location = restTemplate.postForLocation("http://localhost:8080/api/shopping/8500495434241604?password=1996", shopping);
         assert location != null;
         Shopping editedShopping = restTemplate.getForObject(location,Shopping.class);
         assert editedShopping !=null;

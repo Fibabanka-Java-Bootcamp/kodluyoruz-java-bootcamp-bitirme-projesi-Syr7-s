@@ -7,6 +7,8 @@ import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.shopping.abstrct.ShoppingService;
 import org.kodluyoruz.mybank.shopping.abstrct.ShoppingRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -59,5 +61,10 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Product not found");
         }
     }
+
+    /*@Override
+    public Page<Shopping> getAllShopping(Pageable pageable) {
+        return shoppingRepository.findAll(pageable);
+    }*/
 
 }

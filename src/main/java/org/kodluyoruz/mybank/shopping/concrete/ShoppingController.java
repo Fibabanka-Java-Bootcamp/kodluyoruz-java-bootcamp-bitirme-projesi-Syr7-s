@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+
 import java.net.URI;
+
 
 @RestController
 @RequestMapping("/api/shopping")
@@ -31,7 +33,6 @@ public class ShoppingController {
         }catch (Exception exception){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"An Error Occurred");
         }
-        //return shoppingService.doShoppingByCreditCard(creditCardNO, password, shoppingDto).toShoppingDto();
     }
     @GetMapping("/{productID}")
     public ResponseEntity<ShoppingDto> getShoppingByProductID(@PathVariable("productID") int productID){
@@ -41,4 +42,10 @@ public class ShoppingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+ /*   @GetMapping(value = "/all/shopping",params = {"page","size"})
+    public List<ShoppingDto> getAllShopping(@Min(value = 0) @RequestParam("page") int page,@Min(value = 1) @RequestParam("size") int size){
+        return shoppingService.getAllShopping(PageRequest.of(page, size)).stream()
+                .map(Shopping::toShoppingDto)
+                .collect(Collectors.toList());
+    }*/
 }
