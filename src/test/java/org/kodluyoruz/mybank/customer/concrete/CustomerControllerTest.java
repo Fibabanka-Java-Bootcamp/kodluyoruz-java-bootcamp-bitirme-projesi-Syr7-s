@@ -36,7 +36,7 @@ class CustomerControllerTest {
 
     @Test
     void getCustomerById() {
-        Customer customer = restTemplate.getForObject("http://localhost:8080/api/customer/22433513943",Customer.class);
+        Customer customer = restTemplate.getForObject("http://localhost:8080/api/customer/32046912223",Customer.class);
         assert customer != null;
         assertEquals("Isa",customer.getCustomerName());
     }

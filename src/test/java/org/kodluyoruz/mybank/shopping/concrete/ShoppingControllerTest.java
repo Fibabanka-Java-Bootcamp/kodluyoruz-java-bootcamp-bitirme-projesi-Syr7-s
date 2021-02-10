@@ -19,8 +19,8 @@ class ShoppingControllerTest {
 
     @Test
     void doShopping() {
-        shopping.setProductType("Technology");
-        shopping.setProductName("Laptop");
+        shopping.setProductType("Furniture");
+        shopping.setProductName("Carpet");
         shopping.setProductPrice(1000);
         shopping.setCurrency(Currency.TRY);
         shopping.setProductReceiveDate(LocalDate.of(2021, 2, 2));
@@ -28,6 +28,6 @@ class ShoppingControllerTest {
         assert location != null;
         Shopping editedShopping = restTemplate.getForObject(location,Shopping.class);
         assert editedShopping !=null;
-        Assertions.assertEquals("Laptop",editedShopping.getProductName());
+        Assertions.assertEquals("Carpet",editedShopping.getProductName());
     }
 }

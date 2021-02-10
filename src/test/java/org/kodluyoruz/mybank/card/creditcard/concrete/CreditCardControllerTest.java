@@ -15,7 +15,7 @@ class CreditCardControllerTest {
     void setUp() {
         restTemplate = new RestTemplate();
         creditCard = restTemplate
-                .getForObject("http://localhost:8080/api/card/8500768641657976", CreditCard.class);
+                .getForObject("http://localhost:8080/api/card/8500495434241604", CreditCard.class);
     }
 
     @Test
@@ -27,7 +27,7 @@ class CreditCardControllerTest {
     @Test
     void debtIsZero() {
         assert creditCard != null;
-        Assertions.assertEquals(0, creditCard.getCardDebt());
+        Assertions.assertEquals(3500, creditCard.getCardDebt());
     }
 
 }

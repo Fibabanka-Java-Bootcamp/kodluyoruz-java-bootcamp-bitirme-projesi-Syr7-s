@@ -19,14 +19,15 @@ class SavingsAccountControllerTest {
     @DisplayName("SavingsAccount info will get.")
     void get() {
         SavingsAccount savingsAccount = restTemplate
-                .getForObject("http://localhost:8080/api/savings/8500010173201752", SavingsAccount.class);
+                .getForObject("http://localhost:8080/api/savings/8500533421627587", SavingsAccount.class);
         assertNotNull(savingsAccount);
     }
 
     @Test
     void savingsAccountCustomerName() {
         SavingsAccount savingsAccount = restTemplate
-                .getForObject("http://localhost:8080/api/savings/8500010173201752", SavingsAccount.class);
+                .getForObject("http://localhost:8080/api/savings/8500533421627587", SavingsAccount.class);
+        assert savingsAccount != null;
         assertEquals(10000,savingsAccount.getSavingsAccountBalance());
     }
 }
