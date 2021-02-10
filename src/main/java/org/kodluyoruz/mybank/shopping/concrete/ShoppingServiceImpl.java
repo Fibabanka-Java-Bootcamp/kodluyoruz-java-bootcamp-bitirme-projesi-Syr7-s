@@ -62,9 +62,9 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
         }
     }
 
-    /*@Override
+    @Override
     public Page<Shopping> getAllShopping(Pageable pageable) {
         return shoppingRepository.findAll(pageable);
-    }*/
+    }
 
 }

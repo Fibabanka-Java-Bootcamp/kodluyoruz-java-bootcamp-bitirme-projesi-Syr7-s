@@ -8,5 +8,5 @@ public interface ShoppingService<T> {
     T create(T t);
     T doShoppingByCreditCard(long creditCardNo, int password, ShoppingDto shoppingDto);
     T getShoppingByProductID(int shoppingID);
-    //Page<T> getAllShopping(Pageable pageable);
+    Page<T> getAllShopping(Pageable pageable);
 }

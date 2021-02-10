@@ -1,6 +1,7 @@
 package org.kodluyoruz.mybank.shopping.concrete;
 
 import org.kodluyoruz.mybank.shopping.abstrct.ShoppingService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,8 +9,10 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
+import javax.validation.constraints.Min;
 import java.net.URI;
-
+import java.util.stream.Collectors;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/shopping")
@@ -42,10 +45,10 @@ public class ShoppingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
- /*   @GetMapping(value = "/all/shopping",params = {"page","size"})
-    public List<ShoppingDto> getAllShopping(@Min(value = 0) @RequestParam("page") int page,@Min(value = 1) @RequestParam("size") int size){
+    @GetMapping(value = "/all/shoppings",params = {"page","size"})
+    public List<ShoppingDto> getAllShopping(@Min(value = 0) @RequestParam("page") int page, @Min(value = 1) @RequestParam("size") int size){
         return shoppingService.getAllShopping(PageRequest.of(page, size)).stream()
                 .map(Shopping::toShoppingDto)
                 .collect(Collectors.toList());
-    }*/
+    }
 }

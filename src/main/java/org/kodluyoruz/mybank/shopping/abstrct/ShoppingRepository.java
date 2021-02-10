@@ -9,5 +9,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.kodluyoruz.mybank.shopping.concrete.Shopping;
 public interface ShoppingRepository extends CrudRepository<Shopping,Integer> {
     Shopping findShoppingByProductID(int id);
-    //Page<Shopping> findAll(Pageable pageable);
+    Page<Shopping> findAll(Pageable pageable);
 }
