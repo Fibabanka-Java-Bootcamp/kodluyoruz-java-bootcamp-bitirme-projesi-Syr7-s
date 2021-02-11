@@ -8,6 +8,7 @@ import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
 import org.kodluyoruz.mybank.customer.exception.CustomerCouldNotDeletedException;
 import org.kodluyoruz.mybank.customer.exception.CustomerNotFoundException;
 import org.kodluyoruz.mybank.utilities.generate.tcgenerate.TC;
+import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService<Customer> {
         if (customer != null) {
             return customer;
         } else {
-            throw new CustomerNotFoundException("Customer Not Found.");
+            throw new CustomerNotFoundException(ErrorMessages.CUSTOMER_COULD_NOT_FOUND);
         }
     }
 
@@ -54,7 +55,7 @@ public class CustomerServiceImpl implements CustomerService<Customer> {
 
             return customerRepository.save(updatedCustomer);
         } else {
-            throw new CustomerNotFoundException("Customer Not Found.");
+            throw new CustomerNotFoundException(ErrorMessages.CUSTOMER_COULD_NOT_FOUND);
         }
     }
 
@@ -70,7 +71,7 @@ public class CustomerServiceImpl implements CustomerService<Customer> {
         if (isCreditCardDelete && isDemandAccountDelete && isSavingsAccountDelete) {
             customerRepository.delete(deletedCustomer);
         } else {
-            throw new CustomerCouldNotDeletedException("Customer could not deleted .");
+            throw new CustomerCouldNotDeletedException(ErrorMessages.CUSTOMER_COULD_NOT_DELETED);
         }
     }
 

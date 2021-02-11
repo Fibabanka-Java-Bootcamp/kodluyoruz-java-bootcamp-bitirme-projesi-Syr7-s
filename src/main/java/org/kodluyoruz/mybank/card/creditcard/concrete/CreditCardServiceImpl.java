@@ -9,6 +9,7 @@ import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccountServiceImpl;
 import org.kodluyoruz.mybank.utilities.debtprocess.Debt;
+import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,7 @@ public class CreditCardServiceImpl implements CreditCardService<CreditCard> {
         if (creditCard != null) {
             return creditCard;
         } else {
-            throw new CreditCardNotCreatedException("CreditCard is not created.");
+            throw new CreditCardNotCreatedException(ErrorMessages.CARD_COULD_NOT_CREATED);
         }
     }
 
@@ -64,7 +65,7 @@ public class CreditCardServiceImpl implements CreditCardService<CreditCard> {
             extractOfAccountService.update(extractOfAccount);
             return creditCardRepository.save(creditCard);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BankCard info is not correct.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
         }
     }
 }

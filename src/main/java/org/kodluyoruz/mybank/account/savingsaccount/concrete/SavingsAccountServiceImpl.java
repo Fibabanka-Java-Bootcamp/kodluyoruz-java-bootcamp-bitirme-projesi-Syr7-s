@@ -19,6 +19,7 @@ import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.utilities.debtprocess.Debt;
 import org.kodluyoruz.mybank.utilities.generate.accountgenerate.Account;
 import org.kodluyoruz.mybank.utilities.generate.ibangenerate.Iban;
+import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -81,16 +82,16 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
         if (savingsAccount != null) {
             return savingsAccount;
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Savings Account is not found!(AccountIBAN)");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND);
         }
     }
 
     @Override
     public void delete(long accountNumber) {
         SavingsAccount savingsAccount = get(accountNumber)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND));
         if (savingsAccount.getSavingsAccountBalance() != 0) {
-            throw new SavingAccountNotDeletedException("Savings Account is not deleted.Because you have money in your account.");
+            throw new SavingAccountNotDeletedException(ErrorMessages.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT);
         } else {
             savingsAccountRepository.delete(savingsAccount);
         }
@@ -99,42 +100,42 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
     @Override
     public SavingsAccount depositMoney(long bankCardAccountNumber, long accountNumber, int depositMoney) {
         SavingsAccountDto savingsAccountDto = get(accountNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toSavingsAccountDto();
-        if ( savingsAccountDto.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber) {
+                new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
+        if (savingsAccountDto.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber) {
             int balance = savingsAccountDto.getSavingsAccountBalance();
             savingsAccountDto.setSavingsAccountBalance(balance + depositMoney);
             return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
         } else {
-            throw new BankCardNotMatchException("BankCard not matched to the accountIBAN.");
+            throw new BankCardNotMatchException(ErrorMessages.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT);
         }
     }
 
     @Override
     public SavingsAccount withDrawMoney(long bankCardAccountNumber, long accountNumber, int withDrawMoney) {
         SavingsAccountDto savingsAccountDto = get(accountNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toSavingsAccountDto();
+                new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
         if (savingsAccountDto.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber) {
             if (savingsAccountDto.getSavingsAccountBalance() < withDrawMoney) {
-                throw new SavingsAccountNotEnoughMoneyException("Not enough money in your account.");
+                throw new SavingsAccountNotEnoughMoneyException(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
             } else {
                 savingsAccountDto.setSavingsAccountBalance(savingsAccountDto.getSavingsAccountBalance() - withDrawMoney);
                 return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
             }
         } else {
-            throw new BankCardNotMatchException("BankCard not matched to the accountIBAN.");
+            throw new BankCardNotMatchException(ErrorMessages.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT);
         }
     }
 
     @Override
     public SavingsAccount payDebtWithAccount(long accountNumber, long creditCardNumber, int creditCardDebt, int minimumPaymentAmount) {
         SavingsAccountDto savingsAccountDto = get(accountNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toSavingsAccountDto();
+                new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
         CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
         ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
         double money = String.valueOf(savingsAccountDto.getSavingsAccountCurrency()).equals(String.valueOf(creditCard.getCurrency())) ?
                 (creditCardDebt + minimumPaymentAmount) : (creditCardDebt + minimumPaymentAmount) * Exchange.getConvert.apply(String.valueOf(creditCard.getCurrency()))
                 .getRates().get(String.valueOf(savingsAccountDto.getSavingsAccountCurrency()));
-        savingsAccountDto.setSavingsAccountBalance((int) (savingsAccountDto.getSavingsAccountBalance()-money));
+        savingsAccountDto.setSavingsAccountBalance((int) (savingsAccountDto.getSavingsAccountBalance() - money));
         Debt.debtProcess(creditCardDebt, minimumPaymentAmount, creditCard, extractOfAccount);
         extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
         extractOfAccount.setMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPaymentAmount));

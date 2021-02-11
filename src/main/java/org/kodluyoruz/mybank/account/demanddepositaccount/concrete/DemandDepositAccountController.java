@@ -3,6 +3,7 @@ package org.kodluyoruz.mybank.account.demanddepositaccount.concrete;
 import javafx.scene.control.Pagination;
 import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountService;
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotDeletedException;
+import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class DemandDepositAccountController {
     @GetMapping("/{accountNumber}")
     public DemandDepositAccountDto getDemandDepositAccount(@PathVariable("accountNumber") long accountNumber) {
         return demandDepositAccountService.get(accountNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found.")).toDemandDepositAccountDto();
+                new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toDemandDepositAccountDto();
     }
 
     @GetMapping(value = "/accounts", params = {"page", "size"})
@@ -93,7 +94,7 @@ public class DemandDepositAccountController {
         } catch (DemandDepositAccountNotDeletedException exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
         } catch (RuntimeException exception) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.SERVER_ERROR);
         }
     }
 }

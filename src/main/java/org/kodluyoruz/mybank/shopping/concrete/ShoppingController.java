@@ -1,6 +1,7 @@
 package org.kodluyoruz.mybank.shopping.concrete;
 
 import org.kodluyoruz.mybank.shopping.abstrct.ShoppingService;
+import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class ShoppingController {
                     .toUri();
             return ResponseEntity.created(location).build();
         }catch (Exception exception){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"An Error Occurred");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.AN_ERROR_OCCURRED);
         }
     }
 

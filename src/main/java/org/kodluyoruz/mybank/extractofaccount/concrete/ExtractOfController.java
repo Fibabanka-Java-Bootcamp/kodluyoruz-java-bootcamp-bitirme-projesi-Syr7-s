@@ -3,6 +3,7 @@ package org.kodluyoruz.mybank.extractofaccount.concrete;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
 import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountService;
+import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -27,13 +28,13 @@ public class ExtractOfController {
             extractOfAccountDto.setCreditCard(creditCard);
             return extractOfAccountService.create(extractOfAccountDto.toExtractOfAccount()).toExtractOfAccountDto();
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CreditCard info is not correct.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
         }
 
     }
 
     @GetMapping("/{extractNO}/extract")
     public ExtractOfAccountDto get(@PathVariable("extractNO") int extractNO) {
-        return extractOfAccountService.get(extractNO).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Extract is not found")).toExtractOfAccountDto();
+        return extractOfAccountService.get(extractNO).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,ErrorMessages.EXTRACT_OF_ACCOUNT_COULD_NOT_FOUND)).toExtractOfAccountDto();
     }
 }

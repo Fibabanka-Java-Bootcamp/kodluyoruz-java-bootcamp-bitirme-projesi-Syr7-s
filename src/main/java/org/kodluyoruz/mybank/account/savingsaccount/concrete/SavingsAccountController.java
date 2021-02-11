@@ -2,6 +2,7 @@ package org.kodluyoruz.mybank.account.savingsaccount.concrete;
 
 import org.kodluyoruz.mybank.account.savingsaccount.abtrct.SavingsAccountService;
 import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingAccountNotDeletedException;
+import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class SavingsAccountController {
     @GetMapping("/{accountNumber}")
     public SavingsAccountDto get(@PathVariable("accountNumber") long accountNumber) {
         return savingsAccountService.get(accountNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Savings Account is not found")).toSavingsAccountDto();
+                new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
     }
 
     @GetMapping(value = "/accounts", params = {"page", "size"})
@@ -73,7 +74,7 @@ public class SavingsAccountController {
         } catch (SavingAccountNotDeletedException exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
         } catch (RuntimeException exception) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.SERVER_ERROR);
         }
     }
 }

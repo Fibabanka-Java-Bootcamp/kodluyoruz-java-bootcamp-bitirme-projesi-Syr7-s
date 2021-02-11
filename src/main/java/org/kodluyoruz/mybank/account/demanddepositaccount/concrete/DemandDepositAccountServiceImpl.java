@@ -22,6 +22,7 @@ import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.utilities.debtprocess.Debt;
 import org.kodluyoruz.mybank.utilities.generate.accountgenerate.Account;
 import org.kodluyoruz.mybank.utilities.generate.ibangenerate.Iban;
+import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -82,16 +83,16 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
         if (demandDepositAccount != null) {
             return demandDepositAccount;
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found.(AccountIBAN)");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND);
         }
     }
 
     @Override
     public void delete(long accountNumber) {
         DemandDepositAccount demandDepositAccount = get(accountNumber).
-                orElseThrow(() -> (new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")));
+                orElseThrow(() -> (new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)));
         if (demandDepositAccount.getDemandDepositAccountBalance() > 0) {
-            throw new DemandDepositAccountNotDeletedException("Demand Deposit Account is not deleted. Because have money in your account");
+            throw new DemandDepositAccountNotDeletedException(ErrorMessages.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT);
         } else {
             demandDepositAccountRepository.delete(demandDepositAccount);
         }
@@ -100,28 +101,28 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
     @Override
     public DemandDepositAccount depositMoney(long bankCardAccountNumber, long accountNumber, int depositMoney) {
         DemandDepositAccountDto demandDepositAccountDto = get(accountNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toDemandDepositAccountDto();
+                new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toDemandDepositAccountDto();
         if (demandDepositAccountDto.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber) {
             demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() + depositMoney);
             return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
         } else {
-            throw new BankCardNotMatchException("BankCard not matched to the accountIBAN.");
+            throw new BankCardNotMatchException(ErrorMessages.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT);
         }
     }
 
     @Override
     public DemandDepositAccount withDrawMoney(long bankCardAccountNumber, long accountNumber, int withDrawMoney) {
         DemandDepositAccountDto demandDepositAccountDto = get(accountNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toDemandDepositAccountDto();
+                new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toDemandDepositAccountDto();
         if (demandDepositAccountDto.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber) {
             if (demandDepositAccountDto.getDemandDepositAccountBalance() < withDrawMoney) {
-                throw new DemandDepositAccountNotEnoughMoneyException("Not enough money in your account");
+                throw new DemandDepositAccountNotEnoughMoneyException(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
             } else {
                 demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() - withDrawMoney);
                 return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
             }
         } else {
-            throw new BankCardNotMatchException("BankCard not matched to the accountNumber.");
+            throw new BankCardNotMatchException(ErrorMessages.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT);
         }
     }
 
@@ -130,7 +131,7 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
         DemandDepositAccountDto demandDepositAccountDto = getByAccountIban(depositAccountIBAN).toDemandDepositAccountDto();
         SavingsAccount savingAccount = savingsAccountService.getByAccountIban(savingsAccountIBAN);
         if (demandDepositAccountDto.getDemandDepositAccountBalance() - transferMoney < 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not enough money in your demandDepositAccount");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
         } else {
             double money = String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()).equals(String.valueOf(savingAccount.getSavingsAccountCurrency())) ?
                     transferMoney : transferMoney * Exchange.getConvert.apply(String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()))
@@ -148,7 +149,7 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
             DemandDepositAccountDto fromAccount = getByAccountIban(fromAccountIBAN).toDemandDepositAccountDto();
             DemandDepositAccountDto toAccount = getByAccountIban(toAccountIBAN).toDemandDepositAccountDto();
             if (fromAccount.getDemandDepositAccountBalance() - transferMoney < 0) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not enough money in your demandDepositAccount");
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
             } else {
                 double money = String.valueOf(fromAccount.getDemandDepositAccountCurrency()).equals(String.valueOf(toAccount.getDemandDepositAccountCurrency())) ?
                         transferMoney : transferMoney * Exchange.getConvert.apply(String.valueOf(fromAccount.getDemandDepositAccountCurrency()))
@@ -159,14 +160,14 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
                 return demandDepositAccountRepository.save(fromAccount.toDemandDepositAccount());
             }
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Same account.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNTS_COULD_SAME);
         }
     }
 
     @Override
     public DemandDepositAccount payDebtWithDemandDeposit(long accountNumber, long creditCardNumber, int creditCardDebt, int minimumPaymentAmount) {
         DemandDepositAccountDto demandDepositAccountDto = get(accountNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found")).toDemandDepositAccountDto();
+                new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toDemandDepositAccountDto();
         CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
         ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
         double money = String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()).equals(String.valueOf(creditCard.getCurrency())) ?

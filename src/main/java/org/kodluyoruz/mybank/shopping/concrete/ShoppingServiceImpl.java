@@ -2,8 +2,6 @@ package org.kodluyoruz.mybank.shopping.concrete;
 
 import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountService;
 import org.kodluyoruz.mybank.account.demanddepositaccount.concrete.DemandDepositAccount;
-import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardService;
-import org.kodluyoruz.mybank.card.bankcard.concrete.BankCard;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCardServiceImpl;
@@ -12,6 +10,7 @@ import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.shopping.abstrct.ShoppingService;
 import org.kodluyoruz.mybank.shopping.abstrct.ShoppingRepository;
+import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -51,11 +50,11 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
                 shoppingDto.setCreditCard(creditCard);
                 return shoppingRepository.save(shoppingDto.toShopping());
             } else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CreditLimit is over.");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.CREDIT_CARD_LIMIT_OVER);
             }
 
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CreditCard password is not correct.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
         }
     }
 
@@ -66,14 +65,14 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
             double money = demandDepositAccount.getDemandDepositAccountCurrency().equals(shoppingDto.getCurrency()) ?
                     shoppingDto.getProductPrice() : shoppingDto.getProductPrice() * Exchange.getConvert.apply(String.valueOf(shoppingDto.getCurrency())).getRates().get(String.valueOf(demandDepositAccount.getDemandDepositAccountCurrency()));
             if (demandDepositAccount.getDemandDepositAccountBalance() - money < 0) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Not enough money in your account");
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
             } else {
                 demandDepositAccount.setDemandDepositAccountBalance((int) (demandDepositAccount.getDemandDepositAccountBalance() - money));
                 demandDepositAccountService.update(demandDepositAccount);
                 return shoppingRepository.save(shoppingDto.toShopping());
             }
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BankCard password incorrect");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
         }
 
     }
@@ -84,7 +83,7 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
         if (shopping != null) {
             return shopping;
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.PRODUCT_COULD_NOT_FOUND);
         }
     }
 

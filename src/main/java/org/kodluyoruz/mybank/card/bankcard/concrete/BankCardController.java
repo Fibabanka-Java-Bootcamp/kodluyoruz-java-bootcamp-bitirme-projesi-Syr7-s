@@ -3,6 +3,7 @@ package org.kodluyoruz.mybank.card.bankcard.concrete;
 import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardService;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotDeletedException;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotFoundException;
+import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,9 +55,9 @@ public class BankCardController {
         try {
             bankCardService.delete(bankCardNO);
         } catch (BankCardNotDeletedException exception) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "BankCard is not deleted");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.CARD_COULD_NOT_DELETED);
         } catch (RuntimeException exception) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.SERVER_ERROR);
         }
     }
 }

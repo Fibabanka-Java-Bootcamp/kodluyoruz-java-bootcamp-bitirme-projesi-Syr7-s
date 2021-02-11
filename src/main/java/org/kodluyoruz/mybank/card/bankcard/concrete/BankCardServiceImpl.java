@@ -10,6 +10,7 @@ import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
 
 import org.kodluyoruz.mybank.utilities.generate.accountgenerate.Account;
 import org.kodluyoruz.mybank.utilities.generate.securitycodegenerate.SecurityCodeGenerate;
+import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class BankCardServiceImpl implements BankCardService<BankCard> {
         if (bankCard != null) {
             return bankCard;
         } else {
-            throw new BankCardNotFoundException("BankCard not created from by Customer or Bank");
+            throw new BankCardNotFoundException(ErrorMessages.CARD_COULD_NOT_CREATED);
         }
     }
 
@@ -60,7 +61,7 @@ public class BankCardServiceImpl implements BankCardService<BankCard> {
         try {
             bankCardRepository.delete(bankCard);
         } catch (BankCardNotDeletedException exception) {
-            throw new BankCardNotDeletedException("BankCard not deleted.");
+            throw new BankCardNotDeletedException(ErrorMessages.CARD_COULD_NOT_DELETED);
         }
     }
 

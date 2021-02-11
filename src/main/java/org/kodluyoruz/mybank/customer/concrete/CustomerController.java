@@ -3,6 +3,7 @@ package org.kodluyoruz.mybank.customer.concrete;
 import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
 import org.kodluyoruz.mybank.customer.exception.CustomerCouldNotDeletedException;
 import org.kodluyoruz.mybank.customer.exception.CustomerNotFoundException;
+import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,7 @@ public class CustomerController {
                     .toUri();
             return ResponseEntity.created(location).build();
         } catch (Exception exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "An error occurred");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.AN_ERROR_OCCURRED);
         }
     }
 
@@ -63,9 +64,9 @@ public class CustomerController {
         try {
             return customerService.update(customerDto.toCustomer()).toCustomerDto();
         } catch (CustomerNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "An error occurred");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.AN_ERROR_OCCURRED);
         } catch (Exception exception) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.SERVER_ERROR);
         }
     }
 
@@ -74,9 +75,9 @@ public class CustomerController {
         try {
             customerService.delete(customerTC);
         } catch (CustomerCouldNotDeletedException exception) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "An error occurred");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.AN_ERROR_OCCURRED);
         } catch (Exception exception) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.SERVER_ERROR);
         }
     }
 
