@@ -3,6 +3,8 @@ package org.kodluyoruz.mybank.account.demanddepositaccount.abstrct;
 
 
 import org.kodluyoruz.mybank.account.demanddepositaccount.concrete.DemandDepositAccountDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
@@ -17,4 +19,5 @@ public interface DemandDepositAccountService<T> {
     T moneyTransferBetweenDifferentAccounts(String depositAccountIBAN,String savingsAccountIBAN,int transferMoney);
     T moneyTransferBetweenAccounts(String fromAccountIBAN, String toAccountIBAN, int transferMoney);
     T payDebtWithDemandDeposit(long accountNumber,long creditCardNumber,int creditCardDebt,int minimumPaymentAmount);
+    Page<T> getDemandDepositAccounts(Pageable pageable);
 }

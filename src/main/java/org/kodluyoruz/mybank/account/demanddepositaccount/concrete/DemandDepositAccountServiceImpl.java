@@ -22,6 +22,8 @@ import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.utilities.debtprocess.Debt;
 import org.kodluyoruz.mybank.utilities.generate.accountgenerate.Account;
 import org.kodluyoruz.mybank.utilities.generate.ibangenerate.Iban;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -173,6 +175,11 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
         creditCardService.updateCard(creditCard);
         extractOfAccountService.update(extractOfAccount);
         return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
+    }
+
+    @Override
+    public Page<DemandDepositAccount> getDemandDepositAccounts(Pageable pageable) {
+        return demandDepositAccountRepository.findAll(pageable);
     }
 
 

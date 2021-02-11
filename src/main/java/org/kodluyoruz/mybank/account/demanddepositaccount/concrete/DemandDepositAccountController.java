@@ -1,10 +1,16 @@
 package org.kodluyoruz.mybank.account.demanddepositaccount.concrete;
 
+import javafx.scene.control.Pagination;
 import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountService;
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotDeletedException;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.validation.constraints.Min;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/deposit")
@@ -27,6 +33,13 @@ public class DemandDepositAccountController {
     public DemandDepositAccountDto getDemandDepositAccount(@PathVariable("accountNumber") long accountNumber) {
         return demandDepositAccountService.get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found.")).toDemandDepositAccountDto();
+    }
+
+    @GetMapping(value = "/accounts", params = {"page", "size"})
+    public List<DemandDepositAccountDto> getAccounts(@Min(value = 0) @RequestParam("page") int page, @Min(value = 1) @RequestParam("size") int size) {
+        return demandDepositAccountService.getDemandDepositAccounts(PageRequest.of(page, size)).stream()
+                .map(DemandDepositAccount::toDemandDepositAccountDto)
+                .collect(Collectors.toList());
     }
 
     @PutMapping("/{bankCardAccountNumber}/deposit/{accountNumber}")
