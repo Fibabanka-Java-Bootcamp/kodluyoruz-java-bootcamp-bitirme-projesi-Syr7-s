@@ -8,5 +8,5 @@ public interface CustomerService<T>{
     T getCustomerById(long id);
     T update(T t);
     void delete(long customerId);
-    Page<T> customers(Pageable pageable);
+    Page<T> getCustomers(Pageable pageable);
 }

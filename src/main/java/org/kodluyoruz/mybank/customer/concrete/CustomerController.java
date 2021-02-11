@@ -3,13 +3,17 @@ package org.kodluyoruz.mybank.customer.concrete;
 import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
 import org.kodluyoruz.mybank.customer.exception.CustomerCouldNotDeletedException;
 import org.kodluyoruz.mybank.customer.exception.CustomerNotFoundException;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.constraints.Min;
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -37,34 +41,42 @@ public class CustomerController {
 
     @GetMapping("/{customerTC}")
     public ResponseEntity<CustomerDto> getCustomerByID(@PathVariable("customerTC") long customerTC) {
-        try{
+        try {
             return ResponseEntity.ok(customerService.getCustomerById(customerTC).toCustomerDto());
-        }catch (CustomerNotFoundException exception){
+        } catch (CustomerNotFoundException exception) {
             return ResponseEntity.notFound().build();
-        }catch (Exception exception){
+        } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
+    @GetMapping(value = "/customers", params = {"page", "size"})
+    public List<CustomerDto> getCustomers(@Min(value = 0) @RequestParam("page") int page, @Min(value = 1) @RequestParam("size") int size) {
+        return customerService.getCustomers(PageRequest.of(page, size)).stream()
+                .map(Customer::toCustomerDto)
+                .collect(Collectors.toList());
+    }
+
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public CustomerDto update(@RequestBody CustomerDto customerDto){
-        try{
+    public CustomerDto update(@RequestBody CustomerDto customerDto) {
+        try {
             return customerService.update(customerDto.toCustomer()).toCustomerDto();
-        }catch (CustomerNotFoundException exception){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"An error occurred");
-        }catch (Exception exception){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Server Error");
+        } catch (CustomerNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "An error occurred");
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
         }
     }
+
     @DeleteMapping("/delete/{customerTC}")
-    public void delete(@PathVariable("customerTC") long customerTC){
-        try{
+    public void delete(@PathVariable("customerTC") long customerTC) {
+        try {
             customerService.delete(customerTC);
-        }catch (CustomerCouldNotDeletedException exception){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"An error occurred");
-        }catch (Exception exception){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Server Error");
+        } catch (CustomerCouldNotDeletedException exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "An error occurred");
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
         }
     }
 

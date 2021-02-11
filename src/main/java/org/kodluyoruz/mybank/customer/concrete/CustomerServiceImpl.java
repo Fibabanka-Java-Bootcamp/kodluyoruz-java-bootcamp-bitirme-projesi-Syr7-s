@@ -75,7 +75,7 @@ public class CustomerServiceImpl implements CustomerService<Customer> {
     }
 
     @Override
-    public Page<Customer> customers(Pageable pageable) {
+    public Page<Customer> getCustomers(Pageable pageable) {
         return customerRepository.findAll(pageable);
     }
 
