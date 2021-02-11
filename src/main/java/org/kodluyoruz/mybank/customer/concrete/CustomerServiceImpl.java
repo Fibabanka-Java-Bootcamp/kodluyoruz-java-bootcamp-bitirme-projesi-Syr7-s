@@ -21,8 +21,6 @@ public class CustomerServiceImpl implements CustomerService<Customer> {
         this.customerRepository = customerRepository;
     }
 
-    /*  @Autowired
-      CustomerRepository customerRepository;*/
     @Override
     public Customer create(Customer customer) {
         customer.setCustomerTC(Long.parseLong(TC.generateTC.get()));
