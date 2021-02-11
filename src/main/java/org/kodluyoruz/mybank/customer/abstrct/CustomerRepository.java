@@ -1,6 +1,5 @@
 package org.kodluyoruz.mybank.customer.abstrct;
 
-import org.kodluyoruz.mybank.account.savingsaccount.concrete.SavingsAccount;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
