@@ -8,6 +8,8 @@ import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
 import org.kodluyoruz.mybank.customer.exception.CustomerCouldNotDeletedException;
 import org.kodluyoruz.mybank.customer.exception.CustomerNotFoundException;
 import org.kodluyoruz.mybank.utilities.generate.tcgenerate.TC;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -71,6 +73,12 @@ public class CustomerServiceImpl implements CustomerService<Customer> {
             throw new CustomerCouldNotDeletedException("Customer could not deleted .");
         }
     }
+
+    @Override
+    public Page<Customer> customers(Pageable pageable) {
+        return customerRepository.findAll(pageable);
+    }
+
     private boolean isZero(List<Integer> debts) {
         int counter = 0;
         for (Integer debt : debts) {
