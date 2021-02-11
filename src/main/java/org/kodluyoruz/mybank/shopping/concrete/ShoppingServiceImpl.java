@@ -1,8 +1,13 @@
 package org.kodluyoruz.mybank.shopping.concrete;
 
+import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountService;
+import org.kodluyoruz.mybank.account.demanddepositaccount.concrete.DemandDepositAccount;
+import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardService;
+import org.kodluyoruz.mybank.card.bankcard.concrete.BankCard;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCardServiceImpl;
+import org.kodluyoruz.mybank.exchange.concrete.Exchange;
 import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.shopping.abstrct.ShoppingService;
@@ -18,11 +23,13 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
     private final ShoppingRepository shoppingRepository;
     private final CreditCardService<CreditCard> creditCardService;
     private final ExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
+    private final DemandDepositAccountService<DemandDepositAccount> demandDepositAccountService;
 
-    public ShoppingServiceImpl(ShoppingRepository shoppingRepository, CreditCardServiceImpl creditCardServiceImpl, ExtractOfAccountService<ExtractOfAccount> extractOfAccountService) {
+    public ShoppingServiceImpl(ShoppingRepository shoppingRepository, CreditCardServiceImpl creditCardServiceImpl, ExtractOfAccountService<ExtractOfAccount> extractOfAccountService, DemandDepositAccountService<DemandDepositAccount> demandDepositAccountService) {
         this.shoppingRepository = shoppingRepository;
         this.creditCardService = creditCardServiceImpl;
         this.extractOfAccountService = extractOfAccountService;
+        this.demandDepositAccountService = demandDepositAccountService;
     }
 
     @Override
@@ -53,12 +60,31 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
     }
 
     @Override
+    public Shopping doShoppingByBankCard(long bankCardAccountNumber, long demandDepositAccountNumber, int password, ShoppingDto shoppingDto) {
+        DemandDepositAccount demandDepositAccount = demandDepositAccountService.get(demandDepositAccountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found"));
+        if (demandDepositAccount.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber && demandDepositAccount.getBankCard().getBankCardPassword() == password) {
+            double money = demandDepositAccount.getDemandDepositAccountCurrency().equals(shoppingDto.getCurrency()) ?
+                    shoppingDto.getProductPrice() : shoppingDto.getProductPrice() * Exchange.getConvert.apply(String.valueOf(shoppingDto.getCurrency())).getRates().get(String.valueOf(demandDepositAccount.getDemandDepositAccountCurrency()));
+            if (demandDepositAccount.getDemandDepositAccountBalance() - money < 0) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Not enough money in your account");
+            } else {
+                demandDepositAccount.setDemandDepositAccountBalance((int) (demandDepositAccount.getDemandDepositAccountBalance() - money));
+                demandDepositAccountService.update(demandDepositAccount);
+                return shoppingRepository.save(shoppingDto.toShopping());
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BankCard password incorrect");
+        }
+
+    }
+
+    @Override
     public Shopping getShoppingByProductID(int productID) {
         Shopping shopping = shoppingRepository.findShoppingByProductID(productID);
-        if (shopping != null){
+        if (shopping != null) {
             return shopping;
-        }else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Product not found");
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
         }
     }
 

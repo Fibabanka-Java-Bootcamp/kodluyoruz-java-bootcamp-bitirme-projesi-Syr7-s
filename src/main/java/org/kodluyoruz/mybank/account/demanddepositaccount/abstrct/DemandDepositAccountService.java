@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface DemandDepositAccountService<T> {
     T create(T t);
     T create(long customerID, long bankCardAccountNumber, DemandDepositAccountDto demandDepositAccountDto);
+    T update(T t);
     Optional<T> get(long accountNumber);
     T getByAccountIban(String accountIBAN);
     void delete(long accountNumber);

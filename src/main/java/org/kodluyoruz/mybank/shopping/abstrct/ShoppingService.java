@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 public interface ShoppingService<T> {
     T create(T t);
     T doShoppingByCreditCard(long creditCardNo, int password, ShoppingDto shoppingDto);
+    T doShoppingByBankCard(long banckCardAccountNumber,long demandDepositAccountNumber,int password,ShoppingDto shoppingDto);
     T getShoppingByProductID(int shoppingID);
     Page<T> getAllShopping(Pageable pageable);
 }

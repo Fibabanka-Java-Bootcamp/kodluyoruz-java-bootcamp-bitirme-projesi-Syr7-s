@@ -67,6 +67,11 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
     }
 
     @Override
+    public DemandDepositAccount update(DemandDepositAccount demandDepositAccount) {
+        return demandDepositAccountRepository.save(demandDepositAccount);
+    }
+
+    @Override
     public Optional<DemandDepositAccount> get(long accountNumber) {
         return demandDepositAccountRepository.findById(accountNumber);
     }

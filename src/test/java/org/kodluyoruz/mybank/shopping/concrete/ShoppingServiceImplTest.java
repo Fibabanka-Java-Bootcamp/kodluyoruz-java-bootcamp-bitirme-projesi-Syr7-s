@@ -16,6 +16,7 @@ import org.mockito.quality.Strictness;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class ShoppingServiceImplTest {
@@ -26,20 +27,21 @@ class ShoppingServiceImplTest {
     ShoppingServiceImpl shoppingService;
 
     static Shopping shopping = new Shopping();
+
     @BeforeAll
-    static void init(){
+    static void init() {
         shopping.setProductID(6);
         shopping.setProductType("Technology");
         shopping.setProductName("Phone");
         shopping.setProductPrice(6000);
         shopping.setCurrency(Currency.TRY);
-        shopping.setProductReceiveDate(LocalDate.of(2021,2,9));
+        shopping.setProductReceiveDate(LocalDate.of(2021, 2, 9));
         shopping.setCreditCard(null);
     }
 
     @BeforeEach
     void setUp() {
-        shoppingService = new ShoppingServiceImpl(shoppingRepository,null,null);
+        shoppingService = new ShoppingServiceImpl(shoppingRepository, null, null, null);
         shoppingRepository.save(shopping);
 
         Mockito.when(shoppingRepository.findShoppingByProductID(shopping.getProductID())).thenReturn(shopping);
@@ -47,15 +49,16 @@ class ShoppingServiceImplTest {
     }
 
     @Test
-    void productNamePhone(){
-        assertEquals("Phone",shoppingService
+    void productNamePhone() {
+        assertEquals("Phone", shoppingService
                 .getShoppingByProductID(shopping.getProductID())
                 .getProductName());
     }
+
     @Test
-    void productPriceGreaterThanFiveThousand(){
+    void productPriceGreaterThanFiveThousand() {
         assertTrue(shoppingService
                 .getShoppingByProductID(shopping.getProductID())
-                .getProductPrice()>5000);
+                .getProductPrice() > 5000);
     }
 }

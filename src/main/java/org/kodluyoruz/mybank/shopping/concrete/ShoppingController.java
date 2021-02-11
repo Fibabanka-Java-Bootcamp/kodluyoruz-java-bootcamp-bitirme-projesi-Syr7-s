@@ -37,6 +37,15 @@ public class ShoppingController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"An Error Occurred");
         }
     }
+
+    @PostMapping("/{bankCardAccountNumber}/shopping/{demandDepositAccountNumber}")
+    public ShoppingDto doShoppingWithBankCard(@PathVariable("bankCardAccountNumber") long accountNumber,
+                                              @PathVariable("demandDepositAccountNumber") long demandDepositAccountNumber,
+                                              @RequestParam("password") int password,
+                                              @RequestBody ShoppingDto shoppingDto){
+        return shoppingService.doShoppingByBankCard(accountNumber,demandDepositAccountNumber,password,shoppingDto).toShoppingDto();
+
+    }
     @GetMapping("/{productID}")
     public ResponseEntity<ShoppingDto> getShoppingByProductID(@PathVariable("productID") int productID){
         try{
