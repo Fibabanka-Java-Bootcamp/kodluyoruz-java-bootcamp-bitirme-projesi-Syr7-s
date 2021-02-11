@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ExtractOfControllerTest {
     RestTemplate restTemplate;
     ExtractOfAccount extractOfAccount = new ExtractOfAccount();
-    private String uri = "http://localhost:8080/api/extractofaccount";
+    private final String uri = "http://localhost:8080/api/extractofaccount";
 
     @BeforeEach
     void setUp() {
