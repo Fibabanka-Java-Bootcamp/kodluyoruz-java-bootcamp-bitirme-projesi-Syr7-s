@@ -15,7 +15,6 @@ public class CustomerDto {
     private String customerPhone;
     private String customerEmail;
     private String customerAddress;
-    private boolean customerRemovable;
     private LocalDate customerBirthDate;
 
     public Customer toCustomer(){
@@ -27,7 +26,6 @@ public class CustomerDto {
                 .customerPhone(this.customerPhone)
                 .customerEmail(this.customerEmail)
                 .customerAddress(this.customerAddress)
-                .customerRemovable(this.customerRemovable)
                 .customerBirthDate(this.customerBirthDate)
                 .build();
 

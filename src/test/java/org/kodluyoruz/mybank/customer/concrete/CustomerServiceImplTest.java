@@ -37,7 +37,6 @@ class CustomerServiceImplTest {
         customer.setCustomerPhone("5399132765");
         customer.setCustomerEmail("musasayar67@gmail.com");
         customer.setCustomerAddress("ISTANBUL");
-        customer.setCustomerRemovable(false);
         customer.setCustomerBirthDate(LocalDate.of(1996, 8, 25));
     }
 

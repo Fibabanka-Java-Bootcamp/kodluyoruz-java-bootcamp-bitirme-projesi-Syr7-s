@@ -29,7 +29,6 @@ public class Customer {
     private String customerPhone;
     private String customerEmail;
     private String customerAddress;
-    private boolean customerRemovable;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate customerBirthDate;
 
@@ -53,7 +52,6 @@ public class Customer {
                 .customerPhone(this.customerPhone)
                 .customerEmail(this.customerEmail)
                 .customerAddress(this.customerAddress)
-                .customerRemovable(this.customerRemovable)
                 .customerBirthDate(this.customerBirthDate)
                 .build();
     }
