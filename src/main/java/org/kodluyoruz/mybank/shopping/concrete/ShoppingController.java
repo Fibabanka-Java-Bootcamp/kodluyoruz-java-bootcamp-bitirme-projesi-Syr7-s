@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/shopping")
+@RequestMapping("/api/v1/shopping")
 public class ShoppingController {
     private final ShoppingService<Shopping> shoppingService;
 
