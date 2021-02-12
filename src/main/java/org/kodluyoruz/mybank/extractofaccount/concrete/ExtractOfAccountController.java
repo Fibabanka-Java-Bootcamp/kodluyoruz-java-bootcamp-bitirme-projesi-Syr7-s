@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("/api/extractofaccount")
-public class ExtractOfController {
+@RequestMapping("/api/v1/extractofaccount")
+public class ExtractOfAccountController {
     private final ExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
     private final CreditCardService<CreditCard> creditCardService;
 
-    public ExtractOfController(ExtractOfAccountService<ExtractOfAccount> extractOfAccountService, CreditCardService<CreditCard> creditCardService) {
+    public ExtractOfAccountController(ExtractOfAccountService<ExtractOfAccount> extractOfAccountService, CreditCardService<CreditCard> creditCardService) {
         this.extractOfAccountService = extractOfAccountService;
         this.creditCardService = creditCardService;
     }

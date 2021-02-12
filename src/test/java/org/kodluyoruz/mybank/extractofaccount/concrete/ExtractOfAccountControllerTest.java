@@ -7,10 +7,10 @@ import org.springframework.web.client.RestTemplate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ExtractOfControllerTest {
+class ExtractOfAccountControllerTest {
     RestTemplate restTemplate;
     ExtractOfAccount extractOfAccount = new ExtractOfAccount();
-    private final String uri = "http://localhost:8080/api/extractofaccount";
+    private final String uri = "http://localhost:8080/api/v1/extractofaccount";
 
     @BeforeEach
     void setUp() {
