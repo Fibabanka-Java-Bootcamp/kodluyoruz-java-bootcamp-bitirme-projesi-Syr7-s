@@ -26,7 +26,7 @@ class CustomerControllerTest {
     @Test
     void create() {
         customer.setCustomerName("Ugur");
-        URI location = restTemplate.postForLocation("http://localhost:8080/api/customer", customer);
+        URI location = restTemplate.postForLocation("http://localhost:8080/api/v1/customer", customer);
         assert location != null;
         Customer editedCustomer = restTemplate.getForObject(location, Customer.class);
         assert editedCustomer != null;
@@ -36,18 +36,10 @@ class CustomerControllerTest {
 
     @Test
     void getCustomerById() {
-        Customer customer = restTemplate.getForObject("http://localhost:8080/api/customer/32046912223",Customer.class);
+        Customer customer = restTemplate.getForObject("http://localhost:8080/api/v1/customer/32046912223",Customer.class);
         assert customer != null;
         assertEquals("Isa",customer.getCustomerName());
     }
-   /*
-    @Test
-    void customerDelete(){
-        String uri = "http://localhost:8080/api/customer/delete/{customerTC}";
-        Map<String,Long> params = new HashMap<>();
-        params.put("customerTC",81199696053L);
-        restTemplate.delete(uri,params);
-    }*/
 
 
 }

@@ -30,7 +30,7 @@ public class CustomerController {
     public ResponseEntity<URI> create(@RequestBody CustomerDto customerDto) {
         try {
             CustomerDto editedCustomer = customerService.create(customerDto.toCustomer()).toCustomerDto();
-            URI location = ServletUriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/customer")
+            URI location = ServletUriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/v1/customer")
                     .path("/{customerTC}")
                     .buildAndExpand(editedCustomer.toCustomer().getCustomerTC())
                     .toUri();
