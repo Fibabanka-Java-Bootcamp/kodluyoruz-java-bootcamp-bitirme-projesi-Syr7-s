@@ -9,8 +9,6 @@ import org.springframework.web.client.RestTemplate;
 
 
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
