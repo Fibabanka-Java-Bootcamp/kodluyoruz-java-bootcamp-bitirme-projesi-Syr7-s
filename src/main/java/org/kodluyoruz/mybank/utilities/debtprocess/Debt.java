@@ -18,6 +18,8 @@ public class Debt {
             extractOfAccount.setTermDebt(Math.abs(extractOfAccount.getTermDebt() - payMoney));
             zeroSet(extractOfAccount);
         }
+        extractOfAccount.setAccountCutOffTime(extractOfAccount.getAccountCutOffTime().plusMonths(1));
+        extractOfAccount.setPaymentDueTo(extractOfAccount.getPaymentDueTo().plusMonths(1));
     }
 
     private static void zeroSet(ExtractOfAccount extractOfAccount) {
