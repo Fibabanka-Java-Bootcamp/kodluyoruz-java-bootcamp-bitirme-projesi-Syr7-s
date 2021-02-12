@@ -1,6 +1,5 @@
 package org.kodluyoruz.mybank.account.demanddepositaccount.concrete;
 
-import javafx.scene.control.Pagination;
 import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountService;
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotDeletedException;
 import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/deposit")
+@RequestMapping("/api/v1/deposit")
 public class DemandDepositAccountController {
 
     private final DemandDepositAccountService<DemandDepositAccount> demandDepositAccountService;
