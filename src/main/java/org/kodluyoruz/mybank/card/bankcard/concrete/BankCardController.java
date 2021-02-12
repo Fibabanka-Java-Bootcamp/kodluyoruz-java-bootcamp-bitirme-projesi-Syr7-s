@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/bankcard")
+@RequestMapping("/api/v1/bankcard")
 public class BankCardController {
     private final BankCardService<BankCard> bankCardService;
 
