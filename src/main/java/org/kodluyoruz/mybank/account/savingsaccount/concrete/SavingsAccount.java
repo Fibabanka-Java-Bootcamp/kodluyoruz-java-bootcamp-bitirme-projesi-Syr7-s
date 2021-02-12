@@ -22,6 +22,7 @@ public class SavingsAccount {
     private long savingsAccountNumber;
     private String savingsAccountIBAN;
     private int savingsAccountBalance;
+    @Enumerated(EnumType.STRING)
     private Currency savingsAccountCurrency;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate savingsAccountCreationDate;
