@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/card")
+@RequestMapping("/api/v1/card")
 public class CreditCardController {
     private final CreditCardService<CreditCard> creditCardService;
     private final CustomerService<Customer> customerService;
