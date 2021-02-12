@@ -22,7 +22,6 @@ public class ExtractOfAccountDto {
     private double totalInterestAmount;
     private LocalDate accountCutOffTime;
     private LocalDate paymentDueTo;
-    private double bankRate;
     private CreditCard creditCard;
 
     public ExtractOfAccount toExtractOfAccount(){
@@ -40,7 +39,6 @@ public class ExtractOfAccountDto {
                 .totalInterestAmount(this.totalInterestAmount)
                 .accountCutOffTime(this.accountCutOffTime)
                 .paymentDueTo(this.paymentDueTo)
-                .bankRate(this.bankRate)
                 .creditCard(this.creditCard)
                 .build();
     }

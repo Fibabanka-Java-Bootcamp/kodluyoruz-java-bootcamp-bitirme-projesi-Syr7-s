@@ -32,7 +32,7 @@ public class ExtractOfAccount {
     private LocalDate accountCutOffTime;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate paymentDueTo;
-    private double bankRate;
+
     @OneToOne
     @JsonIgnore
     @JoinColumn(name = "creditCardNo",referencedColumnName = "cardAccountNumber")
@@ -53,7 +53,6 @@ public class ExtractOfAccount {
                 .totalInterestAmount(this.totalInterestAmount)
                 .accountCutOffTime(this.accountCutOffTime)
                 .paymentDueTo(this.paymentDueTo)
-                .bankRate(this.bankRate)
                 .creditCard(this.creditCard)
                 .build();
     }

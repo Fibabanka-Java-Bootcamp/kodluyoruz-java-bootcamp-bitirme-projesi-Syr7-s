@@ -46,7 +46,6 @@ class ExtractOfAccountServiceImplTest {
         extractOfAccount.setTotalInterestAmount(28.339);
         extractOfAccount.setAccountCutOffTime(LocalDate.of(2021, 2, 18));
         extractOfAccount.setPaymentDueTo(LocalDate.of(2021, 2, 28));
-        extractOfAccount.setBankRate(2.12);
         extractOfAccount.setCreditCard(null);
     }
 
