@@ -29,7 +29,7 @@ public class ShoppingController {
     public ResponseEntity<URI> doShopping(@PathVariable("creditCardNO") long creditCardNO, @RequestParam("password") int password, @RequestBody ShoppingDto shoppingDto) {
         try{
             ShoppingDto editedShopping = shoppingService.doShoppingByCreditCard(creditCardNO,password,shoppingDto).toShoppingDto();
-            URI location = ServletUriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/shopping")
+            URI location = ServletUriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/v1/shopping")
                     .path("/{productID}")
                     .buildAndExpand(editedShopping.getProductID())
                     .toUri();
