@@ -176,7 +176,9 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
         if (isMatchBankCardNumberAndPasswordWithAccount(demandDepositAccountDto, bankCardAccountNumber, password)) {
             CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
             ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
-            double money = Exchange.convertProcess(creditCard.getCurrency(), demandDepositAccountDto.getDemandDepositAccountCurrency(), (creditCardDebt + minimumPaymentAmount));
+            double money = creditCard.getCardDebt() == creditCardDebt ?
+                    Exchange.convertProcess(creditCard.getCurrency(), demandDepositAccountDto.getDemandDepositAccountCurrency(), creditCardDebt) :
+                    Exchange.convertProcess(creditCard.getCurrency(), demandDepositAccountDto.getDemandDepositAccountCurrency(), (creditCardDebt + minimumPaymentAmount));
             demandDepositAccountDto.setDemandDepositAccountBalance((int) (demandDepositAccountDto.getDemandDepositAccountBalance() - money));
             Debt.debtProcess(creditCardDebt, minimumPaymentAmount, creditCard, extractOfAccount);
             extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
