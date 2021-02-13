@@ -1,5 +1,6 @@
 package org.kodluyoruz.mybank.card.bankcard.concrete;
 
+import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardService;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotDeletedException;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotFoundException;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 public class BankCardServiceImpl implements BankCardService<BankCard> {
     private final BankCardRepository bankCardRepository;
     private final CustomerService<Customer> customerService;
+    private static final Logger log = Logger.getLogger(BankCardServiceImpl.class);
 
     public BankCardServiceImpl(BankCardRepository bankCardRepository, CustomerService<Customer> customerService) {
         this.bankCardRepository = bankCardRepository;
@@ -46,6 +48,7 @@ public class BankCardServiceImpl implements BankCardService<BankCard> {
         if (bankCard != null) {
             return bankCard;
         } else {
+            log.error(ErrorMessages.CARD_COULD_NOT_DELETED);
             throw new BankCardNotFoundException(ErrorMessages.CARD_COULD_NOT_CREATED);
         }
     }
@@ -61,6 +64,7 @@ public class BankCardServiceImpl implements BankCardService<BankCard> {
         try {
             bankCardRepository.delete(bankCard);
         } catch (BankCardNotDeletedException exception) {
+            log.error(ErrorMessages.CARD_COULD_NOT_DELETED);
             throw new BankCardNotDeletedException(ErrorMessages.CARD_COULD_NOT_DELETED);
         }
     }

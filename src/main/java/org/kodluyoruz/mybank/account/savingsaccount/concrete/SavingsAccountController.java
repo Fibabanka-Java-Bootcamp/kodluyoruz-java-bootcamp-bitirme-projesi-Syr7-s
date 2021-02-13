@@ -1,5 +1,6 @@
 package org.kodluyoruz.mybank.account.savingsaccount.concrete;
 
+import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.account.savingsaccount.abtrct.SavingsAccountService;
 import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingAccountNotDeletedException;
 import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/savings")
 public class SavingsAccountController {
     private final SavingsAccountService<SavingsAccount> savingsAccountService;
+    private static final Logger log = Logger.getLogger(SavingsAccountController.class);
 
     public SavingsAccountController(SavingsAccountService<SavingsAccount> savingsAccountService) {
         this.savingsAccountService = savingsAccountService;
@@ -24,12 +26,13 @@ public class SavingsAccountController {
     @PostMapping("/{customerTC}/account/{bankCardAccountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public SavingsAccountDto create(@PathVariable("customerTC") long customerTC, @PathVariable("bankCardAccountNumber") long bankCardAccountNumber, @RequestBody SavingsAccountDto savingsAccountDto) {
-
+        log.info("Savings account will create.");
         return savingsAccountService.create(customerTC, bankCardAccountNumber, savingsAccountDto).toSavingsAccountDto();
     }
 
     @GetMapping("/{accountNumber}")
     public SavingsAccountDto get(@PathVariable("accountNumber") long accountNumber) {
+        log.info(accountNumber + " will get");
         return savingsAccountService.get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
     }
@@ -47,8 +50,8 @@ public class SavingsAccountController {
                                               @PathVariable("accountNumber") long accountNumber,
                                               @RequestParam("password") int password,
                                               @RequestParam("depositMoney") int depositMoney) {
-
-        return savingsAccountService.depositMoney(bankCardAccountNumber,password, accountNumber, depositMoney).toSavingsAccountDto();
+        log.info("Deposit Money process will do.");
+        return savingsAccountService.depositMoney(bankCardAccountNumber, password, accountNumber, depositMoney).toSavingsAccountDto();
     }
 
     @PutMapping("/{bankCardAccountNumber}/withDrawMoney/{accountNumber}")
@@ -57,8 +60,8 @@ public class SavingsAccountController {
                                                            @PathVariable("accountNumber") long accountNumber,
                                                            @RequestParam("password") int password,
                                                            @RequestParam("withDrawMoney") int withDrawMoney) {
-
-        return savingsAccountService.withDrawMoney(bankCardAccountNumber,password, accountNumber, withDrawMoney).toSavingsAccountDto();
+        log.info("With draw money process will do.");
+        return savingsAccountService.withDrawMoney(bankCardAccountNumber, password, accountNumber, withDrawMoney).toSavingsAccountDto();
     }
 
     @PutMapping("/{bankCardAccountNumber}/bankCard/{accountNumber}/payDebt/{creditCardNumber}")
@@ -69,17 +72,20 @@ public class SavingsAccountController {
                                                @RequestParam("password") int password,
                                                @RequestParam("creditCardDebt") int creditCardDebt,
                                                @RequestParam("minimumPaymentAmount") int minimumPaymentAmount) {
-
-        return savingsAccountService.payDebtWithAccount(bankCardAccountNumber,password,accountNumber, creditCardNumber, creditCardDebt, minimumPaymentAmount).toSavingsAccountDto();
+        log.info("Debt will payment with savings account.");
+        return savingsAccountService.payDebtWithAccount(bankCardAccountNumber, password, accountNumber, creditCardNumber, creditCardDebt, minimumPaymentAmount).toSavingsAccountDto();
     }
 
     @DeleteMapping("/{accountNumber}/process")
     public void savingAccountDelete(@PathVariable("accountNumber") long accountNumber) {
         try {
+            log.info(accountNumber + " will delete.");
             savingsAccountService.delete(accountNumber);
         } catch (SavingAccountNotDeletedException exception) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
+            log.error(ErrorMessages.CARD_COULD_NOT_DELETED);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.CARD_COULD_NOT_DELETED);
         } catch (RuntimeException exception) {
+            log.error(ErrorMessages.SERVER_ERROR);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.SERVER_ERROR);
         }
     }

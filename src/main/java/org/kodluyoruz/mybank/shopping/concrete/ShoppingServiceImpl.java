@@ -1,5 +1,6 @@
 package org.kodluyoruz.mybank.shopping.concrete;
 
+import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountService;
 import org.kodluyoruz.mybank.account.demanddepositaccount.concrete.DemandDepositAccount;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardService;
@@ -23,6 +24,7 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
     private final CreditCardService<CreditCard> creditCardService;
     private final ExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
     private final DemandDepositAccountService<DemandDepositAccount> demandDepositAccountService;
+    private static final Logger log = Logger.getLogger(ShoppingServiceImpl.class);
 
     public ShoppingServiceImpl(ShoppingRepository shoppingRepository, CreditCardServiceImpl creditCardServiceImpl, ExtractOfAccountService<ExtractOfAccount> extractOfAccountService, DemandDepositAccountService<DemandDepositAccount> demandDepositAccountService) {
         this.shoppingRepository = shoppingRepository;
@@ -50,10 +52,12 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
                 shoppingDto.setCreditCard(creditCard);
                 return shoppingRepository.save(shoppingDto.toShopping());
             } else {
+                log.error(ErrorMessages.CREDIT_CARD_LIMIT_OVER);
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.CREDIT_CARD_LIMIT_OVER);
             }
 
         } else {
+            log.error(ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
         }
     }
@@ -62,8 +66,9 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
     public Shopping doShoppingByBankCard(long bankCardAccountNumber, long demandDepositAccountNumber, int password, ShoppingDto shoppingDto) {
         DemandDepositAccount demandDepositAccount = demandDepositAccountService.get(demandDepositAccountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found"));
         if (demandDepositAccount.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber && demandDepositAccount.getBankCard().getBankCardPassword() == password) {
-            double money = Exchange.convertProcess(shoppingDto.getCurrency(),demandDepositAccount.getDemandDepositAccountCurrency(),shoppingDto.getProductPrice());
+            double money = Exchange.convertProcess(shoppingDto.getCurrency(), demandDepositAccount.getDemandDepositAccountCurrency(), shoppingDto.getProductPrice());
             if (demandDepositAccount.getDemandDepositAccountBalance() - money < 0) {
+                log.error(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
             } else {
                 demandDepositAccount.setDemandDepositAccountBalance((int) (demandDepositAccount.getDemandDepositAccountBalance() - money));
@@ -71,7 +76,8 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
                 return shoppingRepository.save(shoppingDto.toShopping());
             }
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
+            log.error(ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
         }
 
     }
@@ -82,6 +88,7 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
         if (shopping != null) {
             return shopping;
         } else {
+            log.error(ErrorMessages.PRODUCT_COULD_NOT_FOUND);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.PRODUCT_COULD_NOT_FOUND);
         }
     }

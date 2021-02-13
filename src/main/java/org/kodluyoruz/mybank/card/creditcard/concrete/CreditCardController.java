@@ -1,6 +1,7 @@
 package org.kodluyoruz.mybank.card.creditcard.concrete;
 
 
+import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.exception.CreditCardNotCreatedException;
 import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 public class CreditCardController {
     private final CreditCardService<CreditCard> creditCardService;
     private final CustomerService<Customer> customerService;
-
+    private static final Logger log = Logger.getLogger(CreditCardController.class);
 
     public CreditCardController(CreditCardService<CreditCard> creditCardService, CustomerService<Customer> customerService) {
         this.creditCardService = creditCardService;
@@ -37,6 +38,7 @@ public class CreditCardController {
         creditCardDto.setCardNameSurname(customerDto.getCustomerName() + " " + customerDto.getCustomerLastname());
         creditCardDto.setSecurityCode(SecurityCodeGenerate.securityCode.get());
         creditCardDto.setCustomer(customerDto.toCustomer());
+        log.info("Credit card will create.");
         return creditCardService.create(creditCardDto.toCreditCard()).toCreditCardDto();
     }
 
@@ -50,6 +52,7 @@ public class CreditCardController {
     @GetMapping("/{creditCardNo}")
     public ResponseEntity<CreditCardDto> get(@PathVariable("creditCardNo") long creditCardNo) {
         try {
+            log.info("Credit card info will get.");
             return ResponseEntity.ok(creditCardService.getCreditCard(creditCardNo).toCreditCardDto());
         } catch (CreditCardNotCreatedException exception) {
             return ResponseEntity.notFound().build();
@@ -74,16 +77,16 @@ public class CreditCardController {
                                            @Min(value = 4) @RequestParam("password") int password,
                                            @RequestParam("payMoney") int payMoney,
                                            @RequestParam("minimumPayment") double minimumPayment) {
-
+        log.info("Debt will payment with credit card where in ATM.");
         return creditCardService.payCreditCardDebt(creditCardNO, password, payMoney, minimumPayment).toCreditCardDto();
     }
 
     @PutMapping("/withoutCard/{creditCardNO}")
     @ResponseStatus(HttpStatus.CREATED)
     public CreditCardDto debtPaymentWithoutCreditCard(@PathVariable("creditCardNO") long creditCardNO,
-                                                       @RequestParam("payMoney") int payMoney,
-                                                       @RequestParam("minimumPayment") double minimumPayment) {
-
+                                                      @RequestParam("payMoney") int payMoney,
+                                                      @RequestParam("minimumPayment") double minimumPayment) {
+        log.info("Debt will payment without credit card in ATM.");
         return creditCardService.debtPaymentWithoutCreditCard(creditCardNO, payMoney, minimumPayment).toCreditCardDto();
     }
 }

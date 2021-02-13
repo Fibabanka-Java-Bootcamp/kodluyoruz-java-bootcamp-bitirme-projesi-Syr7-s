@@ -1,5 +1,6 @@
 package org.kodluyoruz.mybank.account.demanddepositaccount.concrete;
 
+import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountService;
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotDeletedException;
 import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/deposit")
 public class DemandDepositAccountController {
-
+    private static final Logger log = Logger.getLogger(DemandDepositAccountController.class);
     private final DemandDepositAccountService<DemandDepositAccount> demandDepositAccountService;
 
     public DemandDepositAccountController(DemandDepositAccountService<DemandDepositAccount> demandDepositAccountService) {
@@ -25,12 +26,13 @@ public class DemandDepositAccountController {
     @PostMapping("/{customerTC}/account/{bankCardAccountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto create(@PathVariable("customerTC") long customerTC, @PathVariable("bankCardAccountNumber") long bankCardAccountNumber, @RequestBody DemandDepositAccountDto demandDepositAccountDto) {
-
+        log.info("Account was created.");
         return demandDepositAccountService.create(customerTC, bankCardAccountNumber, demandDepositAccountDto).toDemandDepositAccountDto();
     }
 
     @GetMapping("/{accountNumber}")
     public DemandDepositAccountDto getDemandDepositAccount(@PathVariable("accountNumber") long accountNumber) {
+        log.info(accountNumber+" account was got.");
         return demandDepositAccountService.get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toDemandDepositAccountDto();
     }
@@ -48,7 +50,7 @@ public class DemandDepositAccountController {
                                                      @PathVariable("accountNumber") long accountNumber,
                                                      @RequestParam("password") int password,
                                                      @RequestParam("depositMoney") int depositMoney) {
-
+        log.info("Deposit Money process was did.");
         return demandDepositAccountService.depositMoney(bankCardAccountNumber, password, accountNumber, depositMoney).toDemandDepositAccountDto();
     }
 
@@ -58,18 +60,18 @@ public class DemandDepositAccountController {
                                                                  @PathVariable("accountNumber") long accountNumber,
                                                                  @RequestParam("password") int password,
                                                                  @RequestParam("withDrawMoney") int withDrawMoney) {
-
+        log.info("With draw money process was did.");
         return demandDepositAccountService.withDrawMoney(bankCardAccountNumber, password, accountNumber, withDrawMoney).toDemandDepositAccountDto();
     }
 
     @PutMapping("/{bankCardAccountNO}/bankCard/{depositAccountIBAN}/transfer/{savingsAccountIBAN}")
     @ResponseStatus(HttpStatus.CREATED)
-    public DemandDepositAccountDto getMoneyTransfer(@PathVariable("depositAccountIBAN") String depositAccountIBAN,
+    public DemandDepositAccountDto getMoneyTransfer(@PathVariable("bankCardAccountNO") long bankCardAccountNumber,
+                                                    @PathVariable("depositAccountIBAN") String depositAccountIBAN,
                                                     @PathVariable("savingsAccountIBAN") String savingsAccountIBAN,
-                                                    @RequestParam("bankCardAccountNO") long bankCardAccountNumber,
                                                     @RequestParam("password") int password,
                                                     @RequestParam("transferMoney") int transferMoney) {
-
+        log.info("Money transfer process was did.");
         return demandDepositAccountService.moneyTransferBetweenDifferentAccounts(bankCardAccountNumber, password, depositAccountIBAN, savingsAccountIBAN, transferMoney).toDemandDepositAccountDto();
     }
 
@@ -99,10 +101,13 @@ public class DemandDepositAccountController {
     @DeleteMapping("/{accountNumber}/process")
     public void demandDepositAccountDelete(@PathVariable("accountNumber") long accountNumber) {
         try {
+            log.info(accountNumber+" number will deleted.");
             demandDepositAccountService.delete(accountNumber);
         } catch (DemandDepositAccountNotDeletedException exception) {
+            log.error(exception.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
         } catch (RuntimeException exception) {
+            log.error(exception.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.SERVER_ERROR);
         }
     }

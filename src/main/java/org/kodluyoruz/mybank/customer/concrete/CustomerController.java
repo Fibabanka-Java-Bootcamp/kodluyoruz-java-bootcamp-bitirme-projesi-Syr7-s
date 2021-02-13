@@ -1,5 +1,6 @@
 package org.kodluyoruz.mybank.customer.concrete;
 
+import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
 import org.kodluyoruz.mybank.customer.exception.CustomerCouldNotDeletedException;
 import org.kodluyoruz.mybank.customer.exception.CustomerNotFoundException;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/customer")
 public class CustomerController {
     private final CustomerService<Customer> customerService;
+    private static final Logger log = Logger.getLogger(CustomerController.class);
 
     public CustomerController(CustomerService<Customer> customerService) {
         this.customerService = customerService;
@@ -29,6 +31,7 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<URI> create(@RequestBody CustomerDto customerDto) {
         try {
+            log.info("Customer will create.");
             CustomerDto editedCustomer = customerService.create(customerDto.toCustomer()).toCustomerDto();
             URI location = ServletUriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/v1/customer")
                     .path("/{customerTC}")
@@ -36,6 +39,7 @@ public class CustomerController {
                     .toUri();
             return ResponseEntity.created(location).build();
         } catch (Exception exception) {
+            log.error(ErrorMessages.AN_ERROR_OCCURRED);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.AN_ERROR_OCCURRED);
         }
     }
@@ -45,8 +49,10 @@ public class CustomerController {
         try {
             return ResponseEntity.ok(customerService.getCustomerById(customerTC).toCustomerDto());
         } catch (CustomerNotFoundException exception) {
+            log.error(customerTC + " number person could not found.");
             return ResponseEntity.notFound().build();
         } catch (Exception exception) {
+            log.error(HttpStatus.INTERNAL_SERVER_ERROR);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -64,8 +70,10 @@ public class CustomerController {
         try {
             return customerService.update(customerDto.toCustomer()).toCustomerDto();
         } catch (CustomerNotFoundException exception) {
+            log.error(ErrorMessages.AN_ERROR_OCCURRED);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.AN_ERROR_OCCURRED);
         } catch (Exception exception) {
+            log.error(ErrorMessages.SERVER_ERROR);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.SERVER_ERROR);
         }
     }
@@ -75,8 +83,10 @@ public class CustomerController {
         try {
             customerService.delete(customerTC);
         } catch (CustomerCouldNotDeletedException exception) {
+            log.error(HttpStatus.BAD_REQUEST);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.AN_ERROR_OCCURRED);
         } catch (Exception exception) {
+            log.error(HttpStatus.INTERNAL_SERVER_ERROR);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.SERVER_ERROR);
         }
     }

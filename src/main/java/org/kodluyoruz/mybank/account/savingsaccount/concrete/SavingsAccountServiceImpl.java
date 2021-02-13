@@ -1,5 +1,6 @@
 package org.kodluyoruz.mybank.account.savingsaccount.concrete;
 
+import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.account.savingsaccount.abtrct.SavingsAccountService;
 import org.kodluyoruz.mybank.account.savingsaccount.abtrct.SavingsAccountRepository;
 import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingAccountNotDeletedException;
@@ -35,6 +36,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
     private final ExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
     private final CustomerService<Customer> customerService;
     private final BankCardService<BankCard> bankCardService;
+    private static final Logger log = Logger.getLogger(SavingsAccountServiceImpl.class);
 
     public SavingsAccountServiceImpl(SavingsAccountRepository savingsAccountRepository, CreditCardService<CreditCard> creditCardService, ExtractOfAccountService<ExtractOfAccount> extractOfAccountService, CustomerService<Customer> customerService, BankCardService<BankCard> bankCardService) {
         this.savingsAccountRepository = savingsAccountRepository;
@@ -82,6 +84,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
         if (savingsAccount != null) {
             return savingsAccount;
         } else {
+            log.error(ErrorMessages.ACCOUNT_COULD_NOT_FOUND);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND);
         }
     }
@@ -91,6 +94,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
         SavingsAccount savingsAccount = get(accountNumber)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND));
         if (savingsAccount.getSavingsAccountBalance() != 0) {
+            log.error(ErrorMessages.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT);
             throw new SavingAccountNotDeletedException(ErrorMessages.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT);
         } else {
             savingsAccountRepository.delete(savingsAccount);
@@ -106,6 +110,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
             savingsAccountDto.setSavingsAccountBalance(balance + depositMoney);
             return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
         } else {
+            log.error(ErrorMessages.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT);
             throw new BankCardNotMatchException(ErrorMessages.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT);
         }
     }
@@ -116,12 +121,14 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
                 new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
         if (isMatchBankCardAccountNumberAndPasswordWithSavingsAccount(savingsAccountDto, bankCardAccountNumber, password)) {
             if (savingsAccountDto.getSavingsAccountBalance() < withDrawMoney) {
+                log.error(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
                 throw new SavingsAccountNotEnoughMoneyException(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
             } else {
                 savingsAccountDto.setSavingsAccountBalance(savingsAccountDto.getSavingsAccountBalance() - withDrawMoney);
                 return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
             }
         } else {
+            log.error(ErrorMessages.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT);
             throw new BankCardNotMatchException(ErrorMessages.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT);
         }
     }
@@ -142,6 +149,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
             extractOfAccountService.update(extractOfAccount);
             return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
         } else {
+            log.error(ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
         }
     }

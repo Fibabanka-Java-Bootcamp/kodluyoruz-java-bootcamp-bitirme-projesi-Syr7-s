@@ -1,5 +1,6 @@
 package org.kodluyoruz.mybank.customer.concrete;
 
+import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.account.demanddepositaccount.concrete.DemandDepositAccount;
 import org.kodluyoruz.mybank.account.savingsaccount.concrete.SavingsAccount;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class CustomerServiceImpl implements CustomerService<Customer> {
     private final CustomerRepository customerRepository;
+    private static final Logger log = Logger.getLogger(CustomerServiceImpl.class);
 
     public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -54,6 +56,7 @@ public class CustomerServiceImpl implements CustomerService<Customer> {
 
             return customerRepository.save(updatedCustomer);
         } else {
+            log.error(ErrorMessages.CUSTOMER_COULD_NOT_FOUND);
             throw new CustomerNotFoundException(ErrorMessages.CUSTOMER_COULD_NOT_FOUND);
         }
     }
@@ -70,6 +73,7 @@ public class CustomerServiceImpl implements CustomerService<Customer> {
         if (isCreditCardDelete && isDemandAccountDelete && isSavingsAccountDelete) {
             customerRepository.delete(deletedCustomer);
         } else {
+            log.error(ErrorMessages.CUSTOMER_COULD_NOT_DELETED);
             throw new CustomerCouldNotDeletedException(ErrorMessages.CUSTOMER_COULD_NOT_DELETED);
         }
     }

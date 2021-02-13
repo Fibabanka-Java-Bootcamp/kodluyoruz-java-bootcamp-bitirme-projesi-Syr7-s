@@ -1,6 +1,7 @@
 package org.kodluyoruz.mybank.card.creditcard.concrete;
 
 
+import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.exception.CreditCardNotCreatedException;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardRepository;
@@ -19,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class CreditCardServiceImpl implements CreditCardService<CreditCard> {
     private final CreditCardRepository creditCardRepository;
     private final ExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
+    private static final Logger log = Logger.getLogger(CreditCardServiceImpl.class);
 
     public CreditCardServiceImpl(CreditCardRepository creditCardRepository, ExtractOfAccountServiceImpl extractOfAccountServiceImpl) {
         this.creditCardRepository = creditCardRepository;
@@ -41,6 +43,7 @@ public class CreditCardServiceImpl implements CreditCardService<CreditCard> {
         if (creditCard != null) {
             return creditCard;
         } else {
+            log.error(ErrorMessages.CARD_COULD_NOT_CREATED);
             throw new CreditCardNotCreatedException(ErrorMessages.CARD_COULD_NOT_CREATED);
         }
     }
@@ -58,6 +61,7 @@ public class CreditCardServiceImpl implements CreditCardService<CreditCard> {
             extractOfAccountService.update(extractOfAccount);
             return creditCardRepository.save(creditCard);
         } else {
+            log.error(ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
         }
     }
