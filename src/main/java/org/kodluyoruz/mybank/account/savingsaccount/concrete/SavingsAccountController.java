@@ -44,17 +44,21 @@ public class SavingsAccountController {
     @PutMapping("/{bankCardAccountNumber}/deposit/{accountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public SavingsAccountDto getUpdateSavings(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
-                                              @PathVariable("accountNumber") long accountNumber, @RequestParam("depositMoney") int depositMoney) {
+                                              @PathVariable("accountNumber") long accountNumber,
+                                              @RequestParam("password") int password,
+                                              @RequestParam("depositMoney") int depositMoney) {
 
-        return savingsAccountService.depositMoney(bankCardAccountNumber, accountNumber, depositMoney).toSavingsAccountDto();
+        return savingsAccountService.depositMoney(bankCardAccountNumber,password, accountNumber, depositMoney).toSavingsAccountDto();
     }
 
     @PutMapping("/{bankCardAccountNumber}/withDrawMoney/{accountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public SavingsAccountDto getUpdateSavingsWithDrawMoney(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
-                                                           @PathVariable("accountNumber") long accountNumber, @RequestParam("withDrawMoney") int withDrawMoney) {
+                                                           @PathVariable("accountNumber") long accountNumber,
+                                                           @RequestParam("password") int password,
+                                                           @RequestParam("withDrawMoney") int withDrawMoney) {
 
-        return savingsAccountService.withDrawMoney(bankCardAccountNumber, accountNumber, withDrawMoney).toSavingsAccountDto();
+        return savingsAccountService.withDrawMoney(bankCardAccountNumber,password, accountNumber, withDrawMoney).toSavingsAccountDto();
     }
 
     @PutMapping("/{bankCardAccountNumber}/bankCard/{accountNumber}/payDebt/{creditCardNumber}")

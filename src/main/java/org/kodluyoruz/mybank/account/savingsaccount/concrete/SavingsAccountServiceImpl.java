@@ -98,10 +98,10 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
     }
 
     @Override
-    public SavingsAccount depositMoney(long bankCardAccountNumber, long accountNumber, int depositMoney) {
+    public SavingsAccount depositMoney(long bankCardAccountNumber, int password, long accountNumber, int depositMoney) {
         SavingsAccountDto savingsAccountDto = get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
-        if (savingsAccountDto.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber) {
+        if (isMatchBankCardAccountNumberAndPasswordWithSavingsAccount(savingsAccountDto, bankCardAccountNumber, password)) {
             int balance = savingsAccountDto.getSavingsAccountBalance();
             savingsAccountDto.setSavingsAccountBalance(balance + depositMoney);
             return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
@@ -111,10 +111,10 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
     }
 
     @Override
-    public SavingsAccount withDrawMoney(long bankCardAccountNumber, long accountNumber, int withDrawMoney) {
+    public SavingsAccount withDrawMoney(long bankCardAccountNumber, int password, long accountNumber, int withDrawMoney) {
         SavingsAccountDto savingsAccountDto = get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
-        if (savingsAccountDto.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber) {
+        if (isMatchBankCardAccountNumberAndPasswordWithSavingsAccount(savingsAccountDto, bankCardAccountNumber, password)) {
             if (savingsAccountDto.getSavingsAccountBalance() < withDrawMoney) {
                 throw new SavingsAccountNotEnoughMoneyException(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
             } else {
