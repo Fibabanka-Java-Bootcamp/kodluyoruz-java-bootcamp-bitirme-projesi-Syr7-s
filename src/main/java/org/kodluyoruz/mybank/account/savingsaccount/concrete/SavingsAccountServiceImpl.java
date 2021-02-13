@@ -133,7 +133,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
         if (isMatchBankCardAccountNumberAndPasswordWithSavingsAccount(savingsAccountDto, bankCardAccountNumber, password)) {
             CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
             ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
-            double money = Exchange.convertProcess(creditCard.getCurrency(), savingsAccountDto.getSavingsAccountCurrency(), (creditCardDebt + minimumPaymentAmount));
+            double money = getMoney(creditCardDebt, minimumPaymentAmount, savingsAccountDto, creditCard);
             savingsAccountDto.setSavingsAccountBalance((int) (savingsAccountDto.getSavingsAccountBalance() - money));
             Debt.debtProcess(creditCardDebt, minimumPaymentAmount, creditCard, extractOfAccount);
             extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
@@ -144,6 +144,12 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
         }
+    }
+
+    private double getMoney(int creditCardDebt, int minimumPaymentAmount, SavingsAccountDto savingsAccountDto, CreditCard creditCard) {
+        return creditCard.getCardDebt() == creditCardDebt ?
+                Exchange.convertProcess(creditCard.getCurrency(), savingsAccountDto.getSavingsAccountCurrency(), creditCardDebt) :
+                Exchange.convertProcess(creditCard.getCurrency(), savingsAccountDto.getSavingsAccountCurrency(), (creditCardDebt + minimumPaymentAmount));
     }
 
     private boolean isMatchBankCardAccountNumberAndPasswordWithSavingsAccount(SavingsAccountDto savingsAccountDto, long bankCardAccountNumber, int password) {
