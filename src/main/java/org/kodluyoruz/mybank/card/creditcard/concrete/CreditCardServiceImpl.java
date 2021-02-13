@@ -1,7 +1,6 @@
 package org.kodluyoruz.mybank.card.creditcard.concrete;
 
-import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardService;
-import org.kodluyoruz.mybank.card.bankcard.concrete.BankCard;
+
 import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.exception.CreditCardNotCreatedException;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardRepository;
@@ -19,12 +18,10 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class CreditCardServiceImpl implements CreditCardService<CreditCard> {
     private final CreditCardRepository creditCardRepository;
-    private final BankCardService<BankCard> bankCardService;
     private final ExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
 
-    public CreditCardServiceImpl(CreditCardRepository creditCardRepository, BankCardService<BankCard> bankCardService, ExtractOfAccountServiceImpl extractOfAccountServiceImpl) {
+    public CreditCardServiceImpl(CreditCardRepository creditCardRepository, ExtractOfAccountServiceImpl extractOfAccountServiceImpl) {
         this.creditCardRepository = creditCardRepository;
-        this.bankCardService = bankCardService;
         this.extractOfAccountService = extractOfAccountServiceImpl;
     }
 
@@ -57,14 +54,28 @@ public class CreditCardServiceImpl implements CreditCardService<CreditCard> {
     public CreditCard payCreditCardDebt(long creditCardNO, int password, int payMoney, double minimumPayment) {
         CreditCard creditCard = getCreditCard(creditCardNO);
         if (creditCard.getCardPassword() == password) {
-            ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
-            Debt.debtProcess(payMoney, minimumPayment, creditCard, extractOfAccount);
-            extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
-            extractOfAccount.setMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPayment));
+            ExtractOfAccount extractOfAccount = getExtractOfAccount(payMoney, minimumPayment, creditCard);
             extractOfAccountService.update(extractOfAccount);
             return creditCardRepository.save(creditCard);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
         }
+    }
+
+    @Override
+    public CreditCard debtPaymentWithoutCreditCard(long creditCardAccountNO, int payMoney, double minimumPayment) {
+        CreditCard creditCard = getCreditCard(creditCardAccountNO);
+        ExtractOfAccount extractOfAccount = getExtractOfAccount(payMoney, minimumPayment, creditCard);
+        extractOfAccountService.update(extractOfAccount);
+        return creditCardRepository.save(creditCard);
+
+    }
+
+    private ExtractOfAccount getExtractOfAccount(int payMoney, double minimumPayment, CreditCard creditCard) {
+        ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
+        Debt.debtProcess(payMoney, minimumPayment, creditCard, extractOfAccount);
+        extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
+        extractOfAccount.setMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPayment));
+        return extractOfAccount;
     }
 }

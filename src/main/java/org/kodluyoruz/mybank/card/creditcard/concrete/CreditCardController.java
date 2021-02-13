@@ -1,7 +1,6 @@
 package org.kodluyoruz.mybank.card.creditcard.concrete;
 
 
-
 import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.exception.CreditCardNotCreatedException;
 import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
@@ -73,8 +72,18 @@ public class CreditCardController {
     @ResponseStatus(HttpStatus.CREATED)
     public CreditCardDto payCreditCardDebt(@PathVariable("creditCardNO") long creditCardNO,
                                            @Min(value = 4) @RequestParam("password") int password,
-                                           @RequestParam("payMoney") int payMoney, @RequestParam("minimumPayment") double minimumPayment) {
+                                           @RequestParam("payMoney") int payMoney,
+                                           @RequestParam("minimumPayment") double minimumPayment) {
 
         return creditCardService.payCreditCardDebt(creditCardNO, password, payMoney, minimumPayment).toCreditCardDto();
+    }
+
+    @PutMapping("/withoutCard/{creditCardNO}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CreditCardDto debtPaymentWithoutCreditCard(@PathVariable("creditCardNO") long creditCardNO,
+                                                       @RequestParam("payMoney") int payMoney,
+                                                       @RequestParam("minimumPayment") double minimumPayment) {
+
+        return creditCardService.debtPaymentWithoutCreditCard(creditCardNO, payMoney, minimumPayment).toCreditCardDto();
     }
 }

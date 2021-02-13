@@ -45,7 +45,7 @@ class CreditCardServiceImplTest {
 
     @BeforeEach
     void setMockOutput() {
-        creditCardService = new CreditCardServiceImpl(creditCardRepository, null, null);
+        creditCardService = new CreditCardServiceImpl(creditCardRepository, null);
         creditCardRepository.save(creditCard);
     }
 

@@ -8,5 +8,6 @@ public interface CreditCardService<T>{
     Page<T> cards(Pageable pageable);
     T getCreditCard(long creditCardNo);
     T updateCard(T t);
-    T payCreditCardDebt(long creditCardNo,int password,int payMoney, double minimumPayment);
+    T payCreditCardDebt(long creditCardNO,int password,int payMoney, double minimumPayment);
+    T debtPaymentWithoutCreditCard(long creditCardAccountNO, int payMoney, double minimumPayment);
 }
