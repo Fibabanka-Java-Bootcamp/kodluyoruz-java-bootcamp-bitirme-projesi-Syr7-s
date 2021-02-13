@@ -69,13 +69,12 @@ public class CreditCardController {
         return nameSurname + " named customer debt : " + debt + " and minimum payment amount " + minimumPaymentAmount;
     }
 
-    @PutMapping("/{bankCardNO}/debt/{creditCardNO}")
+    @PutMapping("/debt/{creditCardNO}")
     @ResponseStatus(HttpStatus.CREATED)
-    public CreditCardDto payCreditCardDebt(@PathVariable("bankCardNO") long bankCardNO,
-                                           @PathVariable("creditCardNO") long creditCardNO,
+    public CreditCardDto payCreditCardDebt(@PathVariable("creditCardNO") long creditCardNO,
                                            @Min(value = 4) @RequestParam("password") int password,
                                            @RequestParam("payMoney") int payMoney, @RequestParam("minimumPayment") double minimumPayment) {
 
-        return creditCardService.payCreditCardDebt(bankCardNO, creditCardNO, password, payMoney, minimumPayment).toCreditCardDto();
+        return creditCardService.payCreditCardDebt(creditCardNO, password, payMoney, minimumPayment).toCreditCardDto();
     }
 }

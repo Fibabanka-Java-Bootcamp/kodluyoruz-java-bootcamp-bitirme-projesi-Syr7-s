@@ -54,11 +54,10 @@ public class CreditCardServiceImpl implements CreditCardService<CreditCard> {
     }
 
     @Override
-    public CreditCard payCreditCardDebt(long bankCardNO, long creditCardNO, int password, int payMoney, double minimumPayment) {
-        BankCard bankCard = bankCardService.findBankCard(bankCardNO);
+    public CreditCard payCreditCardDebt(long creditCardNO, int password, int payMoney, double minimumPayment) {
         CreditCard creditCard = getCreditCard(creditCardNO);
-        ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
-        if (bankCard.getBankCardPassword() == password) {
+        if (creditCard.getCardPassword() == password) {
+            ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
             Debt.debtProcess(payMoney, minimumPayment, creditCard, extractOfAccount);
             extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
             extractOfAccount.setMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPayment));
