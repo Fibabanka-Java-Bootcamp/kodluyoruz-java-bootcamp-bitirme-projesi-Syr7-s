@@ -176,9 +176,7 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
         if (isMatchBankCardNumberAndPasswordWithAccount(demandDepositAccountDto, bankCardAccountNumber, password)) {
             CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
             ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
-            double money = creditCard.getCardDebt() == creditCardDebt ?
-                    Exchange.convertProcess(creditCard.getCurrency(), demandDepositAccountDto.getDemandDepositAccountCurrency(), creditCardDebt) :
-                    Exchange.convertProcess(creditCard.getCurrency(), demandDepositAccountDto.getDemandDepositAccountCurrency(), (creditCardDebt + minimumPaymentAmount));
+            double money = getMoney(creditCardDebt, minimumPaymentAmount, demandDepositAccountDto, creditCard);
             demandDepositAccountDto.setDemandDepositAccountBalance((int) (demandDepositAccountDto.getDemandDepositAccountBalance() - money));
             Debt.debtProcess(creditCardDebt, minimumPaymentAmount, creditCard, extractOfAccount);
             extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
@@ -190,6 +188,12 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
         }
 
+    }
+
+    private double getMoney(int creditCardDebt, int minimumPaymentAmount, DemandDepositAccountDto demandDepositAccountDto, CreditCard creditCard) {
+        return creditCard.getCardDebt() == creditCardDebt ?
+                Exchange.convertProcess(creditCard.getCurrency(), demandDepositAccountDto.getDemandDepositAccountCurrency(), creditCardDebt) :
+                Exchange.convertProcess(creditCard.getCurrency(), demandDepositAccountDto.getDemandDepositAccountCurrency(), (creditCardDebt + minimumPaymentAmount));
     }
 
     @Override
