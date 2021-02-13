@@ -132,9 +132,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
                 new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
         CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
         ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
-        double money = String.valueOf(savingsAccountDto.getSavingsAccountCurrency()).equals(String.valueOf(creditCard.getCurrency())) ?
-                (creditCardDebt + minimumPaymentAmount) : (creditCardDebt + minimumPaymentAmount) * Exchange.getConvert.apply(String.valueOf(creditCard.getCurrency()))
-                .getRates().get(String.valueOf(savingsAccountDto.getSavingsAccountCurrency()));
+        double money = Exchange.convertProcess(creditCard.getCurrency(),savingsAccountDto.getSavingsAccountCurrency(),(creditCardDebt+minimumPaymentAmount));
         savingsAccountDto.setSavingsAccountBalance((int) (savingsAccountDto.getSavingsAccountBalance() - money));
         Debt.debtProcess(creditCardDebt, minimumPaymentAmount, creditCard, extractOfAccount);
         extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());

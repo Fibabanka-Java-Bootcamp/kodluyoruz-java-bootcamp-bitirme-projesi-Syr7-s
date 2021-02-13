@@ -133,9 +133,7 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
         if (demandDepositAccountDto.getDemandDepositAccountBalance() - transferMoney < 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
         } else {
-            double money = String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()).equals(String.valueOf(savingAccount.getSavingsAccountCurrency())) ?
-                    transferMoney : transferMoney * Exchange.getConvert.apply(String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()))
-                    .getRates().get(String.valueOf(savingAccount.getSavingsAccountCurrency()));
+            double money = Exchange.convertProcess(demandDepositAccountDto.getDemandDepositAccountCurrency(),savingAccount.getSavingsAccountCurrency(),transferMoney);
             demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() - transferMoney);
             savingAccount.setSavingsAccountBalance((int) (savingAccount.getSavingsAccountBalance() + money));
             savingsAccountService.update(savingAccount);
@@ -151,9 +149,7 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
             if (fromAccount.getDemandDepositAccountBalance() - transferMoney < 0) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
             } else {
-                double money = String.valueOf(fromAccount.getDemandDepositAccountCurrency()).equals(String.valueOf(toAccount.getDemandDepositAccountCurrency())) ?
-                        transferMoney : transferMoney * Exchange.getConvert.apply(String.valueOf(fromAccount.getDemandDepositAccountCurrency()))
-                        .getRates().get(String.valueOf(toAccount.getDemandDepositAccountCurrency()));
+                double money = Exchange.convertProcess(fromAccount.getDemandDepositAccountCurrency(),toAccount.getDemandDepositAccountCurrency(),transferMoney);
                 fromAccount.setDemandDepositAccountBalance(fromAccount.getDemandDepositAccountBalance() - transferMoney);
                 toAccount.setDemandDepositAccountBalance((int) (toAccount.getDemandDepositAccountBalance() + money));
                 demandDepositAccountRepository.save(toAccount.toDemandDepositAccount()).toDemandDepositAccountDto();
@@ -170,10 +166,7 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
                 new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toDemandDepositAccountDto();
         CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
         ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
-        double money = String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()).equals(String.valueOf(creditCard.getCurrency())) ?
-                (creditCardDebt + minimumPaymentAmount) : (creditCardDebt + minimumPaymentAmount) *
-                Exchange.getConvert.apply(String.valueOf(creditCard.getCurrency()))
-                        .getRates().get(String.valueOf(demandDepositAccountDto.getDemandDepositAccountCurrency()));
+        double money = Exchange.convertProcess(creditCard.getCurrency(),demandDepositAccountDto.getDemandDepositAccountCurrency(),(creditCardDebt+minimumPaymentAmount));
         demandDepositAccountDto.setDemandDepositAccountBalance((int) (demandDepositAccountDto.getDemandDepositAccountBalance() - money));
         Debt.debtProcess(creditCardDebt, minimumPaymentAmount, creditCard, extractOfAccount);
         extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());

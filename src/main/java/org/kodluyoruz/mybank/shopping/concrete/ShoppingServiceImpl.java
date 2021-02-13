@@ -62,8 +62,7 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
     public Shopping doShoppingByBankCard(long bankCardAccountNumber, long demandDepositAccountNumber, int password, ShoppingDto shoppingDto) {
         DemandDepositAccount demandDepositAccount = demandDepositAccountService.get(demandDepositAccountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found"));
         if (demandDepositAccount.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber && demandDepositAccount.getBankCard().getBankCardPassword() == password) {
-            double money = demandDepositAccount.getDemandDepositAccountCurrency().equals(shoppingDto.getCurrency()) ?
-                    shoppingDto.getProductPrice() : shoppingDto.getProductPrice() * Exchange.getConvert.apply(String.valueOf(shoppingDto.getCurrency())).getRates().get(String.valueOf(demandDepositAccount.getDemandDepositAccountCurrency()));
+            double money = Exchange.convertProcess(shoppingDto.getCurrency(),demandDepositAccount.getDemandDepositAccountCurrency(),shoppingDto.getProductPrice());
             if (demandDepositAccount.getDemandDepositAccountBalance() - money < 0) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
             } else {
