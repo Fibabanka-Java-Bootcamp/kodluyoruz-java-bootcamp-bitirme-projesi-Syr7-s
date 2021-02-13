@@ -8,6 +8,7 @@ public class ErrorMessages {
     public static final String AN_ERROR_OCCURRED = "An error occurred.";
     public static final String ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT = "Account could not deleted.Because have money in your account.";
     public static final String ACCOUNT_COULD_NOT_FOUND = "Account could not found.";
+    public static final String ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED = "Account number and password could not matched.";
     public static final String ACCOUNTS_COULD_SAME = "Accounts could same.";
     public static final String CARD_COULD_NOT_CREATED = "Card could not created.";
     public static final String CARD_COULD_NOT_DELETED = "Card could not deleted.";
@@ -20,5 +21,4 @@ public class ErrorMessages {
     public static final String NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT = "Not enough money in your account.";
     public static final String PRODUCT_COULD_NOT_FOUND = "Product could not found.";
     public static final String SERVER_ERROR = "Server error.";
-
 }
