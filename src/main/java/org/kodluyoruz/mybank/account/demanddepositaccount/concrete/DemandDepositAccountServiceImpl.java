@@ -99,10 +99,10 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
     }
 
     @Override
-    public DemandDepositAccount depositMoney(long bankCardAccountNumber, long accountNumber, int depositMoney) {
+    public DemandDepositAccount depositMoney(long bankCardAccountNumber, int password, long accountNumber, int depositMoney) {
         DemandDepositAccountDto demandDepositAccountDto = get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toDemandDepositAccountDto();
-        if (demandDepositAccountDto.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber) {
+        if (isMatchBankCardNumberAndPasswordWithAccount(demandDepositAccountDto, bankCardAccountNumber, password)) {
             demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() + depositMoney);
             return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
         } else {
@@ -111,10 +111,10 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
     }
 
     @Override
-    public DemandDepositAccount withDrawMoney(long bankCardAccountNumber, long accountNumber, int withDrawMoney) {
+    public DemandDepositAccount withDrawMoney(long bankCardAccountNumber, int password, long accountNumber, int withDrawMoney) {
         DemandDepositAccountDto demandDepositAccountDto = get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toDemandDepositAccountDto();
-        if (demandDepositAccountDto.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber) {
+        if (isMatchBankCardNumberAndPasswordWithAccount(demandDepositAccountDto, bankCardAccountNumber, password)) {
             if (demandDepositAccountDto.getDemandDepositAccountBalance() < withDrawMoney) {
                 throw new DemandDepositAccountNotEnoughMoneyException(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
             } else {

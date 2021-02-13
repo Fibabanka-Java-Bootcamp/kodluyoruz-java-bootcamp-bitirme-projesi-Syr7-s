@@ -45,17 +45,21 @@ public class DemandDepositAccountController {
     @PutMapping("/{bankCardAccountNumber}/deposit/{accountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto getUpdatedDeposit(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
-                                                     @PathVariable("accountNumber") long accountNumber, @RequestParam("depositMoney") int depositMoney) {
+                                                     @PathVariable("accountNumber") long accountNumber,
+                                                     @RequestParam("password") int password,
+                                                     @RequestParam("depositMoney") int depositMoney) {
 
-        return demandDepositAccountService.depositMoney(bankCardAccountNumber, accountNumber, depositMoney).toDemandDepositAccountDto();
+        return demandDepositAccountService.depositMoney(bankCardAccountNumber, password, accountNumber, depositMoney).toDemandDepositAccountDto();
     }
 
     @PutMapping("/{bankCardAccountNumber}/withDrawMoney/{accountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto getUpdateDepositWithDrawMoney(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
-                                                                 @PathVariable("accountNumber") long accountNumber, @RequestParam("withDrawMoney") int withDrawMoney) {
+                                                                 @PathVariable("accountNumber") long accountNumber,
+                                                                 @RequestParam("password") int password,
+                                                                 @RequestParam("withDrawMoney") int withDrawMoney) {
 
-        return demandDepositAccountService.withDrawMoney(bankCardAccountNumber, accountNumber, withDrawMoney).toDemandDepositAccountDto();
+        return demandDepositAccountService.withDrawMoney(bankCardAccountNumber, password, accountNumber, withDrawMoney).toDemandDepositAccountDto();
     }
 
     @PutMapping("/{bankCardAccountNO}/bankCard/{depositAccountIBAN}/transfer/{savingsAccountIBAN}")

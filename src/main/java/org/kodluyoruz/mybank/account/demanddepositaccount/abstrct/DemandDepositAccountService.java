@@ -20,9 +20,9 @@ public interface DemandDepositAccountService<T> {
 
     void delete(long accountNumber);
 
-    T depositMoney(long bankCardAccountNumber, long accountNumber, int depositMoney);
+    T depositMoney(long bankCardAccountNumber,int password, long accountNumber, int depositMoney);
 
-    T withDrawMoney(long bankCardAccountNumber, long accountNumber, int withDrawMoney);
+    T withDrawMoney(long bankCardAccountNumber,int password, long accountNumber, int withDrawMoney);
 
     T moneyTransferBetweenDifferentAccounts(long bankCardAccountNumber, int password, String depositAccountIBAN, String savingsAccountIBAN, int transferMoney);
 
