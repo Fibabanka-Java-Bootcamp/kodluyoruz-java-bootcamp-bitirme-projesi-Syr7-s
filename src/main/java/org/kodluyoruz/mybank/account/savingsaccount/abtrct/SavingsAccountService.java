@@ -16,5 +16,5 @@ public interface SavingsAccountService<T> {
     void delete(long accountNumber);
     T depositMoney(long bankCardAccountNumber,long accountNumber,int depositMoney);
     T withDrawMoney(long bankCardAccountNumber,long accountNumber,int withDrawMoney);
-    T payDebtWithAccount(long accountNumber,long creditCardNumber,int creditCardDebt,int minimumPaymentAmount);
+    T payDebtWithAccount(long bankCardAccountNumber,int password,long accountNumber,long creditCardNumber,int creditCardDebt,int minimumPaymentAmount);
 }
