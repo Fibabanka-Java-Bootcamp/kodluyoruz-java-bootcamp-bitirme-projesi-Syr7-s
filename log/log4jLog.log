@@ -1,0 +1,25 @@
+2021-02-14 12:57:41 INFO  SavingsAccountController:29 - Savings account will create.
+2021-02-14 13:16:19 INFO  SavingsAccountController:35 - 8500390940951842 will get
+2021-02-14 14:46:01 INFO  CustomerController:34 - Customer will create.
+2021-02-14 14:47:00 INFO  CreditCardController:41 - Credit card will create.
+2021-02-14 14:48:16 INFO  ExtractOfAccountController:30 - Extract of account create for credit card.
+2021-02-14 14:49:18 INFO  ExtractOfAccountController:42 - extract of account info will get.
+2021-02-14 14:50:16 INFO  CreditCardController:80 - Debt will payment with credit card where in ATM.
+2021-02-14 14:50:39 INFO  ExtractOfAccountController:30 - Extract of account create for credit card.
+2021-02-14 14:50:54 INFO  ExtractOfAccountController:42 - extract of account info will get.
+2021-02-14 16:40:50 INFO  CreditCardController:80 - Debt will payment with credit card where in ATM.
+2021-02-14 16:43:18 INFO  ExtractOfAccountController:30 - Extract of account create for credit card.
+2021-02-14 16:44:08 INFO  ExtractOfAccountController:42 - extract of account info will get.
+2021-02-14 16:44:36 INFO  CreditCardController:80 - Debt will payment with credit card where in ATM.
+2021-02-14 17:30:26 INFO  ExtractOfAccountController:30 - Extract of account create for credit card.
+2021-02-14 17:31:18 ERROR ShoppingServiceImpl:55 - Credit card limit over.
+2021-02-14 17:33:39 INFO  ExtractOfAccountController:42 - extract of account info will get.
+2021-02-14 17:34:27 INFO  CreditCardController:80 - Debt will payment with credit card where in ATM.
+2021-02-14 17:36:05 ERROR ShoppingServiceImpl:55 - Credit card limit over.
+2021-02-14 17:41:55 INFO  CustomerController:34 - Customer will create.
+2021-02-14 17:42:57 INFO  BankCardController:32 - Bank card will create.
+2021-02-14 17:45:08 INFO  DemandDepositAccountController:29 - Account was created.
+2021-02-14 17:45:08 INFO  DemandDepositAccountServiceImpl:69 - 25552022415 customer was created.
+2021-02-14 17:46:23 ERROR DemandDepositAccountServiceImpl:176 - Account number and password could not matched.
+2021-02-14 17:46:52 ERROR DemandDepositAccountServiceImpl:176 - Account number and password could not matched.
+2021-02-14 17:48:24 ERROR DemandDepositAccountServiceImpl:89 - Account could not found.

@@ -35,7 +35,7 @@ public class ShoppingController {
                     .toUri();
             return ResponseEntity.created(location).build();
         }catch (Exception exception){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.AN_ERROR_OCCURRED);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.CREDIT_CARD_LIMIT_OVER);
         }
     }
 
