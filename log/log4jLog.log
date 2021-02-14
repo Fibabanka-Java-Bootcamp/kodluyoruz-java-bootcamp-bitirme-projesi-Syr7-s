@@ -35,3 +35,14 @@
 2021-02-14 19:49:05 INFO  CreditCardController:42 - Credit card will create.
 2021-02-14 19:49:58 INFO  ExtractOfAccountController:30 - Extract of account create for credit card.
 2021-02-14 19:51:24 INFO  ExtractOfAccountController:42 - extract of account info will get.
+2021-02-14 19:57:21 INFO  DemandDepositAccountController:35 - 8500317206061715 account was got.
+2021-02-14 19:57:29 INFO  DemandDepositAccountController:35 - 8500317206061715 account was got.
+2021-02-14 19:58:02 INFO  SavingsAccountController:35 - 8500982288610053 will get
+2021-02-14 19:58:36 INFO  SavingsAccountController:35 - 8500982288610053 will get
+2021-02-14 19:59:07 INFO  BankCardController:46 - 8536797341143025 bank card will get.
+2021-02-14 19:59:46 INFO  CreditCardController:56 - Credit card info will get.
+2021-02-14 19:59:56 INFO  CreditCardController:56 - Credit card info will get.
+2021-02-14 20:02:26 INFO  ExtractOfAccountController:42 - extract of account info will get.
+2021-02-14 20:02:26 INFO  ExtractOfAccountController:42 - extract of account info will get.
+2021-02-14 20:04:29 INFO  ExtractOfAccountController:42 - extract of account info will get.
+2021-02-14 20:06:15 INFO  ExtractOfAccountController:42 - extract of account info will get.

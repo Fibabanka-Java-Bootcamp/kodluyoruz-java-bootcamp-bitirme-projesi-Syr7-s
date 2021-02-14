@@ -2,6 +2,7 @@ package org.kodluyoruz.mybank.card.creditcard.concrete;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,10 +16,11 @@ class CreditCardControllerTest {
     void setUp() {
         restTemplate = new RestTemplate();
         creditCard = restTemplate
-                .getForObject("http://localhost:8080/api/v1/card/8500495434241604", CreditCard.class);
+                .getForObject("http://localhost:8080/api/v1/card/8518332901508354", CreditCard.class);
     }
 
     @Test
+    @DisplayName("Name and surname info control")
     void get() {
         assert creditCard != null;
         Assertions.assertEquals("Isa SAYAR", creditCard.getCardNameSurname());
@@ -27,7 +29,7 @@ class CreditCardControllerTest {
     @Test
     void debtIsZero() {
         assert creditCard != null;
-        Assertions.assertEquals(3500, creditCard.getCardDebt());
+        Assertions.assertEquals(0, creditCard.getCardDebt());
     }
 
 }

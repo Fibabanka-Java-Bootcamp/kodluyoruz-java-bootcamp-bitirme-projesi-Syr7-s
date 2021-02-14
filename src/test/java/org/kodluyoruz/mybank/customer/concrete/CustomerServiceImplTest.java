@@ -31,13 +31,13 @@ class CustomerServiceImplTest {
     @BeforeAll
     static void createCustomer() {
         customer.setCustomerTC(Long.parseLong(TC.generateTC.get()));
-        customer.setCustomerName("Musa");
-        customer.setCustomerLastname("SAYAR");
+        customer.setCustomerName("Ali");
+        customer.setCustomerLastname("Demir");
         customer.setCustomerGender(Gender.ERKEK);
-        customer.setCustomerPhone("5399132765");
-        customer.setCustomerEmail("musasayar67@gmail.com");
+        customer.setCustomerPhone("5359874512");
+        customer.setCustomerEmail("alidemir7@gmail.com");
         customer.setCustomerAddress("ISTANBUL");
-        customer.setCustomerBirthDate(LocalDate.of(1996, 8, 25));
+        customer.setCustomerBirthDate(LocalDate.of(1993, 4, 25));
     }
 
     @BeforeEach

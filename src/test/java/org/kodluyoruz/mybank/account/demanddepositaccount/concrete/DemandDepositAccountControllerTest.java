@@ -19,7 +19,7 @@ class DemandDepositAccountControllerTest {
     @Test
     void getDemandDepositAccount() {
         DemandDepositAccount demandDepositAccount = restTemplate
-                .getForObject("http://localhost:8080/api/v1/deposit/8500975170372874", DemandDepositAccount.class);
+                .getForObject("http://localhost:8080/api/v1/deposit/8500317206061715", DemandDepositAccount.class);
         assertNotNull(demandDepositAccount);
     }
 
@@ -27,7 +27,7 @@ class DemandDepositAccountControllerTest {
     @DisplayName("Is money currency is EUR?")
     void getMoneyCurrency() {
         DemandDepositAccount demandDepositAccount = restTemplate
-                .getForObject("http://localhost:8080/api/v1/deposit/8500975170372874", DemandDepositAccount.class);
+                .getForObject("http://localhost:8080/api/v1/deposit/8500317206061715", DemandDepositAccount.class);
         assert demandDepositAccount != null;
         assertEquals(Currency.EUR, demandDepositAccount.getDemandDepositAccountCurrency());
     }
