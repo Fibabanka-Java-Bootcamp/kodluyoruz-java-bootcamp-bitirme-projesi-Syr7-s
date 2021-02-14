@@ -27,5 +27,5 @@ public interface SavingsAccountService<T> {
 
     T payDebtWithAccount(long bankCardAccountNumber, int password, long accountNumber, long creditCardNumber, int creditCardDebt, int minimumPaymentAmount);
 
-    T computeSavings(long accountNumber,int termTime,double interestRate);
+    T computeSavings(long accountNumber,int termTime,double interestRate,double withHoldingValue);
 }

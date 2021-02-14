@@ -155,11 +155,11 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
     }
 
     @Override
-    public SavingsAccount computeSavings(long accountNumber, int termTime, double interestRate) {
+    public SavingsAccount computeSavings(long accountNumber, int termTime, double interestRate, double withHoldingValue) {
         SavingsAccountDto savingsAccountDto = get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
         double grossInterestReturn = getInterestReturn(termTime, interestRate, savingsAccountDto);
-        double netGain = getNetGain(grossInterestReturn);
+        double netGain = getNetGain(grossInterestReturn, withHoldingValue);
         savingsAccountDto.setTermTime(termTime);
         savingsAccountDto.setGrossInterestReturn(grossInterestReturn);
         savingsAccountDto.setSavingsAccountNetGain(netGain);
@@ -168,8 +168,8 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
         return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
     }
 
-    private double getNetGain(double grossInterestReturn) {
-        return grossInterestReturn - (grossInterestReturn * 0.15);
+    private double getNetGain(double grossInterestReturn, double withHoldingValue) {
+        return grossInterestReturn - (grossInterestReturn * (withHoldingValue / 100));
     }
 
     private double getInterestReturn(int termTime, double interestRate, SavingsAccountDto savingsAccountDto) {

@@ -80,8 +80,9 @@ public class SavingsAccountController {
     @ResponseStatus(HttpStatus.CREATED)
     public SavingsAccountDto computeSavings(@PathVariable("accountNumber") long accountNumber,
                                             @RequestParam("termTime") int termTime,
-                                            @RequestParam("interestRate") double interestRate) {
-        return savingsAccountService.computeSavings(accountNumber, termTime, interestRate).toSavingsAccountDto();
+                                            @RequestParam("interestRate") double interestRate,
+                                            @RequestParam("withHoldingValue") double withHoldingValue) {
+        return savingsAccountService.computeSavings(accountNumber, termTime, interestRate, withHoldingValue).toSavingsAccountDto();
     }
 
     @DeleteMapping("/{accountNumber}/process")
