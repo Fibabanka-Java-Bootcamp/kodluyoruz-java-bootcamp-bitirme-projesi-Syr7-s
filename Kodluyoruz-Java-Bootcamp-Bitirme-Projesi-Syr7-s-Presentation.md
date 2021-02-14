@@ -4,11 +4,11 @@
 
  ## Tanıtım
 
-Merhaba ben İsa SAYAR, Düzce Üniversitesi Bilgisayar Mühendisliğin'den 2020 yılı Sonbaharında mezun oldum. Mezun olduktan sonra Java ve C# programlama dillerine yoğunlaştım ve bu diller ile Masaüstü ve Web uygulamaları geliştirmeye başladım. Bunların haricinde clean code yazmaya, SOLID ve Desing Patterns öğrenmeye  çalışdım. Kasım'ın sonu gibi Sosyal platform aracılığı ile de Kodluyoruz'un Fibabanka destekli Java Bootcamp'i düzenlediğini gördüm ve bende neden olmasın diyerek başvuruda bulundum. Şu anda da bu noktaya kadar geldim.
+Merhaba ben İsa SAYAR, Düzce Üniversitesi Bilgisayar Mühendisliği Bölümünden 2020 yılı Sonbaharında mezun oldum. Mezun olduktan sonra Java ve C# programlama dillerine yoğunlaştım ve bu diller ile Masaüstü ve Web uygulamaları geliştirmeye başladım. Bunların haricinde clean code yazmaya, SOLID ve Desing Patterns öğrenmeye çalıştım. Kasım'ın sonu gibi Sosyal platform aracılığı ile de Kodluyoruz'un Fibabanka destekli Java Bootcamp'i düzenlediğini gördüm ve bende neden olmasın diyerek başvuruda bulundum. Şu anda da bu noktaya kadar geldim.
 
 ## Proje Tanımı
 
-Online Bankacılık Sisteminin Backendinin yazılması.
+Online Bankacılık Sisteminin Backend'inin yazılması.
 
 - Müşteri Yönetimi
 - Hesap Yönetimi
@@ -21,7 +21,7 @@ Online Bankacılık Sisteminin Backendinin yazılması.
 
 
 
-Veritabanı diyagramında da görüldüğü gibi hesap türleri ve card çeşitleri  farklı veritabanında tutuluyor. Kredi kartı müşteri ile ilişkilendirilmişken bank card müşteri ile ilişkilendirilmedi onun yerine bank card ve müşteri hesaplar ile ililşkilendirildi bu şekilde hesap bilgilerinden bank card ve müşteri bilgilerine ve müşteriden de hesap ve kredi kartı bilgilerine ulaşılabilecektir. Ayrıdan da hesap özet bilgilerini ve kartlar kullanılarak da alışveriş yapılabildiğini göstermek amacı ile de Shopping veri tabanı oluşturuldu.
+Veritabanı diyagramında da görüldüğü gibi hesap türleri ve card çeşitleri  farklı veri tabanında tutuluyor. Kredi kartı müşteri ile ilişkilendirilmişken bank card müşteri ile ilişkilendirilmedi onun yerine bank card ve müşteri hesaplar ile ilişkilendirildi. Bu şekilde hesap bilgilerinden bank card ve müşteri bilgilerine ve müşteriden de hesap ve kredi kartı bilgilerine ulaşılabilecektir. Ayrıdan da hesap özet bilgilerini ve kartlar kullanılarak da alışveriş yapılabildiğini göstermek amacı ile de Shopping veri tabanı oluşturuldu.
 
 ## Senaryolar
 
@@ -31,7 +31,7 @@ Veritabanı diyagramında da görüldüğü gibi hesap türleri ve card çeşitl
 
 ### Senaryo 1
 
-Uygulamamızda Birikim hesabı ve vadesiz mevduat hesapları oluşturulabiliyorduz. Senaryoda birikim hesabınız da olan para nın nasıl    değerlendiğini yani biriktiğine değineceğim.
+Uygulamamızda Birikim hesabı ve vadesiz mevduat hesapları oluşturulabiliyoruz. Senaryoda birikim hesabınız da olan paranın nasıl    değerlendiğini yani biriktiğine değineceğim.
 
 İlk olarak birikim hesabı banka müşterilerinin birikim yapmalarına olanak tanıyan aynı zamanda paraya faiz uygulayan bir hesap türü. Bu hesabın avantajlarından en güzeli ise paranızı biriktirmeye başladığınız an belirlenen vade sonunda ne kadar kazanacağınızı görebilirsiniz.
 
@@ -49,19 +49,19 @@ Net kazanç = Brüt kazanç - (Brüt kazanç * stopaj vergisi) , şeklinde net k
 
 Türk Lirasında 6 ay a kadar %5, Dolar ve Euro da ise %20 olarak ele alınır. Proje kapsamında bu değerler kullanılmaya çalışılacaktır.
 
-** Stopaj Vergisi (Mesleki hizmeti karşılığında yapılacak ödeme sırasında, Gelir vergisi kanununda belirtilen oranda kesinti yapar. Bu kesinti işi yapan adına vergi dairesine tarafınızca ödenen para.Buna da stopaj vergisi denir.)
+** Stopaj Vergisi (Mesleki hizmeti karşılığında yapılacak ödeme sırasında, Gelir vergisi kanununda belirtilen oranda kesinti yapar. Bu kesinti işi yapan adına vergi dairesine tarafınızca ödenen para. Buna da stopaj vergisi denir.)
 
 ### Senaryo 2
 
 ![card](figures/card.jpg)
 
-Senaryo 2 ise Kredi kartı borcu ödeme, Kredi kartı ile 1 ay içerisinde ve belirtilen limit altında yapılan işlemler sonucunda kullanıcının bankaya ödemesi gereken bir ücret ortaya çıkmaktadır buda dönem borcu olarak bilinir.. Kullanıcı bu ücreti hesap kesim tarihi ile belirlenen son ödeme tarihleri arasında bankaya ödemesi gerekmektedir. (Uygulama kapsamında hesap kesim tarihi ile son ödeme tarihi arasında 10 gün -  Son ödeme tarihi ile bir sonraki hesap kesim tarihi arasında ise de 20 gün süre baz alınmıştır.) Müşteri bankaya belirlenen oran doğrultusunda asgari ödemesi gereken tutari öder ise kartı belirli bir süre daha kullanmaya devam eder.  
+Senaryo 2 ise Kredi kartı borcu ödeme, Kredi kartı ile 1 ay içerisinde ve belirtilen limit altında yapılan işlemler sonucunda kullanıcının bankaya ödemesi gereken bir ücret ortaya çıkmaktadır bu da dönem borcu olarak bilinir. Kullanıcı bu ücreti hesap kesim tarihi ile belirlenen son ödeme tarihleri arasında bankaya ödemesi gerekmektedir. (Uygulama kapsamında hesap kesim tarihi ile son ödeme tarihi arasında 10 gün -  Son ödeme tarihi ile bir sonraki hesap kesim tarihi arasında ise 20 gün süre baz alınmıştır.) Müşteri bankaya belirlenen oran doğrultusunda asgari ödemesi gereken tutarı öder ise kartı belirli bir süre daha kullanmaya devam eder.  
 
-Uygulama içerisinde, Müşteri dönem borcunu belirtilen tarihler arasında öder ise bir faiz işlemi uygulanmaz. Fakat dönem borcu yerine asgari tutarı öder ise bir sonraki ay a dönem borcuna alışveriş faizi ve gecikme faizi gib faizler uygulanıyor.
+Uygulama içerisinde, Müşteri dönem borcunu belirtilen tarihler arasında öder ise bir faiz işlemi uygulanmaz. Fakat dönem borcu yerine asgari tutarı öder ise bir sonraki ay a dönem borcuna alışveriş faizi ve gecikme faizi gibi faizler uygulanıyor.
 
-- Alışveriş Faiz Tutarı : Ödenmeyen tutara hesap kesim tarihinden son ödeme tarihine kadar gecikme faizi uygulanır. Hesaplama ise şı şekilde yapılır : 
+- Alışveriş Faiz Tutarı : Ödenmeyen tutara hesap kesim tarihinden son ödeme tarihine kadar gecikme faizi uygulanır. Hesaplama ise şu şekilde yapılır : 
 
-  ​							alışveriş faiz tutarı * = (ödenmeyen kısım * faiz oranı * (10/30) )/ 100 (faiz oranı yüzdesi)
+  ​							alışveriş faiz tutarı * = (ödenmeyen kısım * faiz oranı * (10/30) ) / 100 (faiz oranı yüzdesi)
 
 - Gecikme Faizi : Asgari tutarın ödenmeyen kısmına son ödeme tarihinden bir sonraki hesap kesim tarihine kadar gecikme faizi uygulanır. Şu şekilde hesaplanır : 
 
@@ -71,7 +71,7 @@ Uygulama içerisinde, Müşteri dönem borcunu belirtilen tarihler arasında öd
 
   ​						   alışveriş faiz tutarı ** = (Kalan para * alışveriş faiz oranı * (20/30) ) / 100
 
-- Toplam faiz tutarı ise yukarıdaki hesaplamlardaki oluşan değerleri toplanarak elde edilir. Bu toplam faiz tutarı da Müşterinin dönem borcuna yansıtılır.
+- Toplam faiz tutarı ise yukarıdaki hesaplamalardaki oluşan değerleri toplayarak elde edilir. Bu toplam faiz tutarı da Müşterinin dönem borcuna yansıtılır.
 
 Not : Uygulama kapsamında Fiba Banka Kredi Kartı Faiz oranları baz alınmıştır. 
 
@@ -85,7 +85,7 @@ Not : Uygulama kapsamında Fiba Banka Kredi Kartı Faiz oranları baz alınmış
 
 ### Senaryo 1
 
-- Vadesiz mevduat hesaplarında parası bulunan ve kredi kartı borcu bulunan müşterilerin sistemden silme işlemi yapılamayacaktır. (Fakat müşteri dilerse hesaplarını kapatabilir ya da kredi kartı kullanımını bırakabilir (burda da yukarıdaki şartları yerine getirmeli) fakat banka dan tamamen ilişiğini kesmek için belirtilen koşulu sağlaması gerekir.)
+- Vadesiz mevduat hesaplarında parası bulunan ve kredi kartı borcu bulunan müşterilerin sistemden silinme işlemi yapılamayacaktır. (Fakat müşteri dilerse hesaplarını kapatabilir ya da kredi kartı kullanımını bırakabilir (burda da yukarıdaki şartları yerine getirmeli) fakat banka dan tamamen ilişiğini kesmek için belirtilen koşulu sağlaması gerekir.)
 - Müşteri üzerinden vadesiz mevduat hesabındaki para miktarı bir listeye atanır. 
 - Müşteri üzerinden birikim hesabındaki para miktarı bir listeye atanır.
 - Müşteri üzerinden kredi kartındaki borç bilgisi bir listeye atanır.
@@ -115,7 +115,7 @@ Not : Uygulama kapsamında Fiba Banka Kredi Kartı Faiz oranları baz alınmış
 
 ### Senaryo 2
 
-Güncel para kuru kullanılarak para birimleri arasında dönüşüm yapılabilmektedir. Örnek olara hesabınız TRY para biriminde siz USD ya da EUR para birimlerine sahip bir hesaba para göndereceğiniz zaman dönüşüm işlemi yapılmaktadır. Ya da hesabınız EUR biriminde fakat siz kredi kartı borcunuz TRY türünde ve bu işlemler doğrultusunda ödeme işlemlerinde dönüşüm yapılarak işlemler doğru bir şekilde yerine getiriliyor. 
+Güncel para kuru kullanılarak para birimleri arasında dönüşüm yapılabilmektedir. Örnek olarak hesabınız TRY para biriminde siz USD ya da EUR para birimlerine sahip bir hesaba para göndereceğiniz zaman dönüşüm işlemi yapılmaktadır. Ya da hesabınız EUR biriminde fakat siz kredi kartı borcunuz TRY türünde ve bu işlemler doğrultusunda ödeme işlemlerinde dönüşüm yapılarak işlemler doğru bir şekilde yerine getiriliyor. 
 
 Güncel para kuru  (https://api.exchangeratesapi.io/latest?base=TRY) bu url baz alınarak yapılmaktadır. 
 
@@ -135,17 +135,17 @@ Müşterinin kredi kartı ile alışveriş yaptığını ve müşterinin limiti 
 
 ![creditCardLimit](figures/creditCardLimit.png)
 
-​	
+s	
 
 ### Senaryo 2
 
-Müşterinin farklı bir hesapa IBAN ile para gönderme işleminde IBAN' ı yanlış girmesi durumunda karşılaşacağı hata ise aşağıda gösterilmektedir.
+Müşterinin farklı bir hesaba IBAN ile para gönderme işleminde IBAN' ı yanlış girmesi durumunda karşılaşacağı hata ise aşağıda gösterilmektedir.
 
 ![transferMoney](figures/moneyTransferBetweenDifferentAccount.png)
 
 ## Log Kayıtları
 
-Uygulama içerisinde yapılan işlemleri ve kullanıcının karşılaştığı hataları log4j kulanarak kayıt altına almaktayım.
+Uygulama içerisinde yapılan işlemleri ve kullanıcının karşılaştığı hataları log4j kullanarak kayıt altına almaktayım.
 
 ![logRegister](figures/logRegister.png)
 
