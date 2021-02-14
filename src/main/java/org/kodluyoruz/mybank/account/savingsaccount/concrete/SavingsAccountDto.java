@@ -16,6 +16,9 @@ public class SavingsAccountDto {
     private int savingsAccountBalance;
     private Currency savingsAccountCurrency;
     private LocalDate savingsAccountCreationDate;
+    private int termTime;
+    private double grossInterestReturn;
+    private double savingsAccountNetGain;
     private double savingsAccountInterestRate;
     private Customer customer;
     private BankCard bankCard;
@@ -27,6 +30,9 @@ public class SavingsAccountDto {
                 .savingsAccountBalance(this.savingsAccountBalance)
                 .savingsAccountCurrency(this.savingsAccountCurrency)
                 .savingsAccountCreationDate(this.savingsAccountCreationDate)
+                .termTime(this.termTime)
+                .grossInterestReturn(this.grossInterestReturn)
+                .savingsAccountNetGain(this.savingsAccountNetGain)
                 .savingsAccountInterestRate(this.savingsAccountInterestRate)
                 .customer(this.customer)
                 .bankCard(this.bankCard)
