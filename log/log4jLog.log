@@ -23,3 +23,15 @@
 2021-02-14 17:46:23 ERROR DemandDepositAccountServiceImpl:176 - Account number and password could not matched.
 2021-02-14 17:46:52 ERROR DemandDepositAccountServiceImpl:176 - Account number and password could not matched.
 2021-02-14 17:48:24 ERROR DemandDepositAccountServiceImpl:89 - Account could not found.
+2021-02-14 19:26:50 INFO  CustomerController:34 - Customer will create.
+2021-02-14 19:27:35 INFO  BankCardController:32 - Bank card will create.
+2021-02-14 19:44:39 INFO  CustomerController:34 - Customer will create.
+2021-02-14 19:45:23 INFO  BankCardController:32 - Bank card will create.
+2021-02-14 19:46:43 INFO  DemandDepositAccountController:29 - Account was created.
+2021-02-14 19:46:43 INFO  DemandDepositAccountServiceImpl:69 - 12082995906 customer was created.
+2021-02-14 19:47:02 INFO  DemandDepositAccountController:29 - Account was created.
+2021-02-14 19:47:02 INFO  DemandDepositAccountServiceImpl:69 - 12082995906 customer was created.
+2021-02-14 19:48:02 INFO  SavingsAccountController:29 - Savings account will create.
+2021-02-14 19:49:05 INFO  CreditCardController:42 - Credit card will create.
+2021-02-14 19:49:58 INFO  ExtractOfAccountController:30 - Extract of account create for credit card.
+2021-02-14 19:51:24 INFO  ExtractOfAccountController:42 - extract of account info will get.

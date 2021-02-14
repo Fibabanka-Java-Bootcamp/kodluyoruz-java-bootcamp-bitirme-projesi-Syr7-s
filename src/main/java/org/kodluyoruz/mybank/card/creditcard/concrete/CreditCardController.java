@@ -8,6 +8,7 @@ import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
 import org.kodluyoruz.mybank.utilities.generate.accountgenerate.Account;
+import org.kodluyoruz.mybank.utilities.generate.cardaccountgenerate.CardAccountNumber;
 import org.kodluyoruz.mybank.utilities.generate.securitycodegenerate.SecurityCodeGenerate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class CreditCardController {
     @PostMapping("/{customerTC}/creditCard")
     public CreditCardDto create(@PathVariable("customerTC") long customerTC
             , @RequestBody CreditCardDto creditCardDto) {
-        creditCardDto.setCreditCardAccountNumber(Long.parseLong(Account.generateAccount.get()));
+        creditCardDto.setCreditCardAccountNumber(Long.parseLong(CardAccountNumber.generateCardAccountNumber.get()));
         CustomerDto customerDto = customerService.getCustomerById(customerTC).toCustomerDto();
         creditCardDto.setCardNameSurname(customerDto.getCustomerName() + " " + customerDto.getCustomerLastname());
         creditCardDto.setSecurityCode(SecurityCodeGenerate.securityCode.get());

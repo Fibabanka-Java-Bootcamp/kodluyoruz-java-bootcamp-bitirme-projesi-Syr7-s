@@ -10,6 +10,7 @@ import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
 
 import org.kodluyoruz.mybank.utilities.generate.accountgenerate.Account;
+import org.kodluyoruz.mybank.utilities.generate.cardaccountgenerate.CardAccountNumber;
 import org.kodluyoruz.mybank.utilities.generate.securitycodegenerate.SecurityCodeGenerate;
 import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.Page;
@@ -36,7 +37,7 @@ public class BankCardServiceImpl implements BankCardService<BankCard> {
     @Override
     public BankCard create(long customerTC, BankCardDto bankCardDto) {
         CustomerDto customerDto = customerService.getCustomerById(customerTC).toCustomerDto();
-        bankCardDto.setBankCardAccountNumber(Long.parseLong(Account.generateAccount.get()));
+        bankCardDto.setBankCardAccountNumber(Long.parseLong(CardAccountNumber.generateCardAccountNumber.get()));
         bankCardDto.setBankCardNameSurname(customerDto.getCustomerName() + " " + customerDto.getCustomerLastname());
         bankCardDto.setSecurityCode(SecurityCodeGenerate.securityCode.get());
         return bankCardRepository.save(bankCardDto.toBankCard());
