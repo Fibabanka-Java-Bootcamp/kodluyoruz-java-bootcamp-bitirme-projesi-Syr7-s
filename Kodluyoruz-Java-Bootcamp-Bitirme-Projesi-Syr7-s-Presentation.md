@@ -141,7 +141,7 @@ Yukarıdaki resim de convertProcess metodu uygulama içerisinde ihtiyaç duyulan
 
 Müşterinin kredi kartı ile alışveriş yaptığını ve müşterinin limiti aşacak bir alışveriş yapması durumunda alacağı hata aşağıdaki resimde görülmektedir.
 
-<img src="figures/creditcardlimit.png" alt="creditCardLimit"  />	
+<img src="figures/creditCardLimit.png" alt="creditCardLimit"  />	
 
 ### Senaryo 2
 
