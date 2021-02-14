@@ -26,6 +26,9 @@ public class SavingsAccount {
     private Currency savingsAccountCurrency;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate savingsAccountCreationDate;
+    private int termTime;
+    private double grossInterestReturn;
+    private double savingsAccountNetGain;
     private double savingsAccountInterestRate;
     @ManyToOne
     @JsonIgnore
