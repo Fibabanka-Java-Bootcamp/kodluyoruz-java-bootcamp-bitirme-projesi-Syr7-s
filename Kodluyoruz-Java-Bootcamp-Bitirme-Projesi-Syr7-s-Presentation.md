@@ -2,14 +2,6 @@
 
 ![presentation](figures/presentation.png)
 
-## İçindekiler
-
-- [TOC]
-
-- 
-
-
-
  ## Tanıtım
 
 Merhaba ben İsa SAYAR, Düzce Üniversitesi Bilgisayar Mühendisliğin'den 2020 yılı Sonbaharında mezun oldum. Mezun olduktan sonra Java ve C# programlama dillerine yoğunlaştım ve bu diller ile Masaüstü ve Web uygulamaları geliştirmeye başladım. Bunların haricinde clean code yazmaya, SOLID ve Desing Patterns öğrenmeye  çalışdım. Kasım'ın sonu gibi Sosyal platform aracılığı ile de Kodluyoruz'un Fibabanka destekli Java Bootcamp'i düzenlediğini gördüm ve bende neden olmasın diyerek başvuruda bulundum. Şu anda da bu noktaya kadar geldim.
@@ -141,7 +133,9 @@ Yukarıdaki resim de convertProcess metodu uygulama içerisinde ihtiyaç duyulan
 
 Müşterinin kredi kartı ile alışveriş yaptığını ve müşterinin limiti aşacak bir alışveriş yapması durumunda alacağı hata aşağıdaki resimde görülmektedir.
 
-<img src="figures/creditCardLimit.png" alt="creditCardLimit"  />	
+![creditCardLimit](figures/creditCardLimit.png)
+
+​	
 
 ### Senaryo 2
 
