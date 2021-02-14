@@ -76,6 +76,15 @@ public class SavingsAccountController {
         return savingsAccountService.payDebtWithAccount(bankCardAccountNumber, password, accountNumber, creditCardNumber, creditCardDebt, minimumPaymentAmount).toSavingsAccountDto();
     }
 
+    @PutMapping("/{accountNumber}/savingsProcess")
+    @ResponseStatus(HttpStatus.CREATED)
+    public SavingsAccountDto computeSavings(@PathVariable("accountNumber") long accountNumber,
+                                            @RequestParam("termTime") int termTime,
+                                            @RequestParam("interestRate") double interestRate,
+                                            @RequestParam("withHoldingValue") double withHoldingValue) {
+        return savingsAccountService.computeSavings(accountNumber, termTime, interestRate, withHoldingValue).toSavingsAccountDto();
+    }
+
     @DeleteMapping("/{accountNumber}/process")
     public void savingAccountDelete(@PathVariable("accountNumber") long accountNumber) {
         try {

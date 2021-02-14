@@ -26,6 +26,9 @@ public class SavingsAccount {
     private Currency savingsAccountCurrency;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate savingsAccountCreationDate;
+    private int termTime;
+    private double grossInterestReturn;
+    private double savingsAccountNetGain;
     private double savingsAccountInterestRate;
     @ManyToOne
     @JsonIgnore
@@ -43,6 +46,9 @@ public class SavingsAccount {
                 .savingsAccountBalance(this.savingsAccountBalance)
                 .savingsAccountCurrency(this.savingsAccountCurrency)
                 .savingsAccountCreationDate(this.savingsAccountCreationDate)
+                .termTime(this.termTime)
+                .grossInterestReturn(this.grossInterestReturn)
+                .savingsAccountNetGain(this.savingsAccountNetGain)
                 .savingsAccountInterestRate(this.savingsAccountInterestRate)
                 .customer(this.customer)
                 .bankCard(this.bankCard)
