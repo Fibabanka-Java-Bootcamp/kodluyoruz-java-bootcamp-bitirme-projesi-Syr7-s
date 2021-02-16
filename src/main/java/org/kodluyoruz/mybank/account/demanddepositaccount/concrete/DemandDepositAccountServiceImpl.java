@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountRepository;
 import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountService;
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotDeletedException;
-import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotEnoughMoneyException;
 import org.kodluyoruz.mybank.account.savingsaccount.abtrct.SavingsAccountService;
 import org.kodluyoruz.mybank.account.savingsaccount.concrete.SavingsAccount;
 import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardService;
@@ -42,6 +41,7 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
     private final ExtractOfAccountService<ExtractOfAccount> extractOfAccountService;
     private final BankCardService<BankCard> bankCardService;
     private static final Logger log = Logger.getLogger(DemandDepositAccountServiceImpl.class);
+    private static final Object lock = new Object();
 
     public DemandDepositAccountServiceImpl(DemandDepositAccountRepository demandDepositAccountRepository, CustomerService<Customer> customerService, SavingsAccountService<SavingsAccount> savingsAccountService, CreditCardService<CreditCard> creditCardService, ExtractOfAccountService<ExtractOfAccount> extractOfAccountService, BankCardService<BankCard> bankCardService) {
         this.demandDepositAccountRepository = demandDepositAccountRepository;
@@ -121,13 +121,7 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
         DemandDepositAccountDto demandDepositAccountDto = get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toDemandDepositAccountDto();
         if (isMatchBankCardNumberAndPasswordWithAccount(demandDepositAccountDto, bankCardAccountNumber, password)) {
-            if (demandDepositAccountDto.getDemandDepositAccountBalance() < withDrawMoney) {
-                log.error(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
-                throw new DemandDepositAccountNotEnoughMoneyException(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
-            } else {
-                demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() - withDrawMoney);
-                return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
-            }
+            return updateBalanceFromAccount(accountNumber, withDrawMoney);
         } else {
             log.error(ErrorMessages.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT);
             throw new BankCardNotMatchException(ErrorMessages.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT);
@@ -190,11 +184,19 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
         return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
     }
 
-
-    private double getMoney(int creditCardDebt, int minimumPaymentAmount, DemandDepositAccountDto demandDepositAccountDto, CreditCard creditCard) {
-        return creditCard.getCardDebt() == creditCardDebt ?
-                Exchange.convertProcess(creditCard.getCurrency(), demandDepositAccountDto.getDemandDepositAccountCurrency(), creditCardDebt) :
-                Exchange.convertProcess(creditCard.getCurrency(), demandDepositAccountDto.getDemandDepositAccountCurrency(), (creditCardDebt + minimumPaymentAmount));
+    @Override
+    public DemandDepositAccount updateBalanceFromAccount(long accountNumber, int money) {
+        synchronized (lock) {
+            DemandDepositAccountDto demandDepositAccountDto = get(accountNumber).orElseThrow(() ->
+                    new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toDemandDepositAccountDto();
+            if (demandDepositAccountDto.getDemandDepositAccountBalance() - money < 0) {
+                log.error(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
+            } else {
+                demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() - money);
+                return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
+            }
+        }
     }
 
     @Override
@@ -202,11 +204,19 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
         return demandDepositAccountRepository.findAll(pageable);
     }
 
+    private double getMoney(int creditCardDebt, int minimumPaymentAmount, DemandDepositAccountDto demandDepositAccountDto, CreditCard creditCard) {
+        return creditCard.getCardDebt() == creditCardDebt ?
+                Exchange.convertProcess(creditCard.getCurrency(), demandDepositAccountDto.getDemandDepositAccountCurrency(), creditCardDebt) :
+                Exchange.convertProcess(creditCard.getCurrency(), demandDepositAccountDto.getDemandDepositAccountCurrency(), (creditCardDebt + minimumPaymentAmount));
+    }
+
+
     private boolean isMatchBankCardNumberAndPasswordWithAccount(DemandDepositAccountDto demandDepositAccountDto, long bankCardAccountNumber, int password) {
         if (demandDepositAccountDto.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber) {
             return demandDepositAccountDto.getBankCard().getBankCardPassword() == password;
         }
         return false;
     }
+
 
 }

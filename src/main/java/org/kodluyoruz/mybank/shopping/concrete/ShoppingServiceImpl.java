@@ -67,20 +67,14 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
         DemandDepositAccount demandDepositAccount = demandDepositAccountService.get(demandDepositAccountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found"));
         if (demandDepositAccount.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber && demandDepositAccount.getBankCard().getBankCardPassword() == password) {
             double money = Exchange.convertProcess(shoppingDto.getCurrency(), demandDepositAccount.getDemandDepositAccountCurrency(), shoppingDto.getProductPrice());
-            if (demandDepositAccount.getDemandDepositAccountBalance() - money < 0) {
-                log.error(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
-            } else {
-                demandDepositAccount.setDemandDepositAccountBalance((int) (demandDepositAccount.getDemandDepositAccountBalance() - money));
-                demandDepositAccountService.update(demandDepositAccount);
-                return shoppingRepository.save(shoppingDto.toShopping());
-            }
+            demandDepositAccountService.updateBalanceFromAccount(demandDepositAccountNumber, (int) money);
+            return shoppingRepository.save(shoppingDto.toShopping());
         } else {
             log.error(ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
         }
-
     }
+
 
     @Override
     public Shopping getShoppingByProductID(int productID) {

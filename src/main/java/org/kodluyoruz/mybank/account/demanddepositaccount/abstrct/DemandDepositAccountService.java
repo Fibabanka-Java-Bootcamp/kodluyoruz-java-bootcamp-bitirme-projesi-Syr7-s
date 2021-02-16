@@ -30,5 +30,7 @@ public interface DemandDepositAccountService<T> {
 
     T payDebtWithDemandDeposit(long accountNumber, long creditCardNumber, int creditCardDebt, int minimumPaymentAmount);
 
+    T updateBalanceFromAccount(long accountNumber, int money);
+
     Page<T> getDemandDepositAccounts(Pageable pageable);
 }

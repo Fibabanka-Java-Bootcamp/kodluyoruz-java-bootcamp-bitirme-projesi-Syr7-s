@@ -70,3 +70,25 @@
 2021-02-16 12:45:16 INFO  ExtractOfAccountController:42 - extract of account info will get.
 2021-02-16 12:46:21 INFO  ExtractOfAccountController:42 - extract of account info will get.
 2021-02-16 12:49:00 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-16 13:53:23 INFO  CustomerController:34 - Customer will create.
+2021-02-16 13:54:04 INFO  CreditCardController:42 - Credit card will create.
+2021-02-16 13:54:41 INFO  ExtractOfAccountController:30 - Extract of account create for credit card.
+2021-02-16 13:55:51 INFO  ExtractOfAccountController:42 - extract of account info will get.
+2021-02-16 13:56:08 ERROR ShoppingServiceImpl:55 - Credit card limit over.
+2021-02-16 13:56:23 INFO  ExtractOfAccountController:42 - extract of account info will get.
+2021-02-16 13:58:28 INFO  CreditCardController:90 - Debt will payment without credit card in ATM.
+2021-02-16 14:00:00 INFO  BankCardController:32 - Bank card will create.
+2021-02-16 14:00:27 INFO  SavingsAccountController:29 - Savings account will create.
+2021-02-16 14:02:11 INFO  DemandDepositAccountController:29 - Account was created.
+2021-02-16 14:02:11 INFO  DemandDepositAccountServiceImpl:69 - 39412021081 customer was created.
+2021-02-16 14:02:25 INFO  DemandDepositAccountController:29 - Account was created.
+2021-02-16 14:02:25 INFO  DemandDepositAccountServiceImpl:69 - 39412021081 customer was created.
+2021-02-16 14:06:00 INFO  DemandDepositAccountController:53 - Deposit Money process was did.
+2021-02-16 14:06:28 INFO  DemandDepositAccountController:63 - With draw money process was did.
+2021-02-16 14:06:50 INFO  DemandDepositAccountController:63 - With draw money process was did.
+2021-02-16 14:06:50 ERROR DemandDepositAccountServiceImpl:132 - Card could not matched to your account.
+2021-02-16 14:07:12 INFO  DemandDepositAccountController:63 - With draw money process was did.
+2021-02-16 14:07:48 INFO  SavingsAccountController:63 - With draw money process will do.
+2021-02-16 14:32:01 INFO  DemandDepositAccountController:53 - Deposit Money process was did.
+2021-02-16 14:32:59 INFO  DemandDepositAccountController:63 - With draw money process was did.
+2021-02-16 15:22:29 INFO  DemandDepositAccountController:63 - With draw money process was did.
