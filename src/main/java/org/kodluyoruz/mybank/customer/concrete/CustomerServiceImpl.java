@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,16 +63,18 @@ public class CustomerServiceImpl implements CustomerService<Customer> {
     }
 
     @Override
-    public void delete(long customerTC) {
+    public String delete(long customerTC) {
         Customer deletedCustomer = customerRepository.findCustomerByCustomerTC(customerTC);
         List<Integer> debts = deletedCustomer.getCreditCards().stream().map(CreditCard::getCardDebt).collect(Collectors.toList());
-        boolean isCreditCardDelete = isZero(debts);
+        boolean isCreditCardDelete = isZero.test(debts);
         List<Integer> demandAccountBalance = deletedCustomer.getDemandDepositAccounts().stream().map(DemandDepositAccount::getDemandDepositAccountBalance).collect(Collectors.toList());
-        boolean isDemandAccountDelete = isZero(demandAccountBalance);
+        boolean isDemandAccountDelete = isZero.test(demandAccountBalance);
         List<Integer> savingsAccountBalance = deletedCustomer.getSavingsAccounts().stream().map(SavingsAccount::getSavingsAccountBalance).collect(Collectors.toList());
-        boolean isSavingsAccountDelete = isZero(savingsAccountBalance);
+        boolean isSavingsAccountDelete = isZero.test(savingsAccountBalance);
         if (isCreditCardDelete && isDemandAccountDelete && isSavingsAccountDelete) {
+            String customerName = deletedCustomer.getCustomerName() + " " + deletedCustomer.getCustomerLastname();
             customerRepository.delete(deletedCustomer);
+            return customerName +" named customer register totally deleted.";
         } else {
             log.error(ErrorMessages.CUSTOMER_COULD_NOT_DELETED);
             throw new CustomerCouldNotDeletedException(ErrorMessages.CUSTOMER_COULD_NOT_DELETED);
@@ -83,13 +86,13 @@ public class CustomerServiceImpl implements CustomerService<Customer> {
         return customerRepository.findAll(pageable);
     }
 
-    private boolean isZero(List<Integer> debts) {
+    private final Predicate<List<Integer>> isZero = (moneyAmounts) -> {
         int counter = 0;
-        for (Integer debt : debts) {
-            if (debt == 0) {
+        for (Integer money : moneyAmounts) {
+            if (money == 0) {
                 counter++;
             }
         }
-        return counter == debts.size();
-    }
+        return counter == moneyAmounts.size();
+    };
 }

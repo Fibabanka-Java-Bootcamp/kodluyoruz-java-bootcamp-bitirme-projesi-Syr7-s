@@ -18,7 +18,7 @@ public interface DemandDepositAccountService<T> {
 
     T getByAccountIban(String accountIBAN);
 
-    void delete(long accountNumber);
+    String delete(long accountNumber);
 
     T depositMoney(long bankCardAccountNumber, int password, long accountNumber, int depositMoney);
 

@@ -84,13 +84,13 @@ public class SavingsAccountController {
     }
 
     @DeleteMapping("/{accountNumber}/process")
-    public void savingAccountDelete(@PathVariable("accountNumber") long accountNumber) {
+    public String savingAccountDelete(@PathVariable("accountNumber") long accountNumber) {
         try {
             log.info(accountNumber + " will delete.");
-            savingsAccountService.delete(accountNumber);
+            return savingsAccountService.delete(accountNumber);
         } catch (SavingAccountNotDeletedException exception) {
-            log.error(ErrorMessages.CARD_COULD_NOT_DELETED);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.CARD_COULD_NOT_DELETED);
+            log.error(ErrorMessages.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT);
         } catch (RuntimeException exception) {
             log.error(ErrorMessages.SERVER_ERROR);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.SERVER_ERROR);

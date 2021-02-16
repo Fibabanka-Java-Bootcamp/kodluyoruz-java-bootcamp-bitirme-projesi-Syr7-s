@@ -92,14 +92,15 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
     }
 
     @Override
-    public void delete(long accountNumber) {
+    public String delete(long accountNumber) {
         DemandDepositAccount demandDepositAccount = get(accountNumber).
                 orElseThrow(() -> (new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)));
-        if (demandDepositAccount.getDemandDepositAccountBalance() > 0) {
+        if (demandDepositAccount.getDemandDepositAccountBalance() != 0) {
             log.info(ErrorMessages.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT);
             throw new DemandDepositAccountNotDeletedException(ErrorMessages.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT);
         } else {
             demandDepositAccountRepository.delete(demandDepositAccount);
+            return accountNumber + " numbered account was successfully deleted.";
         }
     }
 

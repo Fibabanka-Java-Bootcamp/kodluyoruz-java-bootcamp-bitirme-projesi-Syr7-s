@@ -54,6 +54,17 @@ public class CreditCardServiceImpl implements CreditCardService<CreditCard> {
     }
 
     @Override
+    public String delete(long accountNumber) {
+        CreditCard creditCard = getCreditCard(accountNumber);
+        if (creditCard.getCardDebt() == 0) {
+            creditCardRepository.delete(creditCard);
+            return  creditCard.getCardNameSurname() + " named customer canceled her credit card usage.";
+        } else {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.CARD_COULD_NOT_DELETED);
+        }
+    }
+
+    @Override
     public CreditCard payCreditCardDebt(long creditCardNO, int password, int payMoney, double minimumPayment) {
         CreditCard creditCard = getCreditCard(creditCardNO);
         if (creditCard.getCardPassword() == password) {

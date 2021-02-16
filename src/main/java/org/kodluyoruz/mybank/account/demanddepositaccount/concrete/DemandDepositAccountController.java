@@ -93,10 +93,10 @@ public class DemandDepositAccountController {
     }
 
     @DeleteMapping("/{accountNumber}/process")
-    public void demandDepositAccountDelete(@PathVariable("accountNumber") long accountNumber) {
+    public String demandDepositAccountDelete(@PathVariable("accountNumber") long accountNumber) {
         try {
             log.info(accountNumber + " number will deleted.");
-            demandDepositAccountService.delete(accountNumber);
+            return demandDepositAccountService.delete(accountNumber);
         } catch (DemandDepositAccountNotDeletedException exception) {
             log.error(exception.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());

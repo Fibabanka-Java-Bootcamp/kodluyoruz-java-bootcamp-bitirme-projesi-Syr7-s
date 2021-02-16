@@ -6,8 +6,12 @@ import org.springframework.data.domain.Pageable;
 
 public interface BankCardService<T> {
     T create(T t);
+
     T create(long customerId, BankCardDto bankCardDto);
+
     T findBankCard(long bankCardNo);
+
     Page<T> bankCardPage(Pageable pageable);
-    void delete(long bankCardNo);
+
+    String delete(long bankCardNo);
 }

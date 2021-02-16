@@ -79,9 +79,9 @@ public class CustomerController {
     }
 
     @DeleteMapping("/delete/{customerTC}")
-    public void delete(@PathVariable("customerTC") long customerTC) {
+    public String delete(@PathVariable("customerTC") long customerTC) {
         try {
-            customerService.delete(customerTC);
+            return customerService.delete(customerTC);
         } catch (CustomerCouldNotDeletedException exception) {
             log.error(HttpStatus.BAD_REQUEST);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.AN_ERROR_OCCURRED);

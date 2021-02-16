@@ -19,7 +19,7 @@ public interface SavingsAccountService<T> {
 
     T getByAccountIban(String accountIban);
 
-    void delete(long accountNumber);
+    String delete(long accountNumber);
 
     T depositMoney(long bankCardAccountNumber, int password, long accountNumber, int depositMoney);
 

@@ -55,10 +55,10 @@ public class BankCardController {
     }
 
     @DeleteMapping("/{bankCardNO}/process")
-    public void bankCardDelete(@PathVariable("bankCardNO") long bankCardNO) {
+    public String bankCardDelete(@PathVariable("bankCardNO") long bankCardNO) {
         try {
             log.info("Bank card will delete.");
-            bankCardService.delete(bankCardNO);
+            return bankCardService.delete(bankCardNO);
         } catch (BankCardNotDeletedException exception) {
             log.error(ErrorMessages.CARD_COULD_NOT_DELETED);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.CARD_COULD_NOT_DELETED);

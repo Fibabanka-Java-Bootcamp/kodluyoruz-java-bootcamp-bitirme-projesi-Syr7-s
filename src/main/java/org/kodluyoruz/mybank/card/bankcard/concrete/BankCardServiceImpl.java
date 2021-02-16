@@ -60,10 +60,11 @@ public class BankCardServiceImpl implements BankCardService<BankCard> {
     }
 
     @Override
-    public void delete(long bankCardNo) {
+    public String delete(long bankCardNo) {
         BankCard bankCard = findBankCard(bankCardNo);
         try {
             bankCardRepository.delete(bankCard);
+            return  bankCard.getBankCardNameSurname() + " named customer canceled her bank card usage.";
         } catch (BankCardNotDeletedException exception) {
             log.error(ErrorMessages.CARD_COULD_NOT_DELETED);
             throw new BankCardNotDeletedException(ErrorMessages.CARD_COULD_NOT_DELETED);

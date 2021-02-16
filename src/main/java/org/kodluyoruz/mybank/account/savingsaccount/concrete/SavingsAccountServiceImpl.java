@@ -90,7 +90,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
     }
 
     @Override
-    public void delete(long accountNumber) {
+    public String delete(long accountNumber) {
         SavingsAccount savingsAccount = get(accountNumber)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND));
         if (savingsAccount.getSavingsAccountBalance() != 0) {
@@ -98,6 +98,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
             throw new SavingAccountNotDeletedException(ErrorMessages.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT);
         } else {
             savingsAccountRepository.delete(savingsAccount);
+            return accountNumber+ " numbered account was successfully deleted.";
         }
     }
 

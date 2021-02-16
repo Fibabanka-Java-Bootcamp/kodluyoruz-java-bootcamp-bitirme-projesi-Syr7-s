@@ -92,3 +92,4 @@
 2021-02-16 14:32:01 INFO  DemandDepositAccountController:53 - Deposit Money process was did.
 2021-02-16 14:32:59 INFO  DemandDepositAccountController:63 - With draw money process was did.
 2021-02-16 15:22:29 INFO  DemandDepositAccountController:63 - With draw money process was did.
+2021-02-16 20:03:27 INFO  CustomerController:34 - Customer will create.

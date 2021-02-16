@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.Min;
 import java.util.List;
@@ -89,5 +90,14 @@ public class CreditCardController {
                                                       @RequestParam("minimumPayment") double minimumPayment) {
         log.info("Debt will payment without credit card in ATM.");
         return creditCardService.debtPaymentWithoutCreditCard(creditCardNO, payMoney, minimumPayment).toCreditCardDto();
+    }
+
+    @DeleteMapping("/{cardAccountNumber}/process")
+    public String deleteCreditCard(@PathVariable("cardAccountNumber") long creditCardAccountNumber) {
+        try {
+            return creditCardService.delete(creditCardAccountNumber);
+        } catch (RuntimeException exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
+        }
     }
 }
