@@ -70,8 +70,8 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
             demandDepositAccountService.updateBalanceFromAccount(demandDepositAccountNumber, (int) money);
             return shoppingRepository.save(shoppingDto.toShopping());
         } else {
-            log.error(ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
+            log.error(ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
         }
     }
 

@@ -162,8 +162,8 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
                 return demandDepositAccountRepository.save(fromAccount.toDemandDepositAccount());
             }
         } else {
-            log.error(ErrorMessages.ACCOUNT_COULD_NOT_FOUND);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND);
+            log.error(ErrorMessages.ACCOUNTS_COULD_SAME);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNTS_COULD_SAME);
         }
     }
 
