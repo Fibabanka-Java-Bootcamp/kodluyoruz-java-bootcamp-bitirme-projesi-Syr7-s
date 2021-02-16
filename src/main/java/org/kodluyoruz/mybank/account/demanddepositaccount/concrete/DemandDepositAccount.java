@@ -31,7 +31,7 @@ public class DemandDepositAccount {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnore
     @JoinColumn(name = "bankcard_no")
     private BankCard bankCard;
