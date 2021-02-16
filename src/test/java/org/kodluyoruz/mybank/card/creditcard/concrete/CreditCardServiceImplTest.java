@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardRepository;
 import org.kodluyoruz.mybank.utilities.enums.currency.Currency;
 import org.kodluyoruz.mybank.utilities.generate.accountgenerate.Account;
+import org.kodluyoruz.mybank.utilities.generate.cardaccountgenerate.CardAccountNumber;
 import org.kodluyoruz.mybank.utilities.generate.securitycodegenerate.SecurityCodeGenerate;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -32,7 +33,7 @@ class CreditCardServiceImplTest {
 
     @BeforeAll
     static void firstSetUp() {
-        creditCard.setCardAccountNumber(Long.parseLong(Account.generateAccount.get()));
+        creditCard.setCardAccountNumber(Long.parseLong(CardAccountNumber.generateCardAccountNumber.get()));
         creditCard.setCardNameSurname("Isa SAYAR");
         creditCard.setCardPassword(1996);
         creditCard.setExpirationDate(LocalDate.of(2020, 2, 1));

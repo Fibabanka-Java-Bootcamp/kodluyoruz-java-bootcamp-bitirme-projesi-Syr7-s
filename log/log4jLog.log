@@ -46,3 +46,23 @@
 2021-02-14 20:02:26 INFO  ExtractOfAccountController:42 - extract of account info will get.
 2021-02-14 20:04:29 INFO  ExtractOfAccountController:42 - extract of account info will get.
 2021-02-14 20:06:15 INFO  ExtractOfAccountController:42 - extract of account info will get.
+2021-02-15 12:25:11 ERROR CustomerServiceImpl:76 - Customer could not deleted.
+2021-02-15 12:25:11 ERROR CustomerController:86 - 400 BAD_REQUEST
+2021-02-15 12:27:44 INFO  CustomerController:34 - Customer will create.
+2021-02-15 12:28:31 INFO  BankCardController:32 - Bank card will create.
+2021-02-15 12:29:24 INFO  SavingsAccountController:29 - Savings account will create.
+2021-02-15 12:30:26 INFO  DemandDepositAccountController:29 - Account was created.
+2021-02-15 12:30:26 INFO  DemandDepositAccountServiceImpl:69 - 31393823852 customer was created.
+2021-02-15 12:30:42 INFO  DemandDepositAccountController:29 - Account was created.
+2021-02-15 12:30:42 INFO  DemandDepositAccountServiceImpl:69 - 31393823852 customer was created.
+2021-02-15 12:33:34 INFO  CreditCardController:42 - Credit card will create.
+2021-02-15 12:34:33 INFO  ExtractOfAccountController:30 - Extract of account create for credit card.
+2021-02-15 12:36:28 INFO  ExtractOfAccountController:42 - extract of account info will get.
+2021-02-15 12:37:11 INFO  CreditCardController:81 - Debt will payment with credit card where in ATM.
+2021-02-15 12:37:28 INFO  ExtractOfAccountController:42 - extract of account info will get.
+2021-02-15 12:38:57 INFO  SavingsAccountController:63 - With draw money process will do.
+2021-02-15 12:38:57 ERROR SavingsAccountServiceImpl:131 - Card could not matched to your account.
+2021-02-15 12:40:11 INFO  SavingsAccountController:63 - With draw money process will do.
+2021-02-15 12:40:59 INFO  DemandDepositAccountController:63 - With draw money process was did.
+2021-02-15 12:41:23 INFO  DemandDepositAccountController:63 - With draw money process was did.
+2021-02-15 12:43:09 INFO  BankCardController:60 - Bank card will delete.

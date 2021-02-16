@@ -7,6 +7,7 @@ import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardRepository;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.customer.concrete.CustomerServiceImpl;
 import org.kodluyoruz.mybank.utilities.generate.accountgenerate.Account;
+import org.kodluyoruz.mybank.utilities.generate.cardaccountgenerate.CardAccountNumber;
 import org.kodluyoruz.mybank.utilities.generate.securitycodegenerate.SecurityCodeGenerate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,11 +30,11 @@ class BankCardServiceImplTest {
     @BeforeEach
     void setUp(){
         restTemplate = new RestTemplate();
-        customer = customerService.getCustomerById(22433513943L);
+        customer = customerService.getCustomerById(12082995906L);
     }
     @Test
     void create() {
-        bankCard.setBankCardAccountNumber(Long.parseLong(Account.generateAccount.get()));
+        bankCard.setBankCardAccountNumber(Long.parseLong(CardAccountNumber.generateCardAccountNumber.get()));
         bankCard.setBankCardNameSurname(customer.getCustomerName()+" "+customer.getCustomerLastname());
         bankCard.setBankCardPassword(1996);
         bankCard.setBankCardExpirationDate(LocalDate.of(2020,2,10));
