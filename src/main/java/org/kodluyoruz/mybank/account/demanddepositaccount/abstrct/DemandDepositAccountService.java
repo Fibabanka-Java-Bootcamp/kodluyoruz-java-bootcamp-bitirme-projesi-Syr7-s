@@ -20,15 +20,15 @@ public interface DemandDepositAccountService<T> {
 
     void delete(long accountNumber);
 
-    T depositMoney(long bankCardAccountNumber,int password, long accountNumber, int depositMoney);
+    T depositMoney(long bankCardAccountNumber, int password, long accountNumber, int depositMoney);
 
-    T withDrawMoney(long bankCardAccountNumber,int password, long accountNumber, int withDrawMoney);
+    T withDrawMoney(long bankCardAccountNumber, int password, long accountNumber, int withDrawMoney);
 
-    T moneyTransferBetweenDifferentAccounts(long bankCardAccountNumber, int password, String depositAccountIBAN, String savingsAccountIBAN, int transferMoney);
+    T moneyTransferBetweenDifferentAccounts(String depositAccountIBAN, String savingsAccountIBAN, int transferMoney);
 
-    T moneyTransferBetweenAccounts(long bankCardAccountNumber, int password, String fromAccountIBAN, String toAccountIBAN, int transferMoney);
+    T moneyTransferBetweenAccounts(String fromAccountIBAN, String toAccountIBAN, int transferMoney);
 
-    T payDebtWithDemandDeposit(long bankCardAccountNumber, int password, long accountNumber, long creditCardNumber, int creditCardDebt, int minimumPaymentAmount);
+    T payDebtWithDemandDeposit(long accountNumber, long creditCardNumber, int creditCardDebt, int minimumPaymentAmount);
 
     Page<T> getDemandDepositAccounts(Pageable pageable);
 }

@@ -135,74 +135,61 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
     }
 
     @Override
-    public DemandDepositAccount moneyTransferBetweenDifferentAccounts(long bankCardAccountNumber, int password, String depositAccountIBAN, String savingsAccountIBAN, int transferMoney) {
+    public DemandDepositAccount moneyTransferBetweenDifferentAccounts(String depositAccountIBAN, String savingsAccountIBAN, int transferMoney) {
         DemandDepositAccountDto demandDepositAccountDto = getByAccountIban(depositAccountIBAN).toDemandDepositAccountDto();
         SavingsAccount savingAccount = savingsAccountService.getByAccountIban(savingsAccountIBAN);
-        if (isMatchBankCardNumberAndPasswordWithAccount(demandDepositAccountDto, bankCardAccountNumber, password)) {
-            if (demandDepositAccountDto.getDemandDepositAccountBalance() - transferMoney < 0) {
+        if (demandDepositAccountDto.getDemandDepositAccountBalance() - transferMoney < 0) {
+            log.error(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
+        } else {
+            double money = Exchange.convertProcess(demandDepositAccountDto.getDemandDepositAccountCurrency(), savingAccount.getSavingsAccountCurrency(), transferMoney);
+            demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() - transferMoney);
+            savingAccount.setSavingsAccountBalance((int) (savingAccount.getSavingsAccountBalance() + money));
+            savingsAccountService.update(savingAccount);
+            return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
+        }
+    }
+
+
+    @Override
+    public DemandDepositAccount moneyTransferBetweenAccounts(String fromAccountIBAN, String toAccountIBAN, int transferMoney) {
+        if (!fromAccountIBAN.equals(toAccountIBAN)) {
+            DemandDepositAccountDto fromAccount = getByAccountIban(fromAccountIBAN).toDemandDepositAccountDto();
+            DemandDepositAccountDto toAccount = getByAccountIban(toAccountIBAN).toDemandDepositAccountDto();
+            if (fromAccount.getDemandDepositAccountBalance() - transferMoney < 0) {
                 log.error(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
             } else {
-                double money = Exchange.convertProcess(demandDepositAccountDto.getDemandDepositAccountCurrency(), savingAccount.getSavingsAccountCurrency(), transferMoney);
-                demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() - transferMoney);
-                savingAccount.setSavingsAccountBalance((int) (savingAccount.getSavingsAccountBalance() + money));
-                savingsAccountService.update(savingAccount);
-                return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
+                double money = Exchange.convertProcess(fromAccount.getDemandDepositAccountCurrency(), toAccount.getDemandDepositAccountCurrency(), transferMoney);
+                fromAccount.setDemandDepositAccountBalance(fromAccount.getDemandDepositAccountBalance() - transferMoney);
+                toAccount.setDemandDepositAccountBalance((int) (toAccount.getDemandDepositAccountBalance() + money));
+                demandDepositAccountRepository.save(toAccount.toDemandDepositAccount()).toDemandDepositAccountDto();
+                return demandDepositAccountRepository.save(fromAccount.toDemandDepositAccount());
             }
         } else {
-            log.error(ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
-        }
-
-    }
-
-    @Override
-    public DemandDepositAccount moneyTransferBetweenAccounts(long bankCardAccountNumber, int password, String fromAccountIBAN, String toAccountIBAN, int transferMoney) {
-        if (!fromAccountIBAN.equals(toAccountIBAN)) {
-            DemandDepositAccountDto fromAccount = getByAccountIban(fromAccountIBAN).toDemandDepositAccountDto();
-            if (isMatchBankCardNumberAndPasswordWithAccount(fromAccount, bankCardAccountNumber, password)) {
-                DemandDepositAccountDto toAccount = getByAccountIban(toAccountIBAN).toDemandDepositAccountDto();
-                if (fromAccount.getDemandDepositAccountBalance() - transferMoney < 0) {
-                    log.error(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
-                } else {
-                    double money = Exchange.convertProcess(fromAccount.getDemandDepositAccountCurrency(), toAccount.getDemandDepositAccountCurrency(), transferMoney);
-                    fromAccount.setDemandDepositAccountBalance(fromAccount.getDemandDepositAccountBalance() - transferMoney);
-                    toAccount.setDemandDepositAccountBalance((int) (toAccount.getDemandDepositAccountBalance() + money));
-                    demandDepositAccountRepository.save(toAccount.toDemandDepositAccount()).toDemandDepositAccountDto();
-                    return demandDepositAccountRepository.save(fromAccount.toDemandDepositAccount());
-                }
-            } else {
-                log.error(ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
-            }
-        } else {
-            log.error(ErrorMessages.ACCOUNTS_COULD_SAME);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNTS_COULD_SAME);
+            log.error(ErrorMessages.ACCOUNT_COULD_NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND);
         }
     }
 
+
     @Override
-    public DemandDepositAccount payDebtWithDemandDeposit(long bankCardAccountNumber, int password, long accountNumber, long creditCardNumber, int creditCardDebt, int minimumPaymentAmount) {
+    public DemandDepositAccount payDebtWithDemandDeposit(long accountNumber, long creditCardNumber, int creditCardDebt, int minimumPaymentAmount) {
         DemandDepositAccountDto demandDepositAccountDto = get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toDemandDepositAccountDto();
-        if (isMatchBankCardNumberAndPasswordWithAccount(demandDepositAccountDto, bankCardAccountNumber, password)) {
-            CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
-            ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
-            double money = getMoney(creditCardDebt, minimumPaymentAmount, demandDepositAccountDto, creditCard);
-            demandDepositAccountDto.setDemandDepositAccountBalance((int) (demandDepositAccountDto.getDemandDepositAccountBalance() - money));
-            Debt.debtProcess(creditCardDebt, minimumPaymentAmount, creditCard, extractOfAccount);
-            extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
-            extractOfAccount.setMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPaymentAmount));
-            creditCardService.updateCard(creditCard);
-            extractOfAccountService.update(extractOfAccount);
-            return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
-        } else {
-            log.error(ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
-        }
 
+        CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
+        ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
+        double money = getMoney(creditCardDebt, minimumPaymentAmount, demandDepositAccountDto, creditCard);
+        demandDepositAccountDto.setDemandDepositAccountBalance((int) (demandDepositAccountDto.getDemandDepositAccountBalance() - money));
+        Debt.debtProcess(creditCardDebt, minimumPaymentAmount, creditCard, extractOfAccount);
+        extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
+        extractOfAccount.setMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPaymentAmount));
+        creditCardService.updateCard(creditCard);
+        extractOfAccountService.update(extractOfAccount);
+        return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
     }
+
 
     private double getMoney(int creditCardDebt, int minimumPaymentAmount, DemandDepositAccountDto demandDepositAccountDto, CreditCard creditCard) {
         return creditCard.getCardDebt() == creditCardDebt ?

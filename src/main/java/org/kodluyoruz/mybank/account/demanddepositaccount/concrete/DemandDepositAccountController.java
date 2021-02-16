@@ -32,7 +32,7 @@ public class DemandDepositAccountController {
 
     @GetMapping("/{accountNumber}")
     public DemandDepositAccountDto getDemandDepositAccount(@PathVariable("accountNumber") long accountNumber) {
-        log.info(accountNumber+" account was got.");
+        log.info(accountNumber + " account was got.");
         return demandDepositAccountService.get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toDemandDepositAccountDto();
     }
@@ -64,44 +64,38 @@ public class DemandDepositAccountController {
         return demandDepositAccountService.withDrawMoney(bankCardAccountNumber, password, accountNumber, withDrawMoney).toDemandDepositAccountDto();
     }
 
-    @PutMapping("/{bankCardAccountNO}/bankCard/{depositAccountIBAN}/transfer/{savingsAccountIBAN}")
+    @PutMapping("/{depositAccountIBAN}/transfer/{savingsAccountIBAN}")
     @ResponseStatus(HttpStatus.CREATED)
-    public DemandDepositAccountDto getMoneyTransfer(@PathVariable("bankCardAccountNO") long bankCardAccountNumber,
-                                                    @PathVariable("depositAccountIBAN") String depositAccountIBAN,
+    public DemandDepositAccountDto getMoneyTransfer(@PathVariable("depositAccountIBAN") String depositAccountIBAN,
                                                     @PathVariable("savingsAccountIBAN") String savingsAccountIBAN,
-                                                    @RequestParam("password") int password,
                                                     @RequestParam("transferMoney") int transferMoney) {
         log.info("Money transfer process was did.");
-        return demandDepositAccountService.moneyTransferBetweenDifferentAccounts(bankCardAccountNumber, password, depositAccountIBAN, savingsAccountIBAN, transferMoney).toDemandDepositAccountDto();
+        return demandDepositAccountService.moneyTransferBetweenDifferentAccounts(depositAccountIBAN, savingsAccountIBAN, transferMoney).toDemandDepositAccountDto();
     }
 
-    @PutMapping("/{bankCardAccountNO}/bankCard/{fromAccountIBAN}/betweenAccountMoneyTransfer/{toAccountIBAN}")
+    @PutMapping("/{fromAccountIBAN}/betweenAccountMoneyTransfer/{toAccountIBAN}")
     @ResponseStatus(HttpStatus.CREATED)
-    public DemandDepositAccountDto getBetweenAccountTransferMoney(@PathVariable("bankCardAccountNO") long bankCardAccountNumber,
-                                                                  @PathVariable("fromAccountIBAN") String fromAccountIBAN,
+    public DemandDepositAccountDto getBetweenAccountTransferMoney(@PathVariable("fromAccountIBAN") String fromAccountIBAN,
                                                                   @PathVariable("toAccountIBAN") String toAccountIBAN,
-                                                                  @RequestParam("password") int password,
                                                                   @RequestParam("transferMoney") int transferMoney) {
 
-        return demandDepositAccountService.moneyTransferBetweenAccounts(bankCardAccountNumber, password, fromAccountIBAN, toAccountIBAN, transferMoney).toDemandDepositAccountDto();
+        return demandDepositAccountService.moneyTransferBetweenAccounts(fromAccountIBAN, toAccountIBAN, transferMoney).toDemandDepositAccountDto();
     }
 
-    @PutMapping("/{bankCardAccountNO}/bankCard/{accountNumber}/payDebt/{creditCardNumber}")
+    @PutMapping("/{accountNumber}/payDebt/{creditCardNumber}")
     @ResponseStatus(HttpStatus.CREATED)
-    public DemandDepositAccountDto payDebtWithDemandDeposit(@PathVariable("bankCardAccountNO") long bankCardAccountNumber,
-                                                            @PathVariable("accountNumber") long accountNumber,
+    public DemandDepositAccountDto payDebtWithDemandDeposit(@PathVariable("accountNumber") long accountNumber,
                                                             @PathVariable("creditCardNumber") long creditCardNumber,
-                                                            @RequestParam("password") int password,
                                                             @RequestParam("creditCardDebt") int creditCardDebt,
                                                             @RequestParam("minimumPaymentAmount") int minimumPaymentAmount) {
 
-        return demandDepositAccountService.payDebtWithDemandDeposit(bankCardAccountNumber, password, accountNumber, creditCardNumber, creditCardDebt, minimumPaymentAmount).toDemandDepositAccountDto();
+        return demandDepositAccountService.payDebtWithDemandDeposit(accountNumber, creditCardNumber, creditCardDebt, minimumPaymentAmount).toDemandDepositAccountDto();
     }
 
     @DeleteMapping("/{accountNumber}/process")
     public void demandDepositAccountDelete(@PathVariable("accountNumber") long accountNumber) {
         try {
-            log.info(accountNumber+" number will deleted.");
+            log.info(accountNumber + " number will deleted.");
             demandDepositAccountService.delete(accountNumber);
         } catch (DemandDepositAccountNotDeletedException exception) {
             log.error(exception.getMessage());
