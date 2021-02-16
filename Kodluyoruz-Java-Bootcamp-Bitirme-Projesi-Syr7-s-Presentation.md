@@ -100,15 +100,15 @@ Not : Uygulama kapsamında Fiba Banka Kredi Kartı Faiz oranları baz alınmış
         boolean isCreditCardDelete = isZero(debts);
         // ...
     }
-    private boolean isZero(List<Integer> debts) {
+    private final Predicate<List<Integer>> isZero = moneyAmounts -> {
         int counter = 0;
-        for (Integer debt : debts) {
-            if (debt == 0) {
+        for (Integer money : moneyAmounts) {
+            if (money == 0) {
                 counter++;
             }
         }
-        return counter == debts.size();
-    }
+        return counter == moneyAmounts.size();
+    };
 ```
 
 ! Bu şekilde olma amacı bir kullanıcının birden fazla kredi kartı bulunabilir ve bu kredi kartlarında borçlar göz önüne alınmıştır. Aynı zamanda kullanıcının birden fazla hesabı göz önüne alınarak da değerlendirilmiştir.
