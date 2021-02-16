@@ -3,6 +3,7 @@ package org.kodluyoruz.mybank.account.savingsaccount.concrete;
 import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.account.savingsaccount.abtrct.SavingsAccountService;
 import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingAccountNotDeletedException;
+import org.kodluyoruz.mybank.utilities.enums.messages.Messages;
 import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class SavingsAccountController {
     public SavingsAccountDto get(@PathVariable("accountNumber") long accountNumber) {
         log.info(accountNumber + " will get");
         return savingsAccountService.get(accountNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
+                new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toSavingsAccountDto();
     }
 
     @GetMapping(value = "/accounts", params = {"page", "size"})
@@ -89,11 +90,11 @@ public class SavingsAccountController {
             log.info(accountNumber + " will delete.");
             return savingsAccountService.delete(accountNumber);
         } catch (SavingAccountNotDeletedException exception) {
-            log.error(ErrorMessages.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT);
+            log.error(Messages.Error.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT.message);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Messages.Error.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT.message);
         } catch (RuntimeException exception) {
-            log.error(ErrorMessages.SERVER_ERROR);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.SERVER_ERROR);
+            log.error(Messages.Error.SERVER_ERROR.message);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.SERVER_ERROR.message);
         }
     }
 }

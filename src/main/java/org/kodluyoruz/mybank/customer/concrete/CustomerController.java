@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
 import org.kodluyoruz.mybank.customer.exception.CustomerCouldNotDeletedException;
 import org.kodluyoruz.mybank.customer.exception.CustomerNotFoundException;
-import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
+import org.kodluyoruz.mybank.utilities.enums.messages.Messages;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +39,8 @@ public class CustomerController {
                     .toUri();
             return ResponseEntity.created(location).build();
         } catch (Exception exception) {
-            log.error(ErrorMessages.AN_ERROR_OCCURRED);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.AN_ERROR_OCCURRED);
+            log.error(Messages.Error.AN_ERROR_OCCURRED.message);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.AN_ERROR_OCCURRED.message);
         }
     }
 
@@ -70,11 +70,11 @@ public class CustomerController {
         try {
             return customerService.update(customerDto.toCustomer()).toCustomerDto();
         } catch (CustomerNotFoundException exception) {
-            log.error(ErrorMessages.AN_ERROR_OCCURRED);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.AN_ERROR_OCCURRED);
+            log.error(exception.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         } catch (Exception exception) {
-            log.error(ErrorMessages.SERVER_ERROR);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.SERVER_ERROR);
+            log.error(Messages.Error.SERVER_ERROR.message);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.SERVER_ERROR.message);
         }
     }
 
@@ -83,11 +83,11 @@ public class CustomerController {
         try {
             return customerService.delete(customerTC);
         } catch (CustomerCouldNotDeletedException exception) {
-            log.error(HttpStatus.BAD_REQUEST);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.AN_ERROR_OCCURRED);
+            log.error(exception.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
         } catch (Exception exception) {
             log.error(HttpStatus.INTERNAL_SERVER_ERROR);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.SERVER_ERROR.message);
         }
     }
 

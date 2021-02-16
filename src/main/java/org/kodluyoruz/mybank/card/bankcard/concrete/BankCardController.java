@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardService;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotDeletedException;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotFoundException;
+import org.kodluyoruz.mybank.utilities.enums.messages.Messages;
 import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -49,7 +50,7 @@ public class BankCardController {
             log.error(exception.getMessage());
             return ResponseEntity.notFound().build();
         } catch (Exception exception) {
-            log.error(HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error(Messages.Error.SERVER_ERROR.message);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -60,11 +61,11 @@ public class BankCardController {
             log.info("Bank card will delete.");
             return bankCardService.delete(bankCardNO);
         } catch (BankCardNotDeletedException exception) {
-            log.error(ErrorMessages.CARD_COULD_NOT_DELETED);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.CARD_COULD_NOT_DELETED);
+            log.error(Messages.Error.CARD_COULD_NOT_DELETED.message);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Messages.Error.CARD_COULD_NOT_DELETED.message);
         } catch (RuntimeException exception) {
-            log.error(ErrorMessages.SERVER_ERROR);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.SERVER_ERROR);
+            log.error(Messages.Error.SERVER_ERROR.message);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.SERVER_ERROR.message);
         }
     }
 }

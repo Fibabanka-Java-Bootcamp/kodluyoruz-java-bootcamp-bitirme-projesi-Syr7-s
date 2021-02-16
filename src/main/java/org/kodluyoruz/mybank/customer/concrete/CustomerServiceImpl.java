@@ -8,8 +8,8 @@ import org.kodluyoruz.mybank.customer.abstrct.CustomerRepository;
 import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
 import org.kodluyoruz.mybank.customer.exception.CustomerCouldNotDeletedException;
 import org.kodluyoruz.mybank.customer.exception.CustomerNotFoundException;
+import org.kodluyoruz.mybank.utilities.enums.messages.Messages;
 import org.kodluyoruz.mybank.utilities.generate.tcgenerate.TC;
-import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -39,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService<Customer> {
         if (customer != null) {
             return customer;
         } else {
-            throw new CustomerNotFoundException(ErrorMessages.CUSTOMER_COULD_NOT_FOUND);
+            throw new CustomerNotFoundException(Messages.Error.CUSTOMER_COULD_NOT_FOUND.message);
         }
     }
 
@@ -57,8 +57,8 @@ public class CustomerServiceImpl implements CustomerService<Customer> {
 
             return customerRepository.save(updatedCustomer);
         } else {
-            log.error(ErrorMessages.CUSTOMER_COULD_NOT_FOUND);
-            throw new CustomerNotFoundException(ErrorMessages.CUSTOMER_COULD_NOT_FOUND);
+            log.error(Messages.Error.CUSTOMER_COULD_NOT_FOUND.message);
+            throw new CustomerNotFoundException(Messages.Error.CUSTOMER_COULD_NOT_FOUND.message);
         }
     }
 
@@ -74,10 +74,10 @@ public class CustomerServiceImpl implements CustomerService<Customer> {
         if (isCreditCardDelete && isDemandAccountDelete && isSavingsAccountDelete) {
             String customerName = deletedCustomer.getCustomerName() + " " + deletedCustomer.getCustomerLastname();
             customerRepository.delete(deletedCustomer);
-            return customerName +" named customer register totally deleted.";
+            return customerName + Messages.Info.NAMED_CUSTOMER_REGISTER_TOTALLY_DELETED.message;
         } else {
-            log.error(ErrorMessages.CUSTOMER_COULD_NOT_DELETED);
-            throw new CustomerCouldNotDeletedException(ErrorMessages.CUSTOMER_COULD_NOT_DELETED);
+            log.error(Messages.Error.CUSTOMER_COULD_NOT_DELETED.message);
+            throw new CustomerCouldNotDeletedException(Messages.Error.CUSTOMER_COULD_NOT_DELETED.message);
         }
     }
 
@@ -86,7 +86,7 @@ public class CustomerServiceImpl implements CustomerService<Customer> {
         return customerRepository.findAll(pageable);
     }
 
-    private final Predicate<List<Integer>> isZero = (moneyAmounts) -> {
+    private final Predicate<List<Integer>> isZero = moneyAmounts -> {
         int counter = 0;
         for (Integer money : moneyAmounts) {
             if (money == 0) {

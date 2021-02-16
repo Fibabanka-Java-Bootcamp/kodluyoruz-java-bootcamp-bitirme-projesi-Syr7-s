@@ -18,9 +18,9 @@ import org.kodluyoruz.mybank.exchange.concrete.Exchange;
 import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.utilities.debtprocess.Debt;
+import org.kodluyoruz.mybank.utilities.enums.messages.Messages;
 import org.kodluyoruz.mybank.utilities.generate.accountgenerate.Account;
 import org.kodluyoruz.mybank.utilities.generate.ibangenerate.Iban;
-import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -84,60 +84,60 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
         if (savingsAccount != null) {
             return savingsAccount;
         } else {
-            log.error(ErrorMessages.ACCOUNT_COULD_NOT_FOUND);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND);
+            log.error(Messages.Error.ACCOUNT_COULD_NOT_FOUND.message);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message);
         }
     }
 
     @Override
     public String delete(long accountNumber) {
         SavingsAccount savingsAccount = get(accountNumber)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message));
         if (savingsAccount.getSavingsAccountBalance() != 0) {
-            log.error(ErrorMessages.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT);
-            throw new SavingAccountNotDeletedException(ErrorMessages.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT);
+            log.error(Messages.Error.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT.message);
+            throw new SavingAccountNotDeletedException(Messages.Error.ACCOUNT_COULD_NOT_DELETED_BECAUSE_HAVE_MONEY_IN_YOUR_ACCOUNT.message);
         } else {
             savingsAccountRepository.delete(savingsAccount);
-            return accountNumber+ " numbered account was successfully deleted.";
+            return accountNumber + Messages.Info.NUMBERED_ACCOUNT_WAS_SUCCESSFULLY_DELETED.message;
         }
     }
 
     @Override
     public SavingsAccount depositMoney(long bankCardAccountNumber, int password, long accountNumber, int depositMoney) {
         SavingsAccountDto savingsAccountDto = get(accountNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
+                new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toSavingsAccountDto();
         if (isMatchBankCardAccountNumberAndPasswordWithSavingsAccount(savingsAccountDto, bankCardAccountNumber, password)) {
             int balance = savingsAccountDto.getSavingsAccountBalance();
             savingsAccountDto.setSavingsAccountBalance(balance + depositMoney);
             return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
         } else {
-            log.error(ErrorMessages.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT);
-            throw new BankCardNotMatchException(ErrorMessages.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT);
+            log.error(Messages.Error.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT.message);
+            throw new BankCardNotMatchException(Messages.Error.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT.message);
         }
     }
 
     @Override
     public SavingsAccount withDrawMoney(long bankCardAccountNumber, int password, long accountNumber, int withDrawMoney) {
         SavingsAccountDto savingsAccountDto = get(accountNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
+                new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toSavingsAccountDto();
         if (isMatchBankCardAccountNumberAndPasswordWithSavingsAccount(savingsAccountDto, bankCardAccountNumber, password)) {
             if (savingsAccountDto.getSavingsAccountBalance() < withDrawMoney) {
-                log.error(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
-                throw new SavingsAccountNotEnoughMoneyException(ErrorMessages.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT);
+                log.error(Messages.Error.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT.message);
+                throw new SavingsAccountNotEnoughMoneyException(Messages.Error.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT.message);
             } else {
                 savingsAccountDto.setSavingsAccountBalance(savingsAccountDto.getSavingsAccountBalance() - withDrawMoney);
                 return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
             }
         } else {
-            log.error(ErrorMessages.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT);
-            throw new BankCardNotMatchException(ErrorMessages.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT);
+            log.error(Messages.Error.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT.message);
+            throw new BankCardNotMatchException(Messages.Error.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT.message);
         }
     }
 
     @Override
     public SavingsAccount payDebtWithAccount(long accountNumber, long creditCardNumber, int creditCardDebt, int minimumPaymentAmount) {
         SavingsAccountDto savingsAccountDto = get(accountNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
+                new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toSavingsAccountDto();
 
         CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
         ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
@@ -155,7 +155,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
     @Override
     public SavingsAccount computeSavings(long accountNumber, int termTime, double interestRate, double withHoldingValue) {
         SavingsAccountDto savingsAccountDto = get(accountNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
+                new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toSavingsAccountDto();
         double grossInterestReturn = getInterestReturn(termTime, interestRate, savingsAccountDto);
         double netGain = getNetGain(grossInterestReturn, withHoldingValue);
         savingsAccountDto.setTermTime(termTime);

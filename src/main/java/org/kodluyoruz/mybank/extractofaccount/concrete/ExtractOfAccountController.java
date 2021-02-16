@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.card.creditcard.abstrct.CreditCardService;
 import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
 import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountService;
-import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
+import org.kodluyoruz.mybank.utilities.enums.messages.Messages;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,15 +24,15 @@ public class ExtractOfAccountController {
     @PostMapping("/{creditCardNO}")
     @ResponseStatus(HttpStatus.CREATED)
     public ExtractOfAccountDto create(@PathVariable("creditCardNO") long creditCardNO, @RequestParam("password") int password,
-                                   @RequestBody ExtractOfAccountDto extractOfAccountDto) {
+                                      @RequestBody ExtractOfAccountDto extractOfAccountDto) {
         CreditCard creditCard = creditCardService.getCreditCard(creditCardNO);
         if (creditCard.getCardPassword() == password) {
             log.info("Extract of account create for credit card.");
             extractOfAccountDto.setCreditCard(creditCard);
             return extractOfAccountService.create(extractOfAccountDto.toExtractOfAccount()).toExtractOfAccountDto();
         } else {
-            log.error(ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
+            log.error(Messages.Error.CARD_PASSWORD_COULD_INCORRECT.message);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.CARD_PASSWORD_COULD_INCORRECT.message);
         }
 
     }
@@ -40,6 +40,6 @@ public class ExtractOfAccountController {
     @GetMapping("/{extractNO}/extract")
     public ExtractOfAccountDto get(@PathVariable("extractNO") int extractNO) {
         log.info("extract of account info will get.");
-        return extractOfAccountService.get(extractNO).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,ErrorMessages.EXTRACT_OF_ACCOUNT_COULD_NOT_FOUND)).toExtractOfAccountDto();
+        return extractOfAccountService.get(extractNO).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.EXTRACT_OF_ACCOUNT_COULD_NOT_FOUND.message)).toExtractOfAccountDto();
     }
 }

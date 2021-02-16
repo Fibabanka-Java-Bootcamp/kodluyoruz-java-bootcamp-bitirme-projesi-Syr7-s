@@ -8,11 +8,9 @@ import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardRepository;
 import org.kodluyoruz.mybank.customer.abstrct.CustomerService;
 import org.kodluyoruz.mybank.customer.concrete.Customer;
 import org.kodluyoruz.mybank.customer.concrete.CustomerDto;
-
-import org.kodluyoruz.mybank.utilities.generate.accountgenerate.Account;
+import org.kodluyoruz.mybank.utilities.enums.messages.Messages;
 import org.kodluyoruz.mybank.utilities.generate.cardaccountgenerate.CardAccountNumber;
 import org.kodluyoruz.mybank.utilities.generate.securitycodegenerate.SecurityCodeGenerate;
-import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -49,8 +47,8 @@ public class BankCardServiceImpl implements BankCardService<BankCard> {
         if (bankCard != null) {
             return bankCard;
         } else {
-            log.error(ErrorMessages.CARD_COULD_NOT_DELETED);
-            throw new BankCardNotFoundException(ErrorMessages.CARD_COULD_NOT_CREATED);
+            log.error(Messages.Error.CARD_COULD_NOT_DELETED.message);
+            throw new BankCardNotFoundException(Messages.Error.CARD_COULD_NOT_CREATED.message);
         }
     }
 
@@ -64,10 +62,10 @@ public class BankCardServiceImpl implements BankCardService<BankCard> {
         BankCard bankCard = findBankCard(bankCardNo);
         try {
             bankCardRepository.delete(bankCard);
-            return  bankCard.getBankCardNameSurname() + " named customer canceled her bank card usage.";
+            return bankCard.getBankCardNameSurname() + Messages.Info.NAMED_CUSTOMER_CANCELED_BANK_CARD_USAGE.message;
         } catch (BankCardNotDeletedException exception) {
-            log.error(ErrorMessages.CARD_COULD_NOT_DELETED);
-            throw new BankCardNotDeletedException(ErrorMessages.CARD_COULD_NOT_DELETED);
+            log.error(Messages.Error.CARD_COULD_NOT_DELETED.message);
+            throw new BankCardNotDeletedException(Messages.Error.CARD_COULD_NOT_DELETED.message);
         }
     }
 

@@ -9,7 +9,7 @@ import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccountServiceImpl;
 import org.kodluyoruz.mybank.utilities.debtprocess.Debt;
-import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
+import org.kodluyoruz.mybank.utilities.enums.messages.Messages;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -43,8 +43,8 @@ public class CreditCardServiceImpl implements CreditCardService<CreditCard> {
         if (creditCard != null) {
             return creditCard;
         } else {
-            log.error(ErrorMessages.CARD_COULD_NOT_CREATED);
-            throw new CreditCardNotCreatedException(ErrorMessages.CARD_COULD_NOT_CREATED);
+            log.error(Messages.Error.CARD_COULD_NOT_CREATED.message);
+            throw new CreditCardNotCreatedException(Messages.Error.CARD_COULD_NOT_CREATED.message);
         }
     }
 
@@ -58,9 +58,9 @@ public class CreditCardServiceImpl implements CreditCardService<CreditCard> {
         CreditCard creditCard = getCreditCard(accountNumber);
         if (creditCard.getCardDebt() == 0) {
             creditCardRepository.delete(creditCard);
-            return  creditCard.getCardNameSurname() + " named customer canceled her credit card usage.";
+            return creditCard.getCardNameSurname()  + Messages.Info.NAMED_CUSTOMER_CANCELED_BANK_CARD_USAGE.message;
         } else {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.CARD_COULD_NOT_DELETED);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.CARD_COULD_NOT_DELETED.message);
         }
     }
 
@@ -72,8 +72,8 @@ public class CreditCardServiceImpl implements CreditCardService<CreditCard> {
             extractOfAccountService.update(extractOfAccount);
             return creditCardRepository.save(creditCard);
         } else {
-            log.error(ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
+            log.error(Messages.Error.CARD_PASSWORD_COULD_INCORRECT.message);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.CARD_PASSWORD_COULD_INCORRECT.message);
         }
     }
 

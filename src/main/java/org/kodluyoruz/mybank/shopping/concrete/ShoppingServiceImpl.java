@@ -11,7 +11,7 @@ import org.kodluyoruz.mybank.extractofaccount.abstrct.ExtractOfAccountService;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 import org.kodluyoruz.mybank.shopping.abstrct.ShoppingService;
 import org.kodluyoruz.mybank.shopping.abstrct.ShoppingRepository;
-import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
+import org.kodluyoruz.mybank.utilities.enums.messages.Messages;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -52,13 +52,13 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
                 shoppingDto.setCreditCard(creditCard);
                 return shoppingRepository.save(shoppingDto.toShopping());
             } else {
-                log.error(ErrorMessages.CREDIT_CARD_LIMIT_OVER);
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.CREDIT_CARD_LIMIT_OVER);
+                log.error(Messages.Error.CREDIT_CARD_LIMIT_OVER.message);
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Messages.Error.CREDIT_CARD_LIMIT_OVER.message);
             }
 
         } else {
-            log.error(ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.CARD_PASSWORD_COULD_INCORRECT);
+            log.error(Messages.Error.CARD_PASSWORD_COULD_INCORRECT.message);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.CARD_PASSWORD_COULD_INCORRECT.message);
         }
     }
 
@@ -70,8 +70,8 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
             demandDepositAccountService.updateBalanceFromAccount(demandDepositAccountNumber, (int) money);
             return shoppingRepository.save(shoppingDto.toShopping());
         } else {
-            log.error(ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
+            log.error(Messages.Error.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED.message);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Messages.Error.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED.message);
         }
     }
 
@@ -82,8 +82,8 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
         if (shopping != null) {
             return shopping;
         } else {
-            log.error(ErrorMessages.PRODUCT_COULD_NOT_FOUND);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.PRODUCT_COULD_NOT_FOUND);
+            log.error(Messages.Error.PRODUCT_COULD_NOT_FOUND.message);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.PRODUCT_COULD_NOT_FOUND.message);
         }
     }
 

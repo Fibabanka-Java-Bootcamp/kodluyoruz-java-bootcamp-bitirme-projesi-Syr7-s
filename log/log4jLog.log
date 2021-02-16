@@ -93,3 +93,7 @@
 2021-02-16 14:32:59 INFO  DemandDepositAccountController:63 - With draw money process was did.
 2021-02-16 15:22:29 INFO  DemandDepositAccountController:63 - With draw money process was did.
 2021-02-16 20:03:27 INFO  CustomerController:34 - Customer will create.
+2021-02-16 21:23:04 ERROR CustomerController:89 - 500 INTERNAL_SERVER_ERROR
+2021-02-16 21:23:22 ERROR CustomerController:52 - 1231515 number person could not found.
+2021-02-16 21:23:41 INFO  CreditCardController:57 - Credit card info will get.
+2021-02-16 21:23:41 ERROR CreditCardServiceImpl:46 - Card could not created.
