@@ -67,3 +67,6 @@
 2021-02-15 12:41:23 INFO  DemandDepositAccountController:63 - With draw money process was did.
 2021-02-15 12:43:09 INFO  BankCardController:60 - Bank card will delete.
 2021-02-16 12:38:52 INFO  DemandDepositAccountController:72 - Money transfer process was did.
+2021-02-16 12:45:16 INFO  ExtractOfAccountController:42 - extract of account info will get.
+2021-02-16 12:46:21 INFO  ExtractOfAccountController:42 - extract of account info will get.
+2021-02-16 12:49:00 INFO  SavingsAccountController:73 - Debt will payment with savings account.

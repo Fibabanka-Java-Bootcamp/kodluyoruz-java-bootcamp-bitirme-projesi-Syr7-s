@@ -134,25 +134,22 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
     }
 
     @Override
-    public SavingsAccount payDebtWithAccount(long bankCardAccountNumber, int password, long accountNumber, long creditCardNumber, int creditCardDebt, int minimumPaymentAmount) {
+    public SavingsAccount payDebtWithAccount(long accountNumber, long creditCardNumber, int creditCardDebt, int minimumPaymentAmount) {
         SavingsAccountDto savingsAccountDto = get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_COULD_NOT_FOUND)).toSavingsAccountDto();
-        if (isMatchBankCardAccountNumberAndPasswordWithSavingsAccount(savingsAccountDto, bankCardAccountNumber, password)) {
-            CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
-            ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
-            double money = getMoney(creditCardDebt, minimumPaymentAmount, savingsAccountDto, creditCard);
-            savingsAccountDto.setSavingsAccountBalance((int) (savingsAccountDto.getSavingsAccountBalance() - money));
-            Debt.debtProcess(creditCardDebt, minimumPaymentAmount, creditCard, extractOfAccount);
-            extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
-            extractOfAccount.setMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPaymentAmount));
-            creditCardService.updateCard(creditCard);
-            extractOfAccountService.update(extractOfAccount);
-            return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
-        } else {
-            log.error(ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessages.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED);
-        }
+
+        CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
+        ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
+        double money = getMoney(creditCardDebt, minimumPaymentAmount, savingsAccountDto, creditCard);
+        savingsAccountDto.setSavingsAccountBalance((int) (savingsAccountDto.getSavingsAccountBalance() - money));
+        Debt.debtProcess(creditCardDebt, minimumPaymentAmount, creditCard, extractOfAccount);
+        extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
+        extractOfAccount.setMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPaymentAmount));
+        creditCardService.updateCard(creditCard);
+        extractOfAccountService.update(extractOfAccount);
+        return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
     }
+
 
     @Override
     public SavingsAccount computeSavings(long accountNumber, int termTime, double interestRate, double withHoldingValue) {

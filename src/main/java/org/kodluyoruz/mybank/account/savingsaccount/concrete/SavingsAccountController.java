@@ -64,16 +64,14 @@ public class SavingsAccountController {
         return savingsAccountService.withDrawMoney(bankCardAccountNumber, password, accountNumber, withDrawMoney).toSavingsAccountDto();
     }
 
-    @PutMapping("/{bankCardAccountNumber}/bankCard/{accountNumber}/payDebt/{creditCardNumber}")
+    @PutMapping("/{accountNumber}/payDebt/{creditCardNumber}")
     @ResponseStatus(HttpStatus.CREATED)
-    public SavingsAccountDto payDebtWithSaving(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
-                                               @PathVariable("accountNumber") long accountNumber,
+    public SavingsAccountDto payDebtWithSaving(@PathVariable("accountNumber") long accountNumber,
                                                @PathVariable("creditCardNumber") long creditCardNumber,
-                                               @RequestParam("password") int password,
                                                @RequestParam("creditCardDebt") int creditCardDebt,
                                                @RequestParam("minimumPaymentAmount") int minimumPaymentAmount) {
         log.info("Debt will payment with savings account.");
-        return savingsAccountService.payDebtWithAccount(bankCardAccountNumber, password, accountNumber, creditCardNumber, creditCardDebt, minimumPaymentAmount).toSavingsAccountDto();
+        return savingsAccountService.payDebtWithAccount(accountNumber, creditCardNumber, creditCardDebt, minimumPaymentAmount).toSavingsAccountDto();
     }
 
     @PutMapping("/{accountNumber}/savingsProcess")
