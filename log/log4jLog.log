@@ -103,3 +103,18 @@
 2021-02-17 12:30:25 ERROR DemandDepositAccountServiceImpl:194 - Not enough money in your account.
 2021-02-17 12:31:56 INFO  DemandDepositAccountController:53 - Deposit Money process was did.
 2021-02-17 12:51:04 ERROR DemandDepositAccountServiceImpl:194 - Not enough money in your account.
+2021-02-17 19:27:12 ERROR DemandDepositAccountServiceImpl:194 - Not enough money in your account.
+2021-02-17 19:27:42 ERROR DemandDepositAccountServiceImpl:194 - Not enough money in your account.
+2021-02-17 19:28:08 ERROR DemandDepositAccountServiceImpl:194 - Not enough money in your account.
+2021-02-17 19:30:41 ERROR DemandDepositAccountServiceImpl:194 - Not enough money in your account.
+2021-02-17 19:30:41 ERROR DemandDepositAccountServiceImpl:194 - Not enough money in your account.
+2021-02-17 19:32:48 ERROR DemandDepositAccountServiceImpl:194 - Not enough money in your account.
+2021-02-17 19:32:48 ERROR DemandDepositAccountServiceImpl:194 - Not enough money in your account.
+2021-02-17 19:38:51 INFO  DemandDepositAccountController:54 - Deposit Money process was did.
+2021-02-17 19:40:28 ERROR DemandDepositAccountServiceImpl:194 - Not enough money in your account.
+2021-02-17 20:00:24 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.
+2021-02-17 20:08:26 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.
+2021-02-17 20:11:58 INFO  DemandDepositAccountController:55 - Deposit Money process was did.
+2021-02-17 20:13:35 INFO  DemandDepositAccountController:65 - With draw money process was did.
+2021-02-17 20:22:20 INFO  DemandDepositAccountController:37 - 8500527082842319 account was got.
+2021-02-17 20:44:26 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.

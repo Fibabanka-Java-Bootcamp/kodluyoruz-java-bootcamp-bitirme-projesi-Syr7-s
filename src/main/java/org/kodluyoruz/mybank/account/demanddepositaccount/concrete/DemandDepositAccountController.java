@@ -3,6 +3,10 @@ package org.kodluyoruz.mybank.account.demanddepositaccount.concrete;
 import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountService;
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotDeletedException;
+import org.kodluyoruz.mybank.exchange.concrete.Exchange;
+import org.kodluyoruz.mybank.shopping.abstrct.ShoppingService;
+import org.kodluyoruz.mybank.shopping.concrete.Shopping;
+import org.kodluyoruz.mybank.shopping.concrete.ShoppingDto;
 import org.kodluyoruz.mybank.utilities.enums.messages.Messages;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -18,9 +22,11 @@ import java.util.stream.Collectors;
 public class DemandDepositAccountController {
     private static final Logger log = Logger.getLogger(DemandDepositAccountController.class);
     private final DemandDepositAccountService<DemandDepositAccount> demandDepositAccountService;
+    private final ShoppingService<Shopping> shoppingService;
 
-    public DemandDepositAccountController(DemandDepositAccountService<DemandDepositAccount> demandDepositAccountService) {
+    public DemandDepositAccountController(DemandDepositAccountService<DemandDepositAccount> demandDepositAccountService, ShoppingService<Shopping> shoppingService) {
         this.demandDepositAccountService = demandDepositAccountService;
+        this.shoppingService = shoppingService;
     }
 
     @PostMapping("/{customerTC}/account/{bankCardAccountNumber}")
@@ -108,42 +114,33 @@ public class DemandDepositAccountController {
 
     @PutMapping("/currency/{accountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
-    public String currencyProcess(@PathVariable("accountNumber") long accountNumber,
-                                  @RequestParam("money") int money,
-                                  @RequestParam("shoppingMoney") int shoppingMoney) {
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    System.out.println("Money : " + money + " Balance Thread 1 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
-
-                } catch (Exception exception) {
-                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT.message);
-                }
+    public DemandDepositAccountDto currencyProcess(@PathVariable("accountNumber") long accountNumber,
+                                                   @RequestParam("money") int money,
+                                                   @RequestParam("shoppingMoney") int shoppingMoney) {
+        Thread withDrawMoney = new Thread(() -> {
+            try {
+                System.out.println("Money : " + money + " Balance Thread 1 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
+            } catch (Exception exception) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
             }
         });
-        Thread thread1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    System.out.println("Shopping : " + shoppingMoney + " Balance Thread 2 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, shoppingMoney).getDemandDepositAccountBalance());
-                } catch (Exception exception) {
-                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT.message);
-                }
+        Thread shoppingMoneyThread = new Thread(() -> {
+            try {
+                System.out.println("Shopping : " + shoppingMoney + " Balance Thread 2 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, shoppingMoney).getDemandDepositAccountBalance());
+            } catch (Exception exception) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
             }
         });
-
-        thread.start();
-        thread1.start();
+        withDrawMoney.start();
+        shoppingMoneyThread.start();
         try {
-            thread.join();
-            thread1.join();
-            return "Successfully";
-        } catch (InterruptedException exception) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT.message);
+            withDrawMoney.join();
+            shoppingMoneyThread.join();
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.SERVER_ERROR.message);
         }
-
+        return demandDepositAccountService.get(accountNumber).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toDemandDepositAccountDto();
 
     }
 }
