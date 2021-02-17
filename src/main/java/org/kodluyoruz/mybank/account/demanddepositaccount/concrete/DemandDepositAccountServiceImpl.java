@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountRepository;
 import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountService;
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotDeletedException;
-import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotEnoughMoneyException;
 import org.kodluyoruz.mybank.account.savingsaccount.abtrct.SavingsAccountService;
 import org.kodluyoruz.mybank.account.savingsaccount.concrete.SavingsAccount;
 import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardService;
