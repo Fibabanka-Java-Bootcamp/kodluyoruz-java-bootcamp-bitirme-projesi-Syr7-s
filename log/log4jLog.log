@@ -97,3 +97,9 @@
 2021-02-16 21:23:22 ERROR CustomerController:52 - 1231515 number person could not found.
 2021-02-16 21:23:41 INFO  CreditCardController:57 - Credit card info will get.
 2021-02-16 21:23:41 ERROR CreditCardServiceImpl:46 - Card could not created.
+2021-02-17 12:15:24 ERROR DemandDepositAccountServiceImpl:194 - Not enough money in your account.
+2021-02-17 12:19:25 ERROR DemandDepositAccountServiceImpl:194 - Not enough money in your account.
+2021-02-17 12:21:51 INFO  DemandDepositAccountController:53 - Deposit Money process was did.
+2021-02-17 12:30:25 ERROR DemandDepositAccountServiceImpl:194 - Not enough money in your account.
+2021-02-17 12:31:56 INFO  DemandDepositAccountController:53 - Deposit Money process was did.
+2021-02-17 12:51:04 ERROR DemandDepositAccountServiceImpl:194 - Not enough money in your account.

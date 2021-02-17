@@ -105,4 +105,45 @@ public class DemandDepositAccountController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.SERVER_ERROR.message);
         }
     }
+
+    @PutMapping("/currency/{accountNumber}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String currencyProcess(@PathVariable("accountNumber") long accountNumber,
+                                  @RequestParam("money") int money,
+                                  @RequestParam("shoppingMoney") int shoppingMoney) {
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("Money : " + money + " Balance Thread 1 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
+
+                } catch (Exception exception) {
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT.message);
+                }
+            }
+        });
+        Thread thread1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("Shopping : " + shoppingMoney + " Balance Thread 2 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, shoppingMoney).getDemandDepositAccountBalance());
+                } catch (Exception exception) {
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT.message);
+                }
+            }
+        });
+
+        thread.start();
+        thread1.start();
+        try {
+            thread.join();
+            thread1.join();
+            return "Successfully";
+        } catch (InterruptedException exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT.message);
+        }
+
+
+    }
 }
