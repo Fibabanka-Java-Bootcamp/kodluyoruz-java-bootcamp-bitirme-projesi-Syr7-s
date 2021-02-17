@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.account.demanddepositaccount.abstrct.DemandDepositAccountService;
 import org.kodluyoruz.mybank.account.demanddepositaccount.exception.DemandDepositAccountNotDeletedException;
 import org.kodluyoruz.mybank.utilities.enums.messages.Messages;
-import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

@@ -5,7 +5,6 @@ import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardService;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotDeletedException;
 import org.kodluyoruz.mybank.card.bankcard.exception.BankCardNotFoundException;
 import org.kodluyoruz.mybank.utilities.enums.messages.Messages;
-import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

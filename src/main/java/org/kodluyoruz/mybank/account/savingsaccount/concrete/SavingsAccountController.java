@@ -4,12 +4,10 @@ import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.account.savingsaccount.abtrct.SavingsAccountService;
 import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingAccountNotDeletedException;
 import org.kodluyoruz.mybank.utilities.enums.messages.Messages;
-import org.kodluyoruz.mybank.utilities.messages.ErrorMessages;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.stream.Collectors;
