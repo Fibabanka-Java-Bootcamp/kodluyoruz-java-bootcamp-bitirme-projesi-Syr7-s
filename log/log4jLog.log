@@ -122,3 +122,7 @@
 2021-02-18 12:20:01 INFO  DemandDepositAccountController:59 - Deposit Money process was did.
 2021-02-18 12:20:11 INFO  DemandDepositAccountController:59 - Deposit Money process was did.
 2021-02-18 12:20:11 ERROR DemandDepositAccountServiceImpl:117 - Card could not matched to your account.
+2021-02-18 15:14:03 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-18 15:14:03 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-18 15:15:35 INFO  DemandDepositAccountController:59 - Deposit Money process was did.
+2021-02-18 16:09:36 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.

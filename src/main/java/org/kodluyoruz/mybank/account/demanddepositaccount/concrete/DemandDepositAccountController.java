@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @RestController
@@ -112,44 +113,80 @@ public class DemandDepositAccountController {
         }
     }
 
+    /*
+        @PutMapping("/{bankCardAccountNumber}/currency/{accountNumber}")
+        @ResponseStatus(HttpStatus.CREATED)
+        public DemandDepositAccountDto currencyProcess(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
+                                                       @PathVariable("accountNumber") long accountNumber,
+                                                       @RequestParam("money") int money,
+                                                       @RequestParam("password") int password,
+                                                       @RequestBody ShoppingDto shoppingDto) {
+            //Random random = new Random();
+            Thread withDrawMoney = new Thread(() -> {
+                try {
+                    int time = 1 + new Random().nextInt(9);
+                    System.out.println("Time : " + (time * 100));
+                    Thread.sleep(time);
+                    System.out.println("Money : " + money + " Balance Thread 1 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
+                } catch (Exception exception) {
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
+                }
+            });
+            Thread shoppingMoneyThread = new Thread(() -> {
+                DemandDepositAccount demandDepositAccount = demandDepositAccountService.get(accountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found"));
+                if (demandDepositAccount.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber && demandDepositAccount.getBankCard().getBankCardPassword() == password) {
+                    double moneyProcess = Exchange.convertProcess(shoppingDto.getCurrency(), demandDepositAccount.getDemandDepositAccountCurrency(), shoppingDto.getProductPrice());
+                    System.out.println("Shopping Money : " + moneyProcess + " Balance Thread 2 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, (int) moneyProcess).getDemandDepositAccountBalance());
+                    shoppingService.create(shoppingDto.toShopping());
+                } else {
+                    log.error(Messages.Error.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED.message);
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Messages.Error.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED.message);
+                }
+            });
 
-  @PutMapping("/{bankCardAccountNumber}/currency/{accountNumber}")
-  @ResponseStatus(HttpStatus.CREATED)
-  public DemandDepositAccountDto currencyProcess(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
-                                                 @PathVariable("accountNumber") long accountNumber,
-                                                 @RequestParam("money") int money,
-                                                 @RequestParam("password") int password,
-                                                 @RequestBody ShoppingDto shoppingDto) {
+            withDrawMoney.start();
+            shoppingMoneyThread.start();
+            try {
+                withDrawMoney.join();
+                shoppingMoneyThread.join();
+            } catch (Exception exception) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.SERVER_ERROR.message);
+            }
+            return demandDepositAccountService.get(accountNumber).orElseThrow(() ->
+                    new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toDemandDepositAccountDto();
 
-      Thread withDrawMoney = new Thread(() -> {
-          try {
-              System.out.println("Money : " + money + " Balance Thread 1 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
-          } catch (Exception exception) {
-              throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
-          }
-      });
-      Thread shoppingMoneyThread = new Thread(() -> {
-          DemandDepositAccount demandDepositAccount = demandDepositAccountService.get(accountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found"));
-          if (demandDepositAccount.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber && demandDepositAccount.getBankCard().getBankCardPassword() == password) {
-              double moneyProcess = Exchange.convertProcess(shoppingDto.getCurrency(), demandDepositAccount.getDemandDepositAccountCurrency(), shoppingDto.getProductPrice());
-              demandDepositAccountService.updateBalanceFromAccount(accountNumber, (int) moneyProcess);
-              shoppingService.create(shoppingDto.toShopping());
-          } else {
-              log.error(Messages.Error.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED.message);
-              throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Messages.Error.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED.message);
-          }
-      });
+        }
 
-      withDrawMoney.start();
-      shoppingMoneyThread.start();
-      try {
-          withDrawMoney.join();
-          shoppingMoneyThread.join();
-      } catch (Exception exception) {
-          throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.SERVER_ERROR.message);
-      }
-      return demandDepositAccountService.get(accountNumber).orElseThrow(() ->
-              new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toDemandDepositAccountDto();
+     */
+    @PutMapping("/finalSituation/{accountNumber}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public DemandDepositAccountDto currencyProcess(@PathVariable("accountNumber") long accountNumber,
+                                                   @RequestParam("money") int money,
+                                                   @RequestParam("shoppingMoney") int shoppingMoney) {
+        Thread withDrawMoney = new Thread(() -> {
+            try {
+                System.out.println("Money : " + money + " Balance Thread 1 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
+            } catch (Exception exception) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
+            }
+        });
+        Thread shoppingMoneyThread = new Thread(() -> {
+            try {
+                System.out.println("Shopping : " + shoppingMoney + " Balance Thread 2 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, shoppingMoney).getDemandDepositAccountBalance());
+            } catch (Exception exception) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
+            }
+        });
+        withDrawMoney.start();
+        shoppingMoneyThread.start();
+        try {
+            withDrawMoney.join();
+            shoppingMoneyThread.join();
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.SERVER_ERROR.message);
+        }
+        return demandDepositAccountService.get(accountNumber).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toDemandDepositAccountDto();
 
-  }
+    }
 }

@@ -79,7 +79,37 @@ Not : Uygulama kapsamında Fiba Banka Kredi Kartı Faiz oranları baz alınmış
   * Alışveriş Faiz Oranı (TL) : % 1.79
   * Gecikme Faiz Oranı (TL) : % 2.09 
 
+### Senaryo 3
 
+Üçüncü senaryomuz ise şu ; 
+
+ATM' den banka kartını kullanarak para çekerken aynı zamanda kart bilgilerini kullanarak online alışveriş yapılabildiğini düşünelim. Para çekme ve alışveriş işlemlerinin son kısmındayken yani tam para çekme ve ödeme işlemi yaparken müşterinin bu durum sonucunda doğru bir cevap alması gerekir. Çünkü işlem olarak para çekme yaptığımızda bakiye de belirli miktar para kalıyor ve aynı zamanda alışveriş için bakiye yetersiz kalabilir. Bu durum alışveriş işlemi içinde geçerli.  Bu işlemlerin eş zamanlı gerçekleşme olasılığı olabilir.
+
+Bu işlemler para çekme ve harcama durumu olduğu için bakiyenin çekilen ya da harcanan miktar çıkartılarak bakiye güncelleniyor. Bu işlem arka tarafta bir metot ile yapılıyor.  Para çekme ve alışveriş işleminde bakiye güncellemek için yani 2 durum için ortak kullanılan metoda ilk ulaşan işlemini yapacak ve bu işlemi yaparken diğer durum, işlem yapanı bekleyecek. Bu işlemde synchronized blok ile yapılıyor. Yani ilk gelen lock objesini kapıyor ve diğer işlem, ilk gelen işlemin bitmesini bekliyor.
+
+Metoda hesap numarası ve para miktarı parametre olarak gönderiliyor. Hesap numarası ile veri tabanından güncel bakiye bilgisi çekiliyor. Bakiye bilgisi alındıktan sonra işlemi yapan durum ilk olarak bakiye kontrolü yapıyor eğer, bakiye çekilecek ya da alışveriş durumunda ödenecek miktardan az ise işlem yapılamayacak. Eğer bakiye kontrol durumu para çekme ya da alışveriş sonucunda ödenecek parayı karşılayabiliyor ise işlemler yapılabilecektir. İşlemi yapan durum yani para miktarı güncellendikten sonra yeni bakiye veri tabanına kaydediliyor. Bunun nedeni sırada bekleyen diğer işlemde güncel bakiye bilgisi çekerek işlemi yapacaktır. Aksi halde işlemler yapılır fakat bakiye istenilen sonucu vermez. 
+
+Örnek 
+
+Bakiye : 1000 
+
+ATM den çekilecek miktar : 500
+
+Online alışveriş sonucunda ödenecek tutar : 300,
+
+İlk olarak metoda ATM den para çekme işleminin ulaştığını varsayalım, 1000 > 500 den büyük yani para çekmek için yeterli bakiye var, Para çekiliyor ve güncel bakiye (1000-500 = 500)  veri tabanına kayıt ediliyor.
+
+Para çekme işleminden sonra, sırada bekleyen online alışveriş durumu işlemini yapacaktır. Bu işlem de aynı şekilde hesap numarasını kullanarak güncel bakiyeyi çekiyor. Bu bakiye ile de önceden bakiye güncellendiyse güncel bilgileri kullanmak amacı ile çekiliyor. Bu işlemden sonra online alışveriş de ödenecek tutar ile bakiye kontrolü yapılıyor. Bu kontrol sonucunda bakiye 500 > 300 olduğu için alışveriş işlemi de başarı ile işlemini yapacaktır. Bu işlem sonucunda güncel bakiye bilgisi (500 - 300 = 200) veri tabanına kayıt edilecektir.
+
+Bakiye : 200
+
+ATM den çekilecek miktar : 150
+
+Online alışveriş sonucunda ödenecek tutar : 100,
+
+Bu senaryoda da Online işlemin arka tarafta ilk olarak işlem yapacağını varsayalım. Online işlem önceki örnekteki ile aynı adımlar ile işlemi yapacak ve bakiye kontrol durumunda 200 > 100 olduğu için alışveriş işlemi yapılacak. Güncel bakiye bilgisi veri tabanında güncellenecek. Bu işlem bittikten sonra ATM den para çekme işlemi, metot da işlemi yaparken bakiye kontrolünde çekmek istediği tutar bakiye durumunu aştığı için yani 100 > 150 durumu olamayacağı için, Hesabınızda yeterli bakiye yoktur hatası alacak.
+
+Bu senaryoda işlemler sonucunda işlem yapılan hesap geri kullanıcıya gösteriliyor. (Bu senaryo 2 farklı anonim thread oluşturularak denendi ve çalıştı.)
 
 ## Proje Kapsamında Yapılan Algoritmik Çözümlemeler
 
