@@ -118,3 +118,7 @@
 2021-02-17 20:13:35 INFO  DemandDepositAccountController:65 - With draw money process was did.
 2021-02-17 20:22:20 INFO  DemandDepositAccountController:37 - 8500527082842319 account was got.
 2021-02-17 20:44:26 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.
+2021-02-18 12:18:40 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-18 12:20:01 INFO  DemandDepositAccountController:59 - Deposit Money process was did.
+2021-02-18 12:20:11 INFO  DemandDepositAccountController:59 - Deposit Money process was did.
+2021-02-18 12:20:11 ERROR DemandDepositAccountServiceImpl:117 - Card could not matched to your account.
