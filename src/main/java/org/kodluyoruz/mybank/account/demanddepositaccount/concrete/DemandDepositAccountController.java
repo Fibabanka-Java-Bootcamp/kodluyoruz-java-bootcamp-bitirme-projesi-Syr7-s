@@ -113,7 +113,7 @@ public class DemandDepositAccountController {
         }
     }
 
-    /*
+
         @PutMapping("/{bankCardAccountNumber}/currency/{accountNumber}")
         @ResponseStatus(HttpStatus.CREATED)
         public DemandDepositAccountDto currencyProcess(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
@@ -121,7 +121,6 @@ public class DemandDepositAccountController {
                                                        @RequestParam("money") int money,
                                                        @RequestParam("password") int password,
                                                        @RequestBody ShoppingDto shoppingDto) {
-            //Random random = new Random();
             Thread withDrawMoney = new Thread(() -> {
                 try {
                     int time = 1 + new Random().nextInt(9);
@@ -157,8 +156,8 @@ public class DemandDepositAccountController {
 
         }
 
-     */
-    @PutMapping("/finalSituation/{accountNumber}")
+
+   /* @PutMapping("/finalSituation/{accountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto currencyProcess(@PathVariable("accountNumber") long accountNumber,
                                                    @RequestParam("money") int money,
@@ -188,5 +187,5 @@ public class DemandDepositAccountController {
         return demandDepositAccountService.get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toDemandDepositAccountDto();
 
-    }
+    }*/
 }
