@@ -150,3 +150,26 @@
 2021-02-19 15:17:18 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
 2021-02-19 15:22:18 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
 2021-02-19 15:24:30 INFO  DemandDepositAccountController:60 - Deposit Money process was did.
+2021-02-19 16:28:37 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.
+2021-02-19 16:29:18 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.
+2021-02-19 16:31:44 INFO  DemandDepositAccountServiceImpl:219 - Money : 250 Balance Thread 1 : 220
+2021-02-19 16:31:44 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.
+2021-02-19 16:32:32 INFO  DemandDepositAccountServiceImpl:211 - Money : 50 Balance Thread 1 : 170
+2021-02-19 16:32:32 INFO  DemandDepositAccountServiceImpl:219 - Money : 50 Balance Thread 1 : 120
+2021-02-19 16:34:37 INFO  DemandDepositAccountController:61 - Deposit Money process was did.
+2021-02-19 16:35:00 INFO  DemandDepositAccountServiceImpl:219 - Shopping : 160 Balance Thread 2 : 24960
+2021-02-19 16:35:00 INFO  DemandDepositAccountServiceImpl:211 - Money : 250 Balance Thread 1 : 24710
+2021-02-19 16:35:12 INFO  DemandDepositAccountServiceImpl:219 - Shopping : 600 Balance Thread 2 : 24110
+2021-02-19 16:35:12 INFO  DemandDepositAccountServiceImpl:211 - Money : 250 Balance Thread 1 : 23860
+2021-02-19 16:35:17 INFO  DemandDepositAccountServiceImpl:211 - Money : 250 Balance Thread 1 : 23610
+2021-02-19 16:35:17 INFO  DemandDepositAccountServiceImpl:219 - Shopping : 600 Balance Thread 2 : 23010
+2021-02-19 16:35:40 INFO  DemandDepositAccountServiceImpl:211 - Money : 20000 Balance Thread 1 : 3010
+2021-02-19 16:35:40 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.
+2021-02-19 16:38:14 INFO  DemandDepositAccountServiceImpl:211 - Money : 150 Balance Thread 1 : 2860
+2021-02-19 16:38:14 INFO  DemandDepositAccountServiceImpl:220 - Shopping : 250 Balance Thread 2 : 2610
+2021-02-19 16:38:19 INFO  DemandDepositAccountServiceImpl:220 - Shopping : 250 Balance Thread 2 : 2360
+2021-02-19 16:38:19 INFO  DemandDepositAccountServiceImpl:211 - Money : 150 Balance Thread 1 : 2210
+2021-02-19 16:38:34 INFO  DemandDepositAccountServiceImpl:211 - Money : 250 Balance Thread 1 : 1960
+2021-02-19 16:38:34 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.
+2021-02-19 16:38:34 ERROR DemandDepositAccountServiceImpl:222 - 500 INTERNAL_SERVER_ERROR "Not enough money in your account."
+2021-02-19 16:40:13 INFO  DemandDepositAccountController:61 - Deposit Money process was did.

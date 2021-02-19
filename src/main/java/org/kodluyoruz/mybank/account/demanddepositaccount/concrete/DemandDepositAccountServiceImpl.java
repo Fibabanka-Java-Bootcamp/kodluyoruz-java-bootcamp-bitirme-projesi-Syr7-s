@@ -207,16 +207,17 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
     public DemandDepositAccount withDrawMoneyAndShopping(long accountNumber, int money, int shoppingMoney) {
         Thread withDrawMoney = new Thread(() -> {
             try {
-                System.out.println("Money : " + money + " Balance Thread 1 : " + updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
+                log.info("Money : " + money + " Balance Thread 1 : " + updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
             } catch (Exception exception) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
+                log.error(exception.getMessage());
             }
         });
         Thread shoppingMoneyThread = new Thread(() -> {
             try {
-                System.out.println("Shopping : " + shoppingMoney + " Balance Thread 2 : " + updateBalanceFromAccount(accountNumber, shoppingMoney).getDemandDepositAccountBalance());
+                log.info("Shopping : " + shoppingMoney + " Balance Thread 2 : " + updateBalanceFromAccount(accountNumber, shoppingMoney).getDemandDepositAccountBalance());
             } catch (Exception exception) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
+                log.error(exception.getMessage());
+
             }
         });
         withDrawMoney.start();
@@ -225,7 +226,7 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
             withDrawMoney.join();
             shoppingMoneyThread.join();
         } catch (Exception exception) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.SERVER_ERROR.message);
+            log.error(exception.getMessage());
         }
         return get(accountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message));
     }
