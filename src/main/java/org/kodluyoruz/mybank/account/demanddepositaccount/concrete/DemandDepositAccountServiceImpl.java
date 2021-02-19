@@ -50,6 +50,7 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
         this.creditCardService = creditCardService;
         this.extractOfAccountService = extractOfAccountService;
         this.bankCardService = bankCardService;
+
     }
 
     @Override
@@ -110,8 +111,8 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
                 new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toDemandDepositAccountDto();
         if (isMatchBankCardNumberAndPasswordWithAccount(demandDepositAccountDto, bankCardAccountNumber, password)) {
 
-                demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() + depositMoney);
-                return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
+            demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() + depositMoney);
+            return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
 
         } else {
             log.error(Messages.Error.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT.message);
@@ -200,6 +201,33 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
                 return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
             }
         }
+    }
+
+    @Override
+    public DemandDepositAccount withDrawMoneyAndShopping(long accountNumber, int money, int shoppingMoney) {
+        Thread withDrawMoney = new Thread(() -> {
+            try {
+                System.out.println("Money : " + money + " Balance Thread 1 : " + updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
+            } catch (Exception exception) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
+            }
+        });
+        Thread shoppingMoneyThread = new Thread(() -> {
+            try {
+                System.out.println("Shopping : " + shoppingMoney + " Balance Thread 2 : " + updateBalanceFromAccount(accountNumber, shoppingMoney).getDemandDepositAccountBalance());
+            } catch (Exception exception) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
+            }
+        });
+        withDrawMoney.start();
+        shoppingMoneyThread.start();
+        try {
+            withDrawMoney.join();
+            shoppingMoneyThread.join();
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.SERVER_ERROR.message);
+        }
+        return get(accountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message));
     }
 
     @Override

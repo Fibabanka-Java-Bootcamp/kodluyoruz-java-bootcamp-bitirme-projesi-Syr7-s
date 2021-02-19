@@ -127,3 +127,26 @@
 2021-02-18 15:15:35 INFO  DemandDepositAccountController:59 - Deposit Money process was did.
 2021-02-18 16:09:36 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
 2021-02-18 17:13:29 INFO  DemandDepositAccountController:60 - Deposit Money process was did.
+2021-02-19 14:45:26 ERROR CustomerServiceImpl:79 - Customer could not deleted.
+2021-02-19 14:45:26 ERROR CustomerController:86 - Customer could not deleted.
+2021-02-19 14:46:29 INFO  DemandDepositAccountController:70 - With draw money process was did.
+2021-02-19 14:46:29 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-19 14:46:39 INFO  DemandDepositAccountController:70 - With draw money process was did.
+2021-02-19 14:48:11 INFO  DemandDepositAccountController:60 - Deposit Money process was did.
+2021-02-19 14:49:00 INFO  DemandDepositAccountController:79 - Money transfer process was did.
+2021-02-19 14:49:00 ERROR DemandDepositAccountServiceImpl:89 - Account could not found.
+2021-02-19 14:49:16 INFO  DemandDepositAccountController:79 - Money transfer process was did.
+2021-02-19 14:49:16 ERROR DemandDepositAccountServiceImpl:89 - Account could not found.
+2021-02-19 14:49:56 INFO  DemandDepositAccountController:79 - Money transfer process was did.
+2021-02-19 14:49:56 ERROR DemandDepositAccountServiceImpl:139 - Not enough money in your account.
+2021-02-19 14:50:05 INFO  DemandDepositAccountController:79 - Money transfer process was did.
+2021-02-19 14:53:28 INFO  SavingsAccountController:62 - With draw money process will do.
+2021-02-19 14:53:28 ERROR SavingsAccountServiceImpl:132 - Card could not matched to your account.
+2021-02-19 14:53:40 INFO  SavingsAccountController:62 - With draw money process will do.
+2021-02-19 14:53:40 ERROR SavingsAccountServiceImpl:132 - Card could not matched to your account.
+2021-02-19 14:54:19 INFO  SavingsAccountController:62 - With draw money process will do.
+2021-02-19 14:54:19 ERROR SavingsAccountServiceImpl:125 - Not enough money in your account.
+2021-02-19 15:16:23 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-19 15:17:18 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-19 15:22:18 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-19 15:24:30 INFO  DemandDepositAccountController:60 - Deposit Money process was did.

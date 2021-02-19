@@ -1,6 +1,5 @@
 package org.kodluyoruz.mybank.account.demanddepositaccount.abstrct;
 
-
 import org.kodluyoruz.mybank.account.demanddepositaccount.concrete.DemandDepositAccountDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +30,8 @@ public interface DemandDepositAccountService<T> {
     T payDebtWithDemandDeposit(long accountNumber, long creditCardNumber, int creditCardDebt, int minimumPaymentAmount);
 
     T updateBalanceFromAccount(long accountNumber, int money);
+
+    T withDrawMoneyAndShopping(long accountNumber, int money, int shoppingMoney);
 
     Page<T> getDemandDepositAccounts(Pageable pageable);
 }

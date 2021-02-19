@@ -89,6 +89,8 @@ Bu işlemler para çekme ve harcama durumu olduğu için bakiyenin çekilen ya d
 
 Metoda hesap numarası ve para miktarı parametre olarak gönderiliyor. Hesap numarası ile veri tabanından güncel bakiye bilgisi çekiliyor. Bakiye bilgisi alındıktan sonra işlemi yapan durum ilk olarak bakiye kontrolü yapıyor eğer, bakiye çekilecek ya da alışveriş durumunda ödenecek miktardan az ise işlem yapılamayacak. Eğer bakiye kontrol durumu para çekme ya da alışveriş sonucunda ödenecek parayı karşılayabiliyor ise işlemler yapılabilecektir. İşlemi yapan durum yani para miktarı güncellendikten sonra yeni bakiye veri tabanına kaydediliyor. Bunun nedeni sırada bekleyen diğer işlemde güncel bakiye bilgisi çekerek işlemi yapacaktır. Aksi halde işlemler yapılır fakat bakiye istenilen sonucu vermez. 
 
+!NOT : Bu senaryo için 2 farklı örnek yapıldı uygulama içinde ilk örnek son işlemlerin yapıldığı yani tam para işleminin çekilme esnasında ve online alışveriş senaryosunda ödeme işlemi yapılacağı kısım düşünülerek yapıldı. İkinci senaryo ise para çekme ve online alışveriş yapılması yani ürünün ne olduğu ne kadar fiyat ile alınacağı gibi bir örnek hazırlandı.
+
 Örnek 
 
 Bakiye : 1000 
