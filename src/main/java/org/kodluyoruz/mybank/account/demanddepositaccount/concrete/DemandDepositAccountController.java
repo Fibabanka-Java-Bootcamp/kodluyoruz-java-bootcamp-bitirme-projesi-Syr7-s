@@ -122,41 +122,44 @@ public class DemandDepositAccountController {
                                                    @RequestParam("money") int money,
                                                    @RequestParam("password") int password,
                                                    @RequestBody ShoppingDto shoppingDto) {
-        Thread withDrawMoney = new Thread(() -> {
-            try {
-                int time = 1 + new Random().nextInt(9);
-                log.info("Time : " + (time * 100));
-                Thread.sleep(time);
-                log.info("Money : " + money + " Balance Thread 1 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
-            } catch (Exception exception) {
-                log.error(exception.getMessage());
-            }
-        });
-        Thread shoppingMoneyThread = new Thread(() -> {
-            DemandDepositAccount demandDepositAccount = demandDepositAccountService.get(accountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found"));
-            if (demandDepositAccount.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber && demandDepositAccount.getBankCard().getBankCardPassword() == password) {
-                double moneyProcess = Exchange.convertProcess(shoppingDto.getCurrency(), demandDepositAccount.getDemandDepositAccountCurrency(), shoppingDto.getProductPrice());
-                try{
-                    log.info("Shopping Money : " + moneyProcess + " Balance Thread 2 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, (int) moneyProcess).getDemandDepositAccountBalance());
-                }catch (Exception exception){
-                    log.error(exception.getMessage());
-                }
-                shoppingService.create(shoppingDto.toShopping());
-            } else {
-                log.error(Messages.Error.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED.message);
-            }
-        });
-
+        Thread withDrawMoney = new Thread(() -> withDrawMoneyProcess(accountNumber, money));
+        Thread shoppingMoneyThread = new Thread(() -> shoppingProcess(bankCardAccountNumber, accountNumber, password, shoppingDto));
         withDrawMoney.start();
         shoppingMoneyThread.start();
         try {
             withDrawMoney.join();
             shoppingMoneyThread.join();
         } catch (Exception exception) {
-            log.error( Messages.Error.SERVER_ERROR.message);
+            log.error(Messages.Error.SERVER_ERROR.message);
         }
-        return demandDepositAccountService.get(accountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toDemandDepositAccountDto();
+        return demandDepositAccountService.get(accountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toDemandDepositAccountDto();
 
+    }
+
+    private void withDrawMoneyProcess(long accountNumber, int money) {
+        try {
+            int time = 1 + new Random().nextInt(9);
+            log.info("Time : " + (time * 100));
+            Thread.sleep(time);
+            log.info("Money : " + money + " Balance Thread 1 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
+        } catch (Exception exception) {
+            log.error("With draw money : " + exception.getMessage());
+        }
+    }
+
+    private void shoppingProcess(long bankCardAccountNumber, long accountNumber, int password, ShoppingDto shoppingDto) {
+        try {
+            DemandDepositAccount demandDepositAccount = demandDepositAccountService.get(accountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found"));
+            if (demandDepositAccount.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber && demandDepositAccount.getBankCard().getBankCardPassword() == password) {
+                double moneyProcess = Exchange.convertProcess(shoppingDto.getCurrency(), demandDepositAccount.getDemandDepositAccountCurrency(), shoppingDto.getProductPrice());
+                log.info("Shopping Money : " + moneyProcess + " Balance Thread 2 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, (int) moneyProcess).getDemandDepositAccountBalance());
+                shoppingService.create(shoppingDto.toShopping());
+            } else {
+                log.error("Shopping Money Thread " + Messages.Error.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED.message);
+            }
+        } catch (Exception exception) {
+            log.error("Shopping Money Thread " + exception.getMessage());
+        }
     }
 
 

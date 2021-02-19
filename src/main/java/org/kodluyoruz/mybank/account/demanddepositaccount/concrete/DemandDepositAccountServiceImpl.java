@@ -110,7 +110,6 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
         DemandDepositAccountDto demandDepositAccountDto = get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toDemandDepositAccountDto();
         if (isMatchBankCardNumberAndPasswordWithAccount(demandDepositAccountDto, bankCardAccountNumber, password)) {
-
             demandDepositAccountDto.setDemandDepositAccountBalance(demandDepositAccountDto.getDemandDepositAccountBalance() + depositMoney);
             return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
 
@@ -205,21 +204,8 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
 
     @Override
     public DemandDepositAccount withDrawMoneyAndShopping(long accountNumber, int money, int shoppingMoney) {
-        Thread withDrawMoney = new Thread(() -> {
-            try {
-                log.info("Money : " + money + " Balance Thread 1 : " + updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
-            } catch (Exception exception) {
-                log.error(exception.getMessage());
-            }
-        });
-        Thread shoppingMoneyThread = new Thread(() -> {
-            try {
-                log.info("Shopping : " + shoppingMoney + " Balance Thread 2 : " + updateBalanceFromAccount(accountNumber, shoppingMoney).getDemandDepositAccountBalance());
-            } catch (Exception exception) {
-                log.error(exception.getMessage());
-
-            }
-        });
+        Thread withDrawMoney = new Thread(() -> withDrawMoneyWithThread(accountNumber, money));
+        Thread shoppingMoneyThread = new Thread(() -> shoppingPaymentMoneyWithThread(accountNumber, shoppingMoney));
         withDrawMoney.start();
         shoppingMoneyThread.start();
         try {
@@ -230,6 +216,31 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
         }
         return get(accountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message));
     }
+/*
+    private void withDrawMoneyOrShoppingMoneyPayment(long accountNumber, int money, String state) {
+        try {
+            log.info(state + " " + money + " " + "Balance" + ":" + updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+        }
+    }
+*/
+
+        private void withDrawMoneyWithThread(long accountNumber, int money) {
+            try {
+                log.info("Money : " + money + " Balance Thread 1 : " + updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
+            } catch (Exception exception) {
+                log.error(exception.getMessage());
+            }
+        }
+
+        private void shoppingPaymentMoneyWithThread(long accountNumber, int shoppingMoney) {
+            try {
+                log.info("Shopping : " + shoppingMoney + " Balance Thread 2 : " + updateBalanceFromAccount(accountNumber, shoppingMoney).getDemandDepositAccountBalance());
+            } catch (Exception exception) {
+                log.error(exception.getMessage());
+            }
+        }
 
     @Override
     public Page<DemandDepositAccount> getDemandDepositAccounts(Pageable pageable) {

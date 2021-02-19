@@ -227,3 +227,104 @@
 2021-02-19 17:08:16 INFO  DemandDepositAccountController:140 - Shopping Money : 300.0 Balance Thread 2 : 7010
 2021-02-19 17:08:58 INFO  DemandDepositAccountController:128 - Time : 500
 2021-02-19 17:08:58 ERROR DemandDepositAccountController:132 - 404 NOT_FOUND "Account could not found."
+2021-02-19 20:02:31 INFO  DemandDepositAccountController:143 - Time : 300
+2021-02-19 20:02:32 INFO  DemandDepositAccountController:145 - Money : 250 Balance Thread 1 : 6760
+2021-02-19 20:02:32 INFO  DemandDepositAccountController:157 - Shopping Money : 150.0 Balance Thread 2 : 6610
+2021-02-19 20:02:56 INFO  DemandDepositAccountController:143 - Time : 800
+2021-02-19 20:02:56 INFO  DemandDepositAccountController:157 - Shopping Money : 150.0 Balance Thread 2 : 6460
+2021-02-19 20:02:56 INFO  DemandDepositAccountController:145 - Money : 250 Balance Thread 1 : 6210
+2021-02-19 20:03:30 INFO  DemandDepositAccountController:143 - Time : 400
+2021-02-19 20:03:30 INFO  DemandDepositAccountController:145 - Money : 250 Balance Thread 1 : 5960
+2021-02-19 20:03:30 INFO  DemandDepositAccountController:157 - Shopping Money : 150.0 Balance Thread 2 : 5810
+2021-02-19 20:03:37 INFO  DemandDepositAccountController:143 - Time : 500
+2021-02-19 20:03:37 INFO  DemandDepositAccountController:157 - Shopping Money : 150.0 Balance Thread 2 : 5660
+2021-02-19 20:03:37 INFO  DemandDepositAccountController:145 - Money : 250 Balance Thread 1 : 5410
+2021-02-19 20:03:47 INFO  DemandDepositAccountController:143 - Time : 700
+2021-02-19 20:03:47 INFO  DemandDepositAccountController:145 - Money : 250 Balance Thread 1 : 5160
+2021-02-19 20:03:47 INFO  DemandDepositAccountController:157 - Shopping Money : 150.0 Balance Thread 2 : 5010
+2021-02-19 20:04:30 INFO  DemandDepositAccountController:143 - Time : 200
+2021-02-19 20:04:30 ERROR DemandDepositAccountController:166 - 404 NOT_FOUND "Account is not found"
+2021-02-19 20:04:30 ERROR DemandDepositAccountController:147 - 404 NOT_FOUND "Account could not found."
+2021-02-19 20:04:50 INFO  DemandDepositAccountController:143 - Time : 200
+2021-02-19 20:04:50 ERROR DemandDepositAccountController:163 - Account number and password could not matched.
+2021-02-19 20:04:50 INFO  DemandDepositAccountController:145 - Money : 250 Balance Thread 1 : 4760
+2021-02-19 20:06:17 INFO  DemandDepositAccountController:143 - Time : 200
+2021-02-19 20:06:17 INFO  DemandDepositAccountController:145 - Money : 700 Balance Thread 1 : 4060
+2021-02-19 20:06:17 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.
+2021-02-19 20:06:17 ERROR DemandDepositAccountController:166 - 500 INTERNAL_SERVER_ERROR "Not enough money in your account."
+2021-02-19 20:14:53 INFO  DemandDepositAccountController:159 - Shopping Money : 200.0 Balance Thread 2 : 3860
+2021-02-19 20:15:31 INFO  DemandDepositAccountController:159 - Shopping Money : 200.0 Balance Thread 2 : 3660
+2021-02-19 20:15:39 INFO  DemandDepositAccountController:159 - Shopping Money : 200.0 Balance Thread 2 : 3460
+2021-02-19 20:18:32 INFO  DemandDepositAccountController:159 - Shopping Money : 200.0 Balance Thread 2 : 3200
+2021-02-19 20:18:47 INFO  DemandDepositAccountController:159 - Shopping Money : 200.0 Balance Thread 2 : 2940
+2021-02-19 20:18:53 INFO  DemandDepositAccountController:159 - Shopping Money : 200.0 Balance Thread 2 : 2680
+2021-02-19 20:18:57 INFO  DemandDepositAccountController:159 - Shopping Money : 200.0 Balance Thread 2 : 2420
+2021-02-19 20:19:00 INFO  DemandDepositAccountController:159 - Shopping Money : 200.0 Balance Thread 2 : 2160
+2021-02-19 20:25:36 INFO  DemandDepositAccountController:61 - Deposit Money process was did.
+2021-02-19 20:26:18 INFO  DemandDepositAccountController:142 - Time : 100
+2021-02-19 20:26:18 INFO  DemandDepositAccountController:144 - Money : 200 Balance Thread 1 : 4460
+2021-02-19 20:26:18 INFO  DemandDepositAccountController:155 - Shopping Money : 100.0 Balance Thread 2 : 4360
+2021-02-19 20:26:29 INFO  DemandDepositAccountController:142 - Time : 600
+2021-02-19 20:26:29 INFO  DemandDepositAccountController:155 - Shopping Money : 100.0 Balance Thread 2 : 4260
+2021-02-19 20:26:29 INFO  DemandDepositAccountController:144 - Money : 200 Balance Thread 1 : 4060
+2021-02-19 20:26:39 INFO  DemandDepositAccountController:142 - Time : 500
+2021-02-19 20:26:39 INFO  DemandDepositAccountController:144 - Money : 200 Balance Thread 1 : 3860
+2021-02-19 20:26:39 INFO  DemandDepositAccountController:155 - Shopping Money : 100.0 Balance Thread 2 : 3760
+2021-02-19 20:27:02 INFO  DemandDepositAccountController:142 - Time : 500
+2021-02-19 20:27:02 INFO  DemandDepositAccountController:155 - Shopping Money : 3200.0 Balance Thread 2 : 560
+2021-02-19 20:27:02 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.
+2021-02-19 20:27:02 ERROR DemandDepositAccountController:146 - 500 INTERNAL_SERVER_ERROR "Not enough money in your account."
+2021-02-19 20:27:36 INFO  DemandDepositAccountController:142 - Time : 600
+2021-02-19 20:27:36 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.
+2021-02-19 20:27:36 ERROR DemandDepositAccountController:161 - 500 INTERNAL_SERVER_ERROR "Not enough money in your account."
+2021-02-19 20:27:36 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.
+2021-02-19 20:27:36 ERROR DemandDepositAccountController:146 - 500 INTERNAL_SERVER_ERROR "Not enough money in your account."
+2021-02-19 20:33:52 INFO  DemandDepositAccountController:61 - Deposit Money process was did.
+2021-02-19 20:33:52 ERROR DemandDepositAccountServiceImpl:118 - Card could not matched to your account.
+2021-02-19 20:34:10 INFO  DemandDepositAccountController:61 - Deposit Money process was did.
+2021-02-19 20:34:56 INFO  DemandDepositAccountController:156 - Shopping Money : 200.0 Balance Thread 2 : 24860
+2021-02-19 20:35:22 INFO  DemandDepositAccountController:156 - Shopping Money : 200.0 Balance Thread 2 : 24160
+2021-02-19 20:35:32 INFO  DemandDepositAccountController:156 - Shopping Money : 200.0 Balance Thread 2 : 23460
+2021-02-19 20:35:36 INFO  DemandDepositAccountController:156 - Shopping Money : 200.0 Balance Thread 2 : 22760
+2021-02-19 21:02:04 INFO  DemandDepositAccountServiceImpl:222 - Money : 500 Balance Thread 1 : 22260
+2021-02-19 21:02:04 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 600 Balance Thread 2 : 21660
+2021-02-19 21:02:16 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 600 Balance Thread 2 : 21060
+2021-02-19 21:02:16 INFO  DemandDepositAccountServiceImpl:222 - Money : 500 Balance Thread 1 : 20560
+2021-02-19 21:02:36 INFO  DemandDepositAccountServiceImpl:222 - Money : 500 Balance Thread 1 : 20060
+2021-02-19 21:02:37 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 600 Balance Thread 2 : 19460
+2021-02-19 21:03:06 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 10000 Balance Thread 2 : 9460
+2021-02-19 21:03:06 INFO  DemandDepositAccountServiceImpl:222 - Money : 9460 Balance Thread 1 : 0
+2021-02-19 21:03:17 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-19 21:03:17 ERROR DemandDepositAccountServiceImpl:232 - 500 INTERNAL_SERVER_ERROR "Not enough money in your account."
+2021-02-19 21:03:17 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-19 21:03:17 ERROR DemandDepositAccountServiceImpl:224 - 500 INTERNAL_SERVER_ERROR "Not enough money in your account."
+2021-02-19 21:04:04 INFO  DemandDepositAccountController:61 - Deposit Money process was did.
+2021-02-19 21:04:34 INFO  DemandDepositAccountServiceImpl:222 - Money : 12000 Balance Thread 1 : 13000
+2021-02-19 21:04:34 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-19 21:04:34 ERROR DemandDepositAccountServiceImpl:232 - 500 INTERNAL_SERVER_ERROR "Not enough money in your account."
+2021-02-19 21:11:12 INFO  DemandDepositAccountServiceImpl:222 - Money 500 Balance:12500
+2021-02-19 21:11:12 INFO  DemandDepositAccountServiceImpl:222 - Shopping 200 Balance:12300
+2021-02-19 21:11:19 INFO  DemandDepositAccountServiceImpl:222 - Shopping 200 Balance:12100
+2021-02-19 21:11:19 INFO  DemandDepositAccountServiceImpl:222 - Money 500 Balance:11600
+2021-02-19 21:11:32 INFO  DemandDepositAccountServiceImpl:222 - Shopping 200 Balance:11400
+2021-02-19 21:11:32 INFO  DemandDepositAccountServiceImpl:222 - Money 500 Balance:10900
+2021-02-19 21:11:35 INFO  DemandDepositAccountServiceImpl:222 - Money 500 Balance:10400
+2021-02-19 21:11:35 INFO  DemandDepositAccountServiceImpl:222 - Shopping 200 Balance:10200
+2021-02-19 21:11:53 INFO  DemandDepositAccountServiceImpl:222 - Money 500 Balance:9700
+2021-02-19 21:11:53 INFO  DemandDepositAccountServiceImpl:222 - Shopping 200 Balance:9500
+2021-02-19 21:11:57 INFO  DemandDepositAccountServiceImpl:222 - Money 500 Balance:9000
+2021-02-19 21:11:57 INFO  DemandDepositAccountServiceImpl:222 - Shopping 200 Balance:8800
+2021-02-19 21:12:02 INFO  DemandDepositAccountServiceImpl:222 - Money 500 Balance:8300
+2021-02-19 21:12:02 INFO  DemandDepositAccountServiceImpl:222 - Shopping 200 Balance:8100
+2021-02-19 21:12:19 INFO  DemandDepositAccountServiceImpl:222 - Money 500 Balance:7600
+2021-02-19 21:12:19 INFO  DemandDepositAccountServiceImpl:222 - Shopping 200 Balance:7400
+2021-02-19 21:12:24 INFO  DemandDepositAccountServiceImpl:222 - Money 500 Balance:6900
+2021-02-19 21:12:24 INFO  DemandDepositAccountServiceImpl:222 - Shopping 200 Balance:6700
+2021-02-19 21:12:27 INFO  DemandDepositAccountServiceImpl:222 - Money 500 Balance:6200
+2021-02-19 21:12:27 INFO  DemandDepositAccountServiceImpl:222 - Shopping 200 Balance:6000
+2021-02-19 21:12:32 INFO  DemandDepositAccountServiceImpl:222 - Shopping 200 Balance:5800
+2021-02-19 21:12:32 INFO  DemandDepositAccountServiceImpl:222 - Money 500 Balance:5300
+2021-02-19 21:12:40 INFO  DemandDepositAccountServiceImpl:222 - Shopping 200 Balance:5100
+2021-02-19 21:12:40 INFO  DemandDepositAccountServiceImpl:222 - Money 500 Balance:4600
+2021-02-19 21:12:45 INFO  DemandDepositAccountServiceImpl:222 - Money 500 Balance:4100
+2021-02-19 21:12:45 INFO  DemandDepositAccountServiceImpl:222 - Shopping 200 Balance:3900
