@@ -14,8 +14,8 @@ public class Debt {
             extractOfAccount.setTermDebt(creditCard.getCardDebt());
             extractOfAccount.setOldMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPayment));
         } else {
-            creditCard.setCardDebt((int) ((creditCard.getCardDebt() + extractOfAccount.getTotalInterestAmount()) - payMoney));
-            extractOfAccount.setTermDebt(Math.abs(extractOfAccount.getTermDebt() - payMoney));
+            creditCard.setCardDebt((int) ((creditCard.getCardDebt()) - payMoney));
+            extractOfAccount.setTermDebt(creditCard.getCardDebt());
             zeroSet(extractOfAccount);
         }
         extractOfAccount.setAccountCutOffTime(extractOfAccount.getPaymentDueTo().plusDays(20));

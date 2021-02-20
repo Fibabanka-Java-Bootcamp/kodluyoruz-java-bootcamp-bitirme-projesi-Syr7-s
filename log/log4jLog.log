@@ -127,3 +127,47 @@
 2021-02-20 14:54:10 INFO  DemandDepositAccountController:142 - Time : 900
 2021-02-20 14:54:10 INFO  DemandDepositAccountController:155 - Shopping Money : 2500.0 Balance Thread 2 : 41960
 2021-02-20 14:54:10 INFO  DemandDepositAccountController:144 - Money : 500 Balance Thread 1 : 41460
+2021-02-20 19:10:20 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:11:28 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:12:25 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 19:12:25 ERROR SavingsAccountServiceImpl:168 - Not enough money in your account.
+2021-02-20 19:12:36 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 19:12:45 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:13:29 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:16:26 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:19:07 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:19:50 INFO  CreditCardController:83 - Debt will payment with credit card where in ATM.
+2021-02-20 19:19:55 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:20:40 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:21:13 INFO  CreditCardController:83 - Debt will payment with credit card where in ATM.
+2021-02-20 19:21:20 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:22:57 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:24:52 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:26:52 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 19:26:52 ERROR SavingsAccountServiceImpl:168 - Not enough money in your account.
+2021-02-20 19:27:33 INFO  SavingsAccountController:53 - Deposit Money process will do.
+2021-02-20 19:28:21 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 19:28:33 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:30:49 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:31:13 INFO  CreditCardController:83 - Debt will payment with credit card where in ATM.
+2021-02-20 19:31:18 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:33:29 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:34:16 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:34:55 INFO  CreditCardController:92 - Debt will payment without credit card in ATM.
+2021-02-20 19:35:04 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:35:13 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:36:24 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:36:37 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:37:15 INFO  CreditCardController:92 - Debt will payment without credit card in ATM.
+2021-02-20 19:37:22 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:37:43 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:38:07 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:38:28 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:39:41 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 19:39:56 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:40:38 INFO  CreditCardController:92 - Debt will payment without credit card in ATM.
+2021-02-20 19:40:44 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:41:20 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:42:04 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:42:46 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 19:44:40 INFO  ExtractOfAccountController:43 - extract of account info will get.
