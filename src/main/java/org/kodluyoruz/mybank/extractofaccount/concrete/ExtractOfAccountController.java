@@ -23,7 +23,8 @@ public class ExtractOfAccountController {
 
     @PostMapping("/{creditCardNO}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ExtractOfAccountDto create(@PathVariable("creditCardNO") long creditCardNO, @RequestParam("password") int password,
+    public ExtractOfAccountDto create(@PathVariable("creditCardNO") long creditCardNO,
+                                      @RequestParam("password") int password,
                                       @RequestBody ExtractOfAccountDto extractOfAccountDto) {
         CreditCard creditCard = creditCardService.getCreditCard(creditCardNO);
         if (creditCard.getCardPassword() == password) {
