@@ -9,6 +9,7 @@ public enum Messages {
         ACCOUNT_COULD_NOT_FOUND("Account could not found."),
         ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED("Account number and password could not matched."),
         ACCOUNTS_COULD_SAME("Accounts could same."),
+        CURRENCY_SHOULD_WRITE_UPPER_CASE("Currency should write upper case."),
         CARD_COULD_NOT_CREATED("Card could not created."),
         CARD_COULD_NOT_DELETED("Card could not deleted."),
         CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT("Card could not matched to your account."),
