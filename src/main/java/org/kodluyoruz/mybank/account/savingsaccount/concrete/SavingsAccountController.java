@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
 import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,7 +49,7 @@ public class SavingsAccountController {
     public SavingsAccountDto getUpdateSavings(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
                                               @PathVariable("accountNumber") long accountNumber,
                                               @RequestParam("password") int password,
-                                              @RequestParam("depositMoney") int depositMoney) {
+                                              @Min(value = 0) @RequestParam("depositMoney") int depositMoney) {
         log.info("Deposit Money process will do.");
         return savingsAccountService.depositMoney(bankCardAccountNumber, password, accountNumber, depositMoney).toSavingsAccountDto();
     }
@@ -58,7 +59,7 @@ public class SavingsAccountController {
     public SavingsAccountDto getUpdateSavingsWithDrawMoney(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
                                                            @PathVariable("accountNumber") long accountNumber,
                                                            @RequestParam("password") int password,
-                                                           @RequestParam("withDrawMoney") int withDrawMoney) {
+                                                           @Min(value = 0) @RequestParam("withDrawMoney") int withDrawMoney) {
         log.info("With draw money process will do.");
         return savingsAccountService.withDrawMoney(bankCardAccountNumber, password, accountNumber, withDrawMoney).toSavingsAccountDto();
     }
@@ -67,8 +68,8 @@ public class SavingsAccountController {
     @ResponseStatus(HttpStatus.CREATED)
     public SavingsAccountDto payDebtWithSaving(@PathVariable("accountNumber") long accountNumber,
                                                @PathVariable("creditCardNumber") long creditCardNumber,
-                                               @RequestParam("creditCardDebt") int creditCardDebt,
-                                               @RequestParam("minimumPaymentAmount") int minimumPaymentAmount) {
+                                               @Min(value = 0) @RequestParam("creditCardDebt") int creditCardDebt,
+                                               @Min(value = 0) @RequestParam("minimumPaymentAmount") int minimumPaymentAmount) {
         log.info("Debt will payment with savings account.");
         return savingsAccountService.payDebtWithAccount(accountNumber, creditCardNumber, creditCardDebt, minimumPaymentAmount).toSavingsAccountDto();
     }
@@ -76,9 +77,9 @@ public class SavingsAccountController {
     @PutMapping("/{accountNumber}/savingsProcess")
     @ResponseStatus(HttpStatus.CREATED)
     public SavingsAccountDto computeSavings(@PathVariable("accountNumber") long accountNumber,
-                                            @RequestParam("termTime") int termTime,
-                                            @RequestParam("interestRate") double interestRate,
-                                            @RequestParam("withHoldingValue") double withHoldingValue) {
+                                            @Min(value = 0) @RequestParam("termTime") int termTime,
+                                            @Min(value = 0) @RequestParam("interestRate") double interestRate,
+                                            @Min(value = 0) @RequestParam("withHoldingValue") double withHoldingValue) {
         return savingsAccountService.computeSavings(accountNumber, termTime, interestRate, withHoldingValue).toSavingsAccountDto();
     }
 
