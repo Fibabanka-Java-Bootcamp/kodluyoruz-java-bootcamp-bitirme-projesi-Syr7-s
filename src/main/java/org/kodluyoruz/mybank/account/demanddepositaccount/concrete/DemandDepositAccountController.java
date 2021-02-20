@@ -57,7 +57,7 @@ public class DemandDepositAccountController {
     public DemandDepositAccountDto getUpdatedDeposit(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
                                                      @PathVariable("accountNumber") long accountNumber,
                                                      @RequestParam("password") int password,
-                                                     @RequestParam("depositMoney") int depositMoney) {
+                                                     @Min(value = 0) @RequestParam("depositMoney") int depositMoney) {
         log.info("Deposit Money process was did.");
         return demandDepositAccountService.depositMoney(bankCardAccountNumber, password, accountNumber, depositMoney).toDemandDepositAccountDto();
     }
@@ -67,7 +67,7 @@ public class DemandDepositAccountController {
     public DemandDepositAccountDto getUpdateDepositWithDrawMoney(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
                                                                  @PathVariable("accountNumber") long accountNumber,
                                                                  @RequestParam("password") int password,
-                                                                 @RequestParam("withDrawMoney") int withDrawMoney) {
+                                                                 @Min(value = 0) @RequestParam("withDrawMoney") int withDrawMoney) {
         log.info("With draw money process was did.");
         return demandDepositAccountService.withDrawMoney(bankCardAccountNumber, password, accountNumber, withDrawMoney).toDemandDepositAccountDto();
     }
@@ -76,7 +76,7 @@ public class DemandDepositAccountController {
     @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto getMoneyTransfer(@PathVariable("depositAccountIBAN") String depositAccountIBAN,
                                                     @PathVariable("savingsAccountIBAN") String savingsAccountIBAN,
-                                                    @RequestParam("transferMoney") int transferMoney) {
+                                                    @Min(value = 0) @RequestParam("transferMoney") int transferMoney) {
         log.info("Money transfer process was did.");
         return demandDepositAccountService.moneyTransferBetweenDifferentAccounts(depositAccountIBAN, savingsAccountIBAN, transferMoney).toDemandDepositAccountDto();
     }
@@ -85,7 +85,7 @@ public class DemandDepositAccountController {
     @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto getBetweenAccountTransferMoney(@PathVariable("fromAccountIBAN") String fromAccountIBAN,
                                                                   @PathVariable("toAccountIBAN") String toAccountIBAN,
-                                                                  @RequestParam("transferMoney") int transferMoney) {
+                                                                  @Min(value = 0) @RequestParam("transferMoney") int transferMoney) {
 
         return demandDepositAccountService.moneyTransferBetweenAccounts(fromAccountIBAN, toAccountIBAN, transferMoney).toDemandDepositAccountDto();
     }
@@ -94,8 +94,8 @@ public class DemandDepositAccountController {
     @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto payDebtWithDemandDeposit(@PathVariable("accountNumber") long accountNumber,
                                                             @PathVariable("creditCardNumber") long creditCardNumber,
-                                                            @RequestParam("creditCardDebt") int creditCardDebt,
-                                                            @RequestParam("minimumPaymentAmount") int minimumPaymentAmount) {
+                                                            @Min(value = 0) @RequestParam("creditCardDebt") int creditCardDebt,
+                                                            @Min(value = 0) @RequestParam("minimumPaymentAmount") int minimumPaymentAmount) {
 
         return demandDepositAccountService.payDebtWithDemandDeposit(accountNumber, creditCardNumber, creditCardDebt, minimumPaymentAmount).toDemandDepositAccountDto();
     }
@@ -119,7 +119,7 @@ public class DemandDepositAccountController {
     @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto currencyProcess(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
                                                    @PathVariable("accountNumber") long accountNumber,
-                                                   @RequestParam("money") int money,
+                                                   @Min(value = 0) @RequestParam("money") int money,
                                                    @RequestParam("password") int password,
                                                    @RequestBody ShoppingDto shoppingDto) {
         Thread withDrawMoney = new Thread(() -> withDrawMoneyProcess(accountNumber, money));
@@ -166,8 +166,8 @@ public class DemandDepositAccountController {
     @PutMapping("/finalSituation/{accountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto currencyProcess(@PathVariable("accountNumber") long accountNumber,
-                                                   @RequestParam("money") int money,
-                                                   @RequestParam("shoppingMoney") int shoppingMoney) {
+                                                   @Min(value = 0) @RequestParam("money") int money,
+                                                   @Min(value = 0) @RequestParam("shoppingMoney") int shoppingMoney) {
 
         return demandDepositAccountService.withDrawMoneyAndShopping(accountNumber, money, shoppingMoney).toDemandDepositAccountDto();
     }
