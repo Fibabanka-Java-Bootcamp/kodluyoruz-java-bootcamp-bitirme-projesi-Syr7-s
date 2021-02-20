@@ -45,7 +45,8 @@ public class CreditCardController {
     }
 
     @GetMapping(value = "/creditCards", params = {"page", "size"})
-    public List<CreditCardDto> getAllCreditCard(@Min(value = 0) @RequestParam("page") int page, @Min(value = 1) @RequestParam("size") int size) {
+    public List<CreditCardDto> getAllCreditCard(@Min(value = 0) @RequestParam("page") int page,
+                                                @Min(value = 1) @RequestParam("size") int size) {
         return creditCardService.cards(PageRequest.of(page, size)).stream()
                 .map(CreditCard::toCreditCardDto)
                 .collect(Collectors.toList());
@@ -76,8 +77,8 @@ public class CreditCardController {
     @PutMapping("/debt/{creditCardNO}")
     @ResponseStatus(HttpStatus.CREATED)
     public CreditCardDto payCreditCardDebt(@PathVariable("creditCardNO") long creditCardNO,
-                                           @Min(value = 4) @RequestParam("password") int password,
-                                           @RequestParam("payMoney") int payMoney,
+                                           @Min(value = 0) @RequestParam("password") int password,
+                                           @Min(value = 0)@RequestParam("payMoney") int payMoney,
                                            @RequestParam("minimumPayment") double minimumPayment) {
         log.info("Debt will payment with credit card where in ATM.");
         return creditCardService.payCreditCardDebt(creditCardNO, password, payMoney, minimumPayment).toCreditCardDto();
@@ -86,8 +87,8 @@ public class CreditCardController {
     @PutMapping("/withoutCard/{creditCardNO}")
     @ResponseStatus(HttpStatus.CREATED)
     public CreditCardDto debtPaymentWithoutCreditCard(@PathVariable("creditCardNO") long creditCardNO,
-                                                      @RequestParam("payMoney") int payMoney,
-                                                      @RequestParam("minimumPayment") double minimumPayment) {
+                                                      @Min(value = 0)@RequestParam("payMoney") int payMoney,
+                                                      @Min(value = 0)@RequestParam("minimumPayment") double minimumPayment) {
         log.info("Debt will payment without credit card in ATM.");
         return creditCardService.debtPaymentWithoutCreditCard(creditCardNO, payMoney, minimumPayment).toCreditCardDto();
     }

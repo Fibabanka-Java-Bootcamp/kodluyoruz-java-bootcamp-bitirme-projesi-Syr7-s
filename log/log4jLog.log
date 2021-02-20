@@ -1,0 +1,129 @@
+2021-02-20 13:02:02 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:03:06 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:03:55 INFO  CreditCardController:82 - Debt will payment with credit card where in ATM.
+2021-02-20 13:04:56 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:05:11 INFO  CreditCardController:82 - Debt will payment with credit card where in ATM.
+2021-02-20 13:05:16 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:05:28 INFO  CreditCardController:82 - Debt will payment with credit card where in ATM.
+2021-02-20 13:05:35 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:06:09 INFO  CreditCardController:82 - Debt will payment with credit card where in ATM.
+2021-02-20 13:06:20 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:06:49 INFO  CreditCardController:82 - Debt will payment with credit card where in ATM.
+2021-02-20 13:08:27 INFO  CreditCardController:82 - Debt will payment with credit card where in ATM.
+2021-02-20 13:08:31 INFO  CreditCardController:82 - Debt will payment with credit card where in ATM.
+2021-02-20 13:08:33 INFO  CreditCardController:82 - Debt will payment with credit card where in ATM.
+2021-02-20 13:08:49 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:09:49 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:10:23 INFO  CreditCardController:82 - Debt will payment with credit card where in ATM.
+2021-02-20 13:10:31 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:14:43 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:15:25 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:16:04 INFO  CreditCardController:92 - Debt will payment without credit card in ATM.
+2021-02-20 13:16:17 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:16:45 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:17:02 INFO  CreditCardController:92 - Debt will payment without credit card in ATM.
+2021-02-20 13:17:09 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:18:46 INFO  DemandDepositAccountController:61 - Deposit Money process was did.
+2021-02-20 13:20:09 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-20 13:22:55 INFO  SavingsAccountController:63 - With draw money process will do.
+2021-02-20 13:22:55 ERROR SavingsAccountServiceImpl:125 - Not enough money in your account.
+2021-02-20 13:24:51 ERROR ShoppingServiceImpl:55 - Credit card limit over.
+2021-02-20 13:25:18 ERROR ShoppingServiceImpl:55 - Credit card limit over.
+2021-02-20 13:25:26 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:27:38 INFO  DemandDepositAccountController:71 - With draw money process was did.
+2021-02-20 13:28:46 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:36:19 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:37:08 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:40:05 INFO  DemandDepositAccountController:61 - Deposit Money process was did.
+2021-02-20 13:40:20 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.
+2021-02-20 13:41:00 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:42:24 ERROR ShoppingServiceImpl:55 - Credit card limit over.
+2021-02-20 13:42:37 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:43:15 INFO  DemandDepositAccountController:61 - Deposit Money process was did.
+2021-02-20 13:48:58 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:49:50 ERROR ShoppingServiceImpl:60 - Card password could incorrect.
+2021-02-20 13:50:00 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:50:28 ERROR ShoppingServiceImpl:60 - Card password could incorrect.
+2021-02-20 13:51:19 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:54:06 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:54:14 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:54:46 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:55:32 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:57:06 INFO  DemandDepositAccountController:71 - With draw money process was did.
+2021-02-20 13:57:40 INFO  DemandDepositAccountController:71 - With draw money process was did.
+2021-02-20 13:57:40 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.
+2021-02-20 13:58:08 INFO  DemandDepositAccountController:61 - Deposit Money process was did.
+2021-02-20 13:58:23 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 13:59:03 ERROR DemandDepositAccountServiceImpl:197 - Not enough money in your account.
+2021-02-20 13:59:12 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 14:00:53 INFO  SavingsAccountController:63 - With draw money process will do.
+2021-02-20 14:01:12 INFO  SavingsAccountController:63 - With draw money process will do.
+2021-02-20 14:01:12 ERROR SavingsAccountServiceImpl:132 - Card could not matched to your account.
+2021-02-20 14:01:19 INFO  SavingsAccountController:63 - With draw money process will do.
+2021-02-20 14:01:47 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 14:02:54 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 14:03:05 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 14:03:41 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 14:11:59 INFO  SavingsAccountController:53 - Deposit Money process will do.
+2021-02-20 14:12:21 INFO  SavingsAccountController:63 - With draw money process will do.
+2021-02-20 14:12:21 ERROR SavingsAccountServiceImpl:143 - Not enough money in your account.
+2021-02-20 14:17:26 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 14:18:34 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 14:19:39 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 14:19:39 ERROR SavingsAccountServiceImpl:168 - Not enough money in your account.
+2021-02-20 14:19:46 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 14:20:15 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 14:20:26 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 14:20:26 ERROR SavingsAccountServiceImpl:168 - Not enough money in your account.
+2021-02-20 14:21:03 INFO  SavingsAccountController:53 - Deposit Money process will do.
+2021-02-20 14:21:24 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 14:22:59 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 14:22:59 ERROR SavingsAccountServiceImpl:168 - Not enough money in your account.
+2021-02-20 14:23:19 INFO  SavingsAccountController:53 - Deposit Money process will do.
+2021-02-20 14:23:24 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 14:28:03 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 14:28:59 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 14:30:06 INFO  SavingsAccountController:53 - Deposit Money process will do.
+2021-02-20 14:30:55 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 14:30:55 ERROR SavingsAccountServiceImpl:168 - Not enough money in your account.
+2021-02-20 14:31:00 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 14:31:11 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 14:31:23 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 14:32:38 INFO  SavingsAccountController:53 - Deposit Money process will do.
+2021-02-20 14:33:00 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 14:33:12 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 14:33:50 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 14:33:59 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 14:37:06 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 14:38:30 ERROR ShoppingServiceImpl:60 - Card password could incorrect.
+2021-02-20 14:40:51 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 14:41:37 ERROR ShoppingServiceImpl:60 - Card password could incorrect.
+2021-02-20 14:41:46 ERROR ShoppingServiceImpl:60 - Card password could incorrect.
+2021-02-20 14:44:11 ERROR ShoppingServiceImpl:59 - Card password could incorrect.
+2021-02-20 14:44:29 ERROR ShoppingServiceImpl:59 - Card password could incorrect.
+2021-02-20 14:49:34 INFO  DemandDepositAccountServiceImpl:231 - Money : 25 Balance Thread 1 : 225
+2021-02-20 14:49:34 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-20 14:49:34 ERROR DemandDepositAccountServiceImpl:241 - 500 INTERNAL_SERVER_ERROR "Not enough money in your account."
+2021-02-20 14:50:00 INFO  DemandDepositAccountServiceImpl:231 - Money : 25 Balance Thread 1 : 200
+2021-02-20 14:50:00 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 50 Balance Thread 2 : 150
+2021-02-20 14:50:08 INFO  DemandDepositAccountServiceImpl:231 - Money : 25 Balance Thread 1 : 125
+2021-02-20 14:50:08 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 50 Balance Thread 2 : 75
+2021-02-20 14:50:15 INFO  DemandDepositAccountServiceImpl:231 - Money : 25 Balance Thread 1 : 50
+2021-02-20 14:50:15 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 20 Balance Thread 2 : 30
+2021-02-20 14:50:24 INFO  DemandDepositAccountServiceImpl:231 - Money : 5 Balance Thread 1 : 25
+2021-02-20 14:50:24 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 5 Balance Thread 2 : 20
+2021-02-20 14:50:28 INFO  DemandDepositAccountServiceImpl:231 - Money : 5 Balance Thread 1 : 15
+2021-02-20 14:50:28 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 5 Balance Thread 2 : 10
+2021-02-20 14:50:56 INFO  DemandDepositAccountController:61 - Deposit Money process was did.
+2021-02-20 14:51:04 INFO  DemandDepositAccountServiceImpl:231 - Money : 250 Balance Thread 1 : 49760
+2021-02-20 14:51:04 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 600 Balance Thread 2 : 49160
+2021-02-20 14:51:09 INFO  DemandDepositAccountServiceImpl:231 - Money : 250 Balance Thread 1 : 48910
+2021-02-20 14:51:09 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 600 Balance Thread 2 : 48310
+2021-02-20 14:51:22 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 600 Balance Thread 2 : 47710
+2021-02-20 14:51:22 INFO  DemandDepositAccountServiceImpl:231 - Money : 250 Balance Thread 1 : 47460
+2021-02-20 14:54:01 INFO  DemandDepositAccountController:142 - Time : 500
+2021-02-20 14:54:01 INFO  DemandDepositAccountController:144 - Money : 500 Balance Thread 1 : 46960
+2021-02-20 14:54:01 INFO  DemandDepositAccountController:155 - Shopping Money : 2500.0 Balance Thread 2 : 44460
+2021-02-20 14:54:10 INFO  DemandDepositAccountController:142 - Time : 900
+2021-02-20 14:54:10 INFO  DemandDepositAccountController:155 - Shopping Money : 2500.0 Balance Thread 2 : 41960
+2021-02-20 14:54:10 INFO  DemandDepositAccountController:144 - Money : 500 Balance Thread 1 : 41460

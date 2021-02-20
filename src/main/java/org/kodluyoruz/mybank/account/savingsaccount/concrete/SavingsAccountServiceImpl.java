@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.kodluyoruz.mybank.account.savingsaccount.abtrct.SavingsAccountService;
 import org.kodluyoruz.mybank.account.savingsaccount.abtrct.SavingsAccountRepository;
 import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingAccountNotDeletedException;
-import org.kodluyoruz.mybank.account.savingsaccount.exception.SavingsAccountNotEnoughMoneyException;
 import org.kodluyoruz.mybank.card.bankcard.abstrct.BankCardService;
 import org.kodluyoruz.mybank.card.bankcard.concrete.BankCard;
 import org.kodluyoruz.mybank.card.bankcard.concrete.BankCardDto;
@@ -37,6 +36,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
     private final CustomerService<Customer> customerService;
     private final BankCardService<BankCard> bankCardService;
     private static final Logger log = Logger.getLogger(SavingsAccountServiceImpl.class);
+    private static final Object lock = new Object();
 
     public SavingsAccountServiceImpl(SavingsAccountRepository savingsAccountRepository, CreditCardService<CreditCard> creditCardService, ExtractOfAccountService<ExtractOfAccount> extractOfAccountService, CustomerService<Customer> customerService, BankCardService<BankCard> bankCardService) {
         this.savingsAccountRepository = savingsAccountRepository;
@@ -121,18 +121,13 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
         SavingsAccountDto savingsAccountDto = get(accountNumber).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toSavingsAccountDto();
         if (isMatchBankCardAccountNumberAndPasswordWithSavingsAccount(savingsAccountDto, bankCardAccountNumber, password)) {
-            if (savingsAccountDto.getSavingsAccountBalance() < withDrawMoney) {
-                log.error(Messages.Error.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT.message);
-                throw new SavingsAccountNotEnoughMoneyException(Messages.Error.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT.message);
-            } else {
-                savingsAccountDto.setSavingsAccountBalance(savingsAccountDto.getSavingsAccountBalance() - withDrawMoney);
-                return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
-            }
+            return updateBalanceFromAccount(accountNumber, withDrawMoney);
         } else {
             log.error(Messages.Error.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT.message);
             throw new BankCardNotMatchException(Messages.Error.CARD_COULD_NOT_MATCHED_TO_YOUR_ACCOUNT.message);
         }
     }
+
 
     @Override
     public SavingsAccount payDebtWithAccount(long accountNumber, long creditCardNumber, int creditCardDebt, int minimumPaymentAmount) {
@@ -142,13 +137,13 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
         CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
         ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
         double money = getMoney(creditCardDebt, minimumPaymentAmount, savingsAccountDto, creditCard);
-        savingsAccountDto.setSavingsAccountBalance((int) (savingsAccountDto.getSavingsAccountBalance() - money));
+        savingsAccountDto = updateBalanceFromAccount(accountNumber, (int) money).toSavingsAccountDto();
         Debt.debtProcess(creditCardDebt, minimumPaymentAmount, creditCard, extractOfAccount);
         extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
         extractOfAccount.setMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPaymentAmount));
         creditCardService.updateCard(creditCard);
         extractOfAccountService.update(extractOfAccount);
-        return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
+        return savingsAccountDto.toSavingsAccount();
     }
 
 
@@ -164,6 +159,19 @@ public class SavingsAccountServiceImpl implements SavingsAccountService<SavingsA
         savingsAccountDto.setSavingsAccountInterestRate(interestRate);
         savingsAccountDto.setSavingsAccountBalance((int) (savingsAccountDto.getSavingsAccountBalance() + netGain));
         return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
+    }
+
+    private SavingsAccount updateBalanceFromAccount(long accountNumber, int money) {
+        synchronized (lock) {
+            SavingsAccountDto savingsAccountDto = get(accountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message)).toSavingsAccountDto();
+            if (savingsAccountDto.getSavingsAccountBalance() - money < 0) {
+                log.error(Messages.Error.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT.message);
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.NOT_ENOUGH_MONEY_IN_YOUR_ACCOUNT.message);
+            } else {
+                savingsAccountDto.setSavingsAccountBalance(savingsAccountDto.getSavingsAccountBalance() - money);
+                return savingsAccountRepository.save(savingsAccountDto.toSavingsAccount());
+            }
+        }
     }
 
     private double getNetGain(double grossInterestReturn, double withHoldingValue) {

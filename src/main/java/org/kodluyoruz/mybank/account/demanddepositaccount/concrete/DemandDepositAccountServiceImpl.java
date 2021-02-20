@@ -178,13 +178,13 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
         CreditCard creditCard = creditCardService.getCreditCard(creditCardNumber);
         ExtractOfAccount extractOfAccount = creditCard.getExtractOfAccount();
         double money = getMoney(creditCardDebt, minimumPaymentAmount, demandDepositAccountDto, creditCard);
-        demandDepositAccountDto.setDemandDepositAccountBalance((int) (demandDepositAccountDto.getDemandDepositAccountBalance() - money));
+        demandDepositAccountDto = updateBalanceFromAccount(accountNumber, (int) money).toDemandDepositAccountDto();
         Debt.debtProcess(creditCardDebt, minimumPaymentAmount, creditCard, extractOfAccount);
         extractOfAccount.setOldDebt(extractOfAccount.getTermDebt());
         extractOfAccount.setMinimumPaymentAmount(Math.abs(extractOfAccount.getMinimumPaymentAmount() - minimumPaymentAmount));
         creditCardService.updateCard(creditCard);
         extractOfAccountService.update(extractOfAccount);
-        return demandDepositAccountRepository.save(demandDepositAccountDto.toDemandDepositAccount());
+        return demandDepositAccountDto.toDemandDepositAccount();
     }
 
     @Override
@@ -226,21 +226,21 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
     }
 */
 
-        private void withDrawMoneyWithThread(long accountNumber, int money) {
-            try {
-                log.info("Money : " + money + " Balance Thread 1 : " + updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
-            } catch (Exception exception) {
-                log.error(exception.getMessage());
-            }
+    private void withDrawMoneyWithThread(long accountNumber, int money) {
+        try {
+            log.info("Money : " + money + " Balance Thread 1 : " + updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
         }
+    }
 
-        private void shoppingPaymentMoneyWithThread(long accountNumber, int shoppingMoney) {
-            try {
-                log.info("Shopping : " + shoppingMoney + " Balance Thread 2 : " + updateBalanceFromAccount(accountNumber, shoppingMoney).getDemandDepositAccountBalance());
-            } catch (Exception exception) {
-                log.error(exception.getMessage());
-            }
+    private void shoppingPaymentMoneyWithThread(long accountNumber, int shoppingMoney) {
+        try {
+            log.info("Shopping : " + shoppingMoney + " Balance Thread 2 : " + updateBalanceFromAccount(accountNumber, shoppingMoney).getDemandDepositAccountBalance());
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
         }
+    }
 
     @Override
     public Page<DemandDepositAccount> getDemandDepositAccounts(Pageable pageable) {

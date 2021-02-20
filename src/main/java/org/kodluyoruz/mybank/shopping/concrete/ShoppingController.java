@@ -1,7 +1,6 @@
 package org.kodluyoruz.mybank.shopping.concrete;
 
 import org.kodluyoruz.mybank.shopping.abstrct.ShoppingService;
-import org.kodluyoruz.mybank.utilities.enums.messages.Messages;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +25,9 @@ public class ShoppingController {
 
     @PostMapping("/{creditCardNO}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<URI> doShopping(@PathVariable("creditCardNO") long creditCardNO, @RequestParam("password") int password, @RequestBody ShoppingDto shoppingDto) {
+    public ResponseEntity<URI> doShopping(@PathVariable("creditCardNO") long creditCardNO,
+                                          @RequestParam("password") int password,
+                                          @RequestBody ShoppingDto shoppingDto) {
         try{
             ShoppingDto editedShopping = shoppingService.doShoppingByCreditCard(creditCardNO,password,shoppingDto).toShoppingDto();
             URI location = ServletUriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/v1/shopping")
@@ -35,7 +36,7 @@ public class ShoppingController {
                     .toUri();
             return ResponseEntity.created(location).build();
         }catch (Exception exception){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.CREDIT_CARD_LIMIT_OVER.message);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
         }
     }
 

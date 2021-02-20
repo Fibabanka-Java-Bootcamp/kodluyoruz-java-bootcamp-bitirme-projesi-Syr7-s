@@ -55,10 +55,9 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
                 log.error(Messages.Error.CREDIT_CARD_LIMIT_OVER.message);
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Messages.Error.CREDIT_CARD_LIMIT_OVER.message);
             }
-
         } else {
             log.error(Messages.Error.CARD_PASSWORD_COULD_INCORRECT.message);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.CARD_PASSWORD_COULD_INCORRECT.message);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Messages.Error.CARD_PASSWORD_COULD_INCORRECT.message);
         }
     }
 
