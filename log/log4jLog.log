@@ -171,3 +171,29 @@
 2021-02-20 19:42:04 INFO  ExtractOfAccountController:43 - extract of account info will get.
 2021-02-20 19:42:46 INFO  ExtractOfAccountController:43 - extract of account info will get.
 2021-02-20 19:44:40 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 21:05:19 INFO  DemandDepositAccountController:80 - Money transfer process was did.
+2021-02-20 21:07:25 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 21:08:23 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 21:08:44 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 21:10:06 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-20 21:10:18 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 21:10:40 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 21:14:43 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 21:15:11 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 21:17:33 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-20 21:18:36 INFO  DemandDepositAccountServiceImpl:231 - Money : 50 Balance Thread 1 : 26590
+2021-02-20 21:18:36 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 250 Balance Thread 2 : 26340
+2021-02-20 21:18:48 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 250 Balance Thread 2 : 26090
+2021-02-20 21:18:48 INFO  DemandDepositAccountServiceImpl:231 - Money : 50 Balance Thread 1 : 26040
+2021-02-20 21:20:19 INFO  DemandDepositAccountController:142 - Time : 300
+2021-02-20 21:20:19 INFO  DemandDepositAccountController:144 - Money : 150 Balance Thread 1 : 25890
+2021-02-20 21:20:19 INFO  DemandDepositAccountController:155 - Shopping Money : 0.0 Balance Thread 2 : 25890
+2021-02-20 21:20:43 INFO  DemandDepositAccountController:142 - Time : 200
+2021-02-20 21:20:43 INFO  DemandDepositAccountController:144 - Money : 150 Balance Thread 1 : 25740
+2021-02-20 21:20:44 INFO  DemandDepositAccountController:155 - Shopping Money : 800.0 Balance Thread 2 : 24940
+2021-02-20 21:20:55 INFO  DemandDepositAccountController:142 - Time : 200
+2021-02-20 21:20:55 INFO  DemandDepositAccountController:144 - Money : 150 Balance Thread 1 : 24790
+2021-02-20 21:20:55 INFO  DemandDepositAccountController:155 - Shopping Money : 800.0 Balance Thread 2 : 23990
+2021-02-20 21:21:05 INFO  DemandDepositAccountController:142 - Time : 600
+2021-02-20 21:21:05 INFO  DemandDepositAccountController:155 - Shopping Money : 800.0 Balance Thread 2 : 23190
+2021-02-20 21:21:05 INFO  DemandDepositAccountController:144 - Money : 150 Balance Thread 1 : 23040

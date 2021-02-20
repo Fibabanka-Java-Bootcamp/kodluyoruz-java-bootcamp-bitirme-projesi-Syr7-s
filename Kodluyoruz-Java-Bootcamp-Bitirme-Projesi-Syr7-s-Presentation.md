@@ -49,7 +49,7 @@ Net kazanç = Brüt kazanç - (Brüt kazanç * stopaj vergisi) , şeklinde net k
 
 Türk Lirasında 6 ay a kadar %5, Dolar ve Euro da ise %20 olarak ele alınır. Proje kapsamında bu değerler kullanılmaya çalışılacaktır.
 
-** Stopaj Vergisi (Mesleki hizmeti karşılığında yapılacak ödeme sırasında, Gelir vergisi kanununda belirtilen oranda kesinti yapar. Bu kesinti işi yapan adına vergi dairesine tarafınızca ödenen para. Buna da stopaj vergisi denir.)
+** Stopaj Vergisi (**kaynaktan kesme**), gelir vergisinde, özellikle maaş ve ücretlilerin vergi borçlarının ödenmesinde, gelir henüz sahibinin eline geçmeden verginin kesilmesini ifade eder.)
 
 ### Senaryo 2
 
