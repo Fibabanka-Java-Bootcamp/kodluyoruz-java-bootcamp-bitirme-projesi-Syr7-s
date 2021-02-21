@@ -1,0 +1,35 @@
+2021-02-21 14:15:52 ERROR CustomerServiceImpl:79 - Customer could not deleted.
+2021-02-21 14:15:52 ERROR CustomerController:86 - Customer could not deleted.
+2021-02-21 14:16:31 INFO  SavingsAccountController:63 - With draw money process will do.
+2021-02-21 14:16:31 ERROR SavingsAccountServiceImpl:168 - Not enough money in your account.
+2021-02-21 14:16:37 INFO  SavingsAccountController:63 - With draw money process will do.
+2021-02-21 14:17:45 INFO  DemandDepositAccountController:71 - With draw money process was did.
+2021-02-21 14:18:03 INFO  DemandDepositAccountController:71 - With draw money process was did.
+2021-02-21 14:18:03 ERROR DemandDepositAccountServiceImpl:129 - Card could not matched to your account.
+2021-02-21 14:18:24 INFO  DemandDepositAccountController:71 - With draw money process was did.
+2021-02-21 14:21:31 INFO  CustomerController:34 - Customer will create.
+2021-02-21 14:22:06 INFO  CustomerController:34 - Customer will create.
+2021-02-21 14:23:01 INFO  CreditCardController:43 - Credit card will create.
+2021-02-21 14:23:46 INFO  ExtractOfAccountController:31 - Extract of account create for credit card.
+2021-02-21 14:24:30 INFO  BankCardController:32 - Bank card will create.
+2021-02-21 14:26:12 INFO  SavingsAccountController:29 - Savings account will create.
+2021-02-21 14:26:16 INFO  SavingsAccountController:29 - Savings account will create.
+2021-02-21 14:26:40 INFO  SavingsAccountController:89 - 8500163960538730 will delete.
+2021-02-21 14:26:40 ERROR SavingsAccountServiceImpl:97 - Account could not deleted.Because have money in your account.
+2021-02-21 14:26:40 ERROR SavingsAccountController:92 - Account could not deleted.Because have money in your account.
+2021-02-21 14:27:28 INFO  SavingsAccountController:63 - With draw money process will do.
+2021-02-21 14:27:53 INFO  SavingsAccountController:89 - 8500163960538730 will delete.
+2021-02-21 14:29:33 INFO  DemandDepositAccountController:37 - Account was created.
+2021-02-21 14:29:33 INFO  DemandDepositAccountServiceImpl:70 - 94556701125 customer was created.
+2021-02-21 14:29:45 INFO  DemandDepositAccountController:37 - Account was created.
+2021-02-21 14:29:45 INFO  DemandDepositAccountServiceImpl:70 - 94556701125 customer was created.
+2021-02-21 14:30:45 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 300 Balance Thread 2 : 14700
+2021-02-21 14:30:45 INFO  DemandDepositAccountServiceImpl:222 - Money : 250 Balance Thread 1 : 14450
+2021-02-21 14:31:00 INFO  DemandDepositAccountServiceImpl:222 - Money : 250 Balance Thread 1 : 14200
+2021-02-21 14:31:00 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 300 Balance Thread 2 : 13900
+2021-02-21 14:32:30 INFO  DemandDepositAccountController:71 - With draw money process was did.
+2021-02-21 14:32:44 INFO  DemandDepositAccountController:106 - 8500912490990093 number will deleted.
+2021-02-21 14:32:44 ERROR DemandDepositAccountController:112 - could not execute statement; SQL [n/a]; constraint [null]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+2021-02-21 14:36:28 INFO  DemandDepositAccountController:106 - 8500912490990093 number will deleted.
+2021-02-21 14:37:46 INFO  DemandDepositAccountController:37 - Account was created.
+2021-02-21 14:37:47 INFO  DemandDepositAccountServiceImpl:70 - 94556701125 customer was created.
