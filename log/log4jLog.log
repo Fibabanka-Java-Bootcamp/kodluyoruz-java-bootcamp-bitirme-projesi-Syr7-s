@@ -197,3 +197,147 @@
 2021-02-20 21:21:05 INFO  DemandDepositAccountController:142 - Time : 600
 2021-02-20 21:21:05 INFO  DemandDepositAccountController:155 - Shopping Money : 800.0 Balance Thread 2 : 23190
 2021-02-20 21:21:05 INFO  DemandDepositAccountController:144 - Money : 150 Balance Thread 1 : 23040
+2021-02-21 12:11:21 INFO  SavingsAccountController:53 - Deposit Money process will do.
+2021-02-21 12:11:48 INFO  SavingsAccountController:63 - With draw money process will do.
+2021-02-21 12:12:42 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-21 12:13:29 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-21 12:14:21 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-21 12:14:34 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-21 12:15:15 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-21 12:17:21 INFO  DemandDepositAccountController:80 - Money transfer process was did.
+2021-02-21 12:18:23 INFO  DemandDepositAccountController:71 - With draw money process was did.
+2021-02-21 12:18:23 ERROR DemandDepositAccountServiceImpl:129 - Card could not matched to your account.
+2021-02-21 12:18:32 INFO  DemandDepositAccountController:71 - With draw money process was did.
+2021-02-21 12:18:58 INFO  DemandDepositAccountController:61 - Deposit Money process was did.
+2021-02-21 12:20:27 INFO  DemandDepositAccountController:142 - Time : 900
+2021-02-21 12:20:27 INFO  DemandDepositAccountController:155 - Shopping Money : 800.0 Balance Thread 2 : 24200
+2021-02-21 12:20:27 INFO  DemandDepositAccountController:144 - Money : 250 Balance Thread 1 : 23950
+2021-02-21 12:20:44 INFO  DemandDepositAccountController:142 - Time : 300
+2021-02-21 12:20:44 INFO  DemandDepositAccountController:155 - Shopping Money : 800.0 Balance Thread 2 : 23150
+2021-02-21 12:20:44 INFO  DemandDepositAccountController:144 - Money : 250 Balance Thread 1 : 22900
+2021-02-21 12:21:02 INFO  DemandDepositAccountController:142 - Time : 500
+2021-02-21 12:21:02 INFO  DemandDepositAccountController:155 - Shopping Money : 800.0 Balance Thread 2 : 22100
+2021-02-21 12:21:02 INFO  DemandDepositAccountController:144 - Money : 250 Balance Thread 1 : 21850
+2021-02-21 12:21:13 INFO  DemandDepositAccountController:142 - Time : 700
+2021-02-21 12:21:13 INFO  DemandDepositAccountController:155 - Shopping Money : 800.0 Balance Thread 2 : 21050
+2021-02-21 12:21:13 INFO  DemandDepositAccountController:144 - Money : 250 Balance Thread 1 : 20800
+2021-02-21 12:21:29 INFO  DemandDepositAccountController:142 - Time : 600
+2021-02-21 12:21:29 INFO  DemandDepositAccountController:155 - Shopping Money : 800.0 Balance Thread 2 : 20000
+2021-02-21 12:21:29 INFO  DemandDepositAccountController:144 - Money : 250 Balance Thread 1 : 19750
+2021-02-21 12:21:43 INFO  DemandDepositAccountController:142 - Time : 600
+2021-02-21 12:21:43 INFO  DemandDepositAccountController:155 - Shopping Money : 800.0 Balance Thread 2 : 18950
+2021-02-21 12:21:43 INFO  DemandDepositAccountController:144 - Money : 250 Balance Thread 1 : 18700
+2021-02-21 12:23:29 INFO  DemandDepositAccountController:142 - Time : 100
+2021-02-21 12:23:29 INFO  DemandDepositAccountController:144 - Money : 200 Balance Thread 1 : 18500
+2021-02-21 12:23:29 INFO  DemandDepositAccountController:155 - Shopping Money : 200.0 Balance Thread 2 : 18300
+2021-02-21 12:23:41 INFO  DemandDepositAccountController:142 - Time : 200
+2021-02-21 12:23:41 INFO  DemandDepositAccountController:144 - Money : 200 Balance Thread 1 : 18100
+2021-02-21 12:23:41 INFO  DemandDepositAccountController:155 - Shopping Money : 200.0 Balance Thread 2 : 17900
+2021-02-21 12:23:46 INFO  DemandDepositAccountController:142 - Time : 900
+2021-02-21 12:23:46 INFO  DemandDepositAccountController:155 - Shopping Money : 200.0 Balance Thread 2 : 17700
+2021-02-21 12:23:46 INFO  DemandDepositAccountController:144 - Money : 200 Balance Thread 1 : 17500
+2021-02-21 12:24:05 INFO  DemandDepositAccountController:142 - Time : 800
+2021-02-21 12:24:05 INFO  DemandDepositAccountController:155 - Shopping Money : 200.0 Balance Thread 2 : 17300
+2021-02-21 12:24:05 INFO  DemandDepositAccountController:144 - Money : 200 Balance Thread 1 : 17100
+2021-02-21 12:24:12 INFO  DemandDepositAccountController:142 - Time : 400
+2021-02-21 12:24:12 INFO  DemandDepositAccountController:155 - Shopping Money : 200.0 Balance Thread 2 : 16900
+2021-02-21 12:24:12 INFO  DemandDepositAccountController:144 - Money : 200 Balance Thread 1 : 16700
+2021-02-21 12:24:27 INFO  DemandDepositAccountController:142 - Time : 200
+2021-02-21 12:24:27 INFO  DemandDepositAccountController:144 - Money : 200 Balance Thread 1 : 16500
+2021-02-21 12:24:27 INFO  DemandDepositAccountController:155 - Shopping Money : 200.0 Balance Thread 2 : 16300
+2021-02-21 12:25:23 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-21 12:25:49 INFO  DemandDepositAccountServiceImpl:231 - Money : 250 Balance Thread 1 : 16050
+2021-02-21 12:25:49 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 150 Balance Thread 2 : 15900
+2021-02-21 12:25:56 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 150 Balance Thread 2 : 15750
+2021-02-21 12:25:56 INFO  DemandDepositAccountServiceImpl:231 - Money : 250 Balance Thread 1 : 15500
+2021-02-21 12:27:09 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-21 12:28:28 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-21 12:29:24 INFO  CreditCardController:92 - Debt will payment without credit card in ATM.
+2021-02-21 12:29:33 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-21 12:30:39 INFO  DemandDepositAccountController:142 - Time : 500
+2021-02-21 12:30:39 INFO  DemandDepositAccountController:155 - Shopping Money : 1500.0 Balance Thread 2 : 12937
+2021-02-21 12:30:39 INFO  DemandDepositAccountController:144 - Money : 200 Balance Thread 1 : 12737
+2021-02-21 12:30:50 INFO  DemandDepositAccountController:142 - Time : 700
+2021-02-21 12:30:50 INFO  DemandDepositAccountController:155 - Shopping Money : 1500.0 Balance Thread 2 : 11237
+2021-02-21 12:30:50 INFO  DemandDepositAccountController:144 - Money : 200 Balance Thread 1 : 11037
+2021-02-21 12:30:57 INFO  DemandDepositAccountController:142 - Time : 900
+2021-02-21 12:30:57 INFO  DemandDepositAccountController:155 - Shopping Money : 1500.0 Balance Thread 2 : 9537
+2021-02-21 12:30:57 INFO  DemandDepositAccountController:144 - Money : 200 Balance Thread 1 : 9337
+2021-02-21 12:31:06 INFO  DemandDepositAccountController:142 - Time : 600
+2021-02-21 12:31:06 INFO  DemandDepositAccountController:155 - Shopping Money : 1500.0 Balance Thread 2 : 7837
+2021-02-21 12:31:06 INFO  DemandDepositAccountController:144 - Money : 200 Balance Thread 1 : 7637
+2021-02-21 12:31:13 INFO  DemandDepositAccountController:142 - Time : 800
+2021-02-21 12:31:13 INFO  DemandDepositAccountController:155 - Shopping Money : 1500.0 Balance Thread 2 : 6137
+2021-02-21 12:31:13 INFO  DemandDepositAccountController:144 - Money : 200 Balance Thread 1 : 5937
+2021-02-21 12:31:26 INFO  DemandDepositAccountController:142 - Time : 900
+2021-02-21 12:31:26 INFO  DemandDepositAccountController:155 - Shopping Money : 1500.0 Balance Thread 2 : 4437
+2021-02-21 12:31:26 INFO  DemandDepositAccountController:144 - Money : 200 Balance Thread 1 : 4237
+2021-02-21 12:31:42 INFO  DemandDepositAccountController:142 - Time : 800
+2021-02-21 12:31:42 INFO  DemandDepositAccountController:155 - Shopping Money : 600.0 Balance Thread 2 : 3637
+2021-02-21 12:31:42 INFO  DemandDepositAccountController:144 - Money : 100 Balance Thread 1 : 3537
+2021-02-21 12:31:51 INFO  DemandDepositAccountController:142 - Time : 800
+2021-02-21 12:31:51 INFO  DemandDepositAccountController:155 - Shopping Money : 600.0 Balance Thread 2 : 2937
+2021-02-21 12:31:51 INFO  DemandDepositAccountController:144 - Money : 100 Balance Thread 1 : 2837
+2021-02-21 12:31:58 INFO  DemandDepositAccountController:142 - Time : 700
+2021-02-21 12:31:58 INFO  DemandDepositAccountController:155 - Shopping Money : 600.0 Balance Thread 2 : 2237
+2021-02-21 12:31:58 INFO  DemandDepositAccountController:144 - Money : 100 Balance Thread 1 : 2137
+2021-02-21 12:32:29 INFO  DemandDepositAccountController:142 - Time : 800
+2021-02-21 12:32:29 INFO  DemandDepositAccountController:155 - Shopping Money : 600.0 Balance Thread 2 : 1537
+2021-02-21 12:32:29 INFO  DemandDepositAccountController:144 - Money : 100 Balance Thread 1 : 1437
+2021-02-21 12:32:54 INFO  DemandDepositAccountController:142 - Time : 700
+2021-02-21 12:32:54 INFO  DemandDepositAccountController:155 - Shopping Money : 600.0 Balance Thread 2 : 837
+2021-02-21 12:32:54 INFO  DemandDepositAccountController:144 - Money : 100 Balance Thread 1 : 737
+2021-02-21 12:33:14 INFO  DemandDepositAccountController:142 - Time : 300
+2021-02-21 12:33:14 INFO  DemandDepositAccountController:155 - Shopping Money : 600.0 Balance Thread 2 : 137
+2021-02-21 12:33:14 INFO  DemandDepositAccountController:144 - Money : 100 Balance Thread 1 : 37
+2021-02-21 12:33:29 INFO  DemandDepositAccountController:142 - Time : 400
+2021-02-21 12:33:29 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-21 12:33:29 ERROR DemandDepositAccountController:161 - Shopping Money Thread 500 INTERNAL_SERVER_ERROR "Not enough money in your account."
+2021-02-21 12:33:29 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-21 12:33:29 ERROR DemandDepositAccountController:146 - With draw money : 500 INTERNAL_SERVER_ERROR "Not enough money in your account."
+2021-02-21 12:34:24 INFO  DemandDepositAccountController:61 - Deposit Money process was did.
+2021-02-21 12:34:31 INFO  DemandDepositAccountController:142 - Time : 600
+2021-02-21 12:34:31 INFO  DemandDepositAccountController:155 - Shopping Money : 600.0 Balance Thread 2 : 24437
+2021-02-21 12:34:31 INFO  DemandDepositAccountController:144 - Money : 500 Balance Thread 1 : 23937
+2021-02-21 12:34:39 INFO  DemandDepositAccountController:142 - Time : 700
+2021-02-21 12:34:39 INFO  DemandDepositAccountController:155 - Shopping Money : 600.0 Balance Thread 2 : 23337
+2021-02-21 12:34:39 INFO  DemandDepositAccountController:144 - Money : 500 Balance Thread 1 : 22837
+2021-02-21 12:34:52 INFO  DemandDepositAccountController:142 - Time : 900
+2021-02-21 12:34:52 INFO  DemandDepositAccountController:155 - Shopping Money : 600.0 Balance Thread 2 : 22237
+2021-02-21 12:34:52 INFO  DemandDepositAccountController:144 - Money : 500 Balance Thread 1 : 21737
+2021-02-21 12:35:09 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 150 Balance Thread 2 : 21587
+2021-02-21 12:35:09 INFO  DemandDepositAccountServiceImpl:231 - Money : 250 Balance Thread 1 : 21337
+2021-02-21 12:35:19 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 150 Balance Thread 2 : 21187
+2021-02-21 12:35:19 INFO  DemandDepositAccountServiceImpl:231 - Money : 250 Balance Thread 1 : 20937
+2021-02-21 12:35:28 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 150 Balance Thread 2 : 20787
+2021-02-21 12:35:28 INFO  DemandDepositAccountServiceImpl:231 - Money : 250 Balance Thread 1 : 20537
+2021-02-21 12:36:16 INFO  DemandDepositAccountController:142 - Time : 900
+2021-02-21 12:36:16 INFO  DemandDepositAccountController:155 - Shopping Money : 2500.0 Balance Thread 2 : 18037
+2021-02-21 12:36:16 INFO  DemandDepositAccountController:144 - Money : 500 Balance Thread 1 : 17537
+2021-02-21 12:36:32 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 150 Balance Thread 2 : 17387
+2021-02-21 12:36:32 INFO  DemandDepositAccountServiceImpl:231 - Money : 250 Balance Thread 1 : 17137
+2021-02-21 12:38:21 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 300 Balance Thread 2 : 16837
+2021-02-21 12:38:21 INFO  DemandDepositAccountServiceImpl:231 - Money : 200 Balance Thread 1 : 16637
+2021-02-21 12:38:32 INFO  DemandDepositAccountServiceImpl:231 - Money : 200 Balance Thread 1 : 16437
+2021-02-21 12:38:32 INFO  DemandDepositAccountServiceImpl:239 - Shopping : 300 Balance Thread 2 : 16137
+2021-02-21 12:40:00 INFO  DemandDepositAccountController:142 - Time : 900
+2021-02-21 12:40:00 INFO  DemandDepositAccountController:144 - Money : 300 Balance Thread 1 : 15837
+2021-02-21 12:40:00 INFO  DemandDepositAccountController:155 - Shopping Money : 350.0 Balance Thread 2 : 15487
+2021-02-21 12:40:15 INFO  DemandDepositAccountController:142 - Time : 100
+2021-02-21 12:40:15 INFO  DemandDepositAccountController:144 - Money : 300 Balance Thread 1 : 15187
+2021-02-21 12:40:15 INFO  DemandDepositAccountController:155 - Shopping Money : 350.0 Balance Thread 2 : 14837
+2021-02-21 12:40:22 INFO  DemandDepositAccountController:142 - Time : 600
+2021-02-21 12:40:22 INFO  DemandDepositAccountController:155 - Shopping Money : 350.0 Balance Thread 2 : 14487
+2021-02-21 12:40:22 INFO  DemandDepositAccountController:144 - Money : 300 Balance Thread 1 : 14187
+2021-02-21 12:41:19 INFO  DemandDepositAccountController:142 - Time : 900
+2021-02-21 12:41:19 INFO  DemandDepositAccountController:155 - Shopping Money : 350.0 Balance Thread 2 : 13837
+2021-02-21 12:41:19 INFO  DemandDepositAccountController:144 - Money : 300 Balance Thread 1 : 13537
+2021-02-21 12:41:28 INFO  DemandDepositAccountController:142 - Time : 700
+2021-02-21 12:41:28 INFO  DemandDepositAccountController:155 - Shopping Money : 350.0 Balance Thread 2 : 13187
+2021-02-21 12:41:28 INFO  DemandDepositAccountController:144 - Money : 300 Balance Thread 1 : 12887
+2021-02-21 12:41:35 INFO  DemandDepositAccountController:142 - Time : 700
+2021-02-21 12:41:35 INFO  DemandDepositAccountController:155 - Shopping Money : 350.0 Balance Thread 2 : 12537
+2021-02-21 12:41:35 INFO  DemandDepositAccountController:144 - Money : 300 Balance Thread 1 : 12237
+2021-02-21 12:41:43 INFO  DemandDepositAccountController:142 - Time : 100
+2021-02-21 12:41:43 INFO  DemandDepositAccountController:144 - Money : 300 Balance Thread 1 : 11937
+2021-02-21 12:41:43 INFO  DemandDepositAccountController:155 - Shopping Money : 350.0 Balance Thread 2 : 11587

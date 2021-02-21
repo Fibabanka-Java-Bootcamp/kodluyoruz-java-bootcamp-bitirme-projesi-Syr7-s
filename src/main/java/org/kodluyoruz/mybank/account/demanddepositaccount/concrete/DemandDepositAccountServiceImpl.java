@@ -216,15 +216,6 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
         }
         return get(accountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.ACCOUNT_COULD_NOT_FOUND.message));
     }
-/*
-    private void withDrawMoneyOrShoppingMoneyPayment(long accountNumber, int money, String state) {
-        try {
-            log.info(state + " " + money + " " + "Balance" + ":" + updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
-        } catch (Exception exception) {
-            log.error(exception.getMessage());
-        }
-    }
-*/
 
     private void withDrawMoneyWithThread(long accountNumber, int money) {
         try {
