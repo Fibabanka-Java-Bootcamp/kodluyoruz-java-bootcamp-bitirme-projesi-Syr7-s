@@ -13,7 +13,7 @@ class BankCardRepositoryTest {
 
     @Test
     void findBankCardByBankCardAccountNumber(){
-        BankCard bankCard = bankCardRepository.findBankCardByBankCardAccountNumber(8536797341143025L);
+        BankCard bankCard = bankCardRepository.findBankCardByBankCardAccountNumber(8573593428595747L);
         Assertions.assertEquals("Isa SAYAR",bankCard.getBankCardNameSurname());
     }
 

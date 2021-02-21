@@ -37,7 +37,10 @@ class SavingsAccountServiceImplTest {
         savingsAccount.setSavingsAccountBalance(15000);
         savingsAccount.setSavingsAccountCurrency(Currency.EUR);
         savingsAccount.setSavingsAccountCreationDate(LocalDate.of(2020, 5, 6));
-        savingsAccount.setSavingsAccountInterestRate(2.45);
+        savingsAccount.setTermTime(0);
+        savingsAccount.setGrossInterestReturn(0);
+        savingsAccount.setSavingsAccountNetGain(0);
+        savingsAccount.setSavingsAccountInterestRate(0);
         savingsAccount.setCustomer(null);
         savingsAccount.setBankCard(null);
     }

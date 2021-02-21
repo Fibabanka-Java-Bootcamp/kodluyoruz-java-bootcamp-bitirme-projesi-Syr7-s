@@ -12,12 +12,14 @@ class CustomerRepositoryTest {
     CustomerRepository customerRepository;
     @Test
     void findCustomerByCustomerTC() {
-        Customer customer = customerRepository.findCustomerByCustomerTC(22433513943L);
+        Customer customer = customerRepository.findCustomerByCustomerTC(94556701125L);
         Assertions.assertEquals("Isa",customer.getCustomerName());
     }
     @Test
     void deleteCustomer(){
-        Customer customer = customerRepository.findCustomerByCustomerTC(42311352391L);
+        Customer customer = customerRepository.findCustomerByCustomerTC(40452857809L);
         customerRepository.delete(customer);
+        customer = customerRepository.findCustomerByCustomerTC(40452857809L);
+        Assertions.assertNull(customer);
     }
 }

@@ -16,7 +16,7 @@ class CreditCardControllerTest {
     void setUp() {
         restTemplate = new RestTemplate();
         creditCard = restTemplate
-                .getForObject("http://localhost:8080/api/v1/card/8518332901508354", CreditCard.class);
+                .getForObject("http://localhost:8080/api/v1/card/8525028619666010", CreditCard.class);
     }
 
     @Test

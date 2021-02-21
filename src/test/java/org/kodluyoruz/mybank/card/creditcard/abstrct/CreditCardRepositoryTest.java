@@ -13,12 +13,12 @@ class CreditCardRepositoryTest {
     CreditCardRepository creditCardRepository;
     @Test
     void findCreditCardByCardAccountNumber(){
-        CreditCard creditCard = creditCardRepository.findCreditCardByCardAccountNumber(8518332901508354L);
+        CreditCard creditCard = creditCardRepository.findCreditCardByCardAccountNumber(8525028619666010L);
         Assertions.assertEquals("Isa SAYAR",creditCard.getCardNameSurname());
     }
     @Test
     void isCreditCardLimitTenThousandControl(){
-        CreditCard creditCard = creditCardRepository.findCreditCardByCardAccountNumber(8518332901508354L);
+        CreditCard creditCard = creditCardRepository.findCreditCardByCardAccountNumber(8525028619666010L);
         Assertions.assertEquals(10000,creditCard.getCardLimit());
     }
 }

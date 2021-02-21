@@ -19,7 +19,7 @@ class BankCardControllerTest {
     @Test
     void getBankCard() {
         BankCard bankCard = restTemplate
-                .getForObject("http://localhost:8080/api/v1/bankcard/8536797341143025/card",BankCard.class);
+                .getForObject("http://localhost:8080/api/v1/bankcard/8573593428595747/card",BankCard.class);
         assert bankCard != null;
         Assertions.assertEquals("Isa SAYAR",bankCard.getBankCardNameSurname());
     }

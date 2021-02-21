@@ -30,7 +30,7 @@ class BankCardServiceImplTest {
     @BeforeEach
     void setUp(){
         restTemplate = new RestTemplate();
-        customer = customerService.getCustomerById(12082995906L);
+        customer = customerService.getCustomerById(94556701125L);
     }
     @Test
     void create() {
