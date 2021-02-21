@@ -113,6 +113,8 @@ Bu senaryoda da Online işlemin arka tarafta ilk olarak işlem yapacağını var
 
 Bu senaryoda işlemler sonucunda işlem yapılan hesap geri kullanıcıya gösteriliyor. (Bu senaryo 2 farklı anonim thread oluşturularak denendi ve çalıştı.)
 
+![example](figures/example.png)
+
 ## Proje Kapsamında Yapılan Algoritmik Çözümlemeler
 
 ### Senaryo 1

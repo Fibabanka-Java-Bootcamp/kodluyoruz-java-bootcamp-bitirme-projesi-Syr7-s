@@ -139,7 +139,6 @@ public class DemandDepositAccountController {
     private void withDrawMoneyProcess(long accountNumber, int money) {
         try {
             int time = 1 + new Random().nextInt(9);
-            log.info("Time : " + (time * 100));
             Thread.sleep(time);
             log.info("Money : " + money + " Balance Thread 1 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
         } catch (Exception exception) {
@@ -152,7 +151,7 @@ public class DemandDepositAccountController {
             DemandDepositAccount demandDepositAccount = demandDepositAccountService.get(accountNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account is not found"));
             if (demandDepositAccount.getBankCard().getBankCardAccountNumber() == bankCardAccountNumber && demandDepositAccount.getBankCard().getBankCardPassword() == password) {
                 double moneyProcess = Exchange.convertProcess(shoppingDto.getCurrency(), demandDepositAccount.getDemandDepositAccountCurrency(), shoppingDto.getProductPrice());
-                log.info("Shopping Money : " + moneyProcess + " Balance Thread 2 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, (int) moneyProcess).getDemandDepositAccountBalance());
+                log.info("Shopping Money : " + (int) moneyProcess + " Balance Thread 2 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, (int) moneyProcess).getDemandDepositAccountBalance());
                 shoppingService.create(shoppingDto.toShopping());
             } else {
                 log.error("Shopping Money Thread " + Messages.Error.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED.message);
