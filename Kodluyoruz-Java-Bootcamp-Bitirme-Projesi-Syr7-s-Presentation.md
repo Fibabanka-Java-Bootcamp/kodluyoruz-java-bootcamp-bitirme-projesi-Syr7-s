@@ -53,35 +53,7 @@ Türk Lirasında 6 ay a kadar %5, Dolar ve Euro da ise %20 olarak ele alınır. 
 
 ### Senaryo 2
 
-![card](figures/card.jpg)
-
-Senaryo 2 ise Kredi kartı borcu ödeme, Kredi kartı ile 1 ay içerisinde ve belirtilen limit altında yapılan işlemler sonucunda kullanıcının bankaya ödemesi gereken bir ücret ortaya çıkmaktadır bu da dönem borcu olarak bilinir. Kullanıcı bu ücreti hesap kesim tarihi ile belirlenen son ödeme tarihleri arasında bankaya ödemesi gerekmektedir. (Uygulama kapsamında hesap kesim tarihi ile son ödeme tarihi arasında 10 gün -  Son ödeme tarihi ile bir sonraki hesap kesim tarihi arasında ise 20 gün süre baz alınmıştır.) Müşteri bankaya belirlenen oran doğrultusunda asgari ödemesi gereken tutarı öder ise kartı belirli bir süre daha kullanmaya devam eder.  
-
-Uygulama içerisinde, Müşteri dönem borcunu belirtilen tarihler arasında öder ise bir faiz işlemi uygulanmaz. Fakat dönem borcu yerine asgari tutarı öder ise bir sonraki ay a dönem borcuna alışveriş faizi ve gecikme faizi gibi faizler uygulanıyor.
-
-- Alışveriş Faiz Tutarı : Ödenmeyen tutara hesap kesim tarihinden son ödeme tarihine kadar gecikme faizi uygulanır. Hesaplama ise şu şekilde yapılır : 
-
-  ​							alışveriş faiz tutarı * = (ödenmeyen kısım * faiz oranı * (10/30) ) / 100 (faiz oranı yüzdesi)
-
-- Gecikme Faizi : Asgari tutarın ödenmeyen kısmına son ödeme tarihinden bir sonraki hesap kesim tarihine kadar gecikme faizi uygulanır. Şu şekilde hesaplanır : 
-
-  ​							gecikme faiz tutarı = (asgari ödenmeyen para * gecikme faiz tutarı * (20/30) ) / 100 (faiz oranı yüzdesi)
-
-- ** Alışveriş Faiz Tutarı : Son ödeme tarihinden bir sonraki hesap kesim tarihine kadar alışveriş faizi uygulanır. Hesaplama ise şu şekilde yapılır.
-
-  ​						   alışveriş faiz tutarı ** = (Kalan para * alışveriş faiz oranı * (20/30) ) / 100
-
-- Toplam faiz tutarı ise yukarıdaki hesaplamalardaki oluşan değerleri toplayarak elde edilir. Bu toplam faiz tutarı da Müşterinin dönem borcuna yansıtılır.
-
-Not : Uygulama kapsamında Fiba Banka Kredi Kartı Faiz oranları baz alınmıştır. 
-
-* 28.01.2021 tarihinden itibaren ;
-  * Alışveriş Faiz Oranı (TL) : % 1.79
-  * Gecikme Faiz Oranı (TL) : % 2.09 
-
-### Senaryo 3
-
-Üçüncü senaryomuz ise şu ; 
+Bu senaryomuz ise şu şekilde; 
 
 ATM' den banka kartını kullanarak para çekerken aynı zamanda kart bilgilerini kullanarak online alışveriş yapılabildiğini düşünelim. Para çekme ve alışveriş işlemlerinin son kısmındayken yani tam para çekme ve ödeme işlemi yaparken müşterinin bu durum sonucunda doğru bir cevap alması gerekir. Çünkü işlem olarak para çekme yaptığımızda bakiye de belirli miktar para kalıyor ve aynı zamanda alışveriş için bakiye yetersiz kalabilir. Bu durum alışveriş işlemi içinde geçerli.  Bu işlemlerin eş zamanlı gerçekleşme olasılığı olabilir.
 
