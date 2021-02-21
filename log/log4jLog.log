@@ -39,3 +39,7 @@
 2021-02-21 19:29:35 INFO  DemandDepositAccountController:43 - 8500831863100394 account was got.
 2021-02-21 19:29:43 INFO  DemandDepositAccountController:43 - 8500831863100394 account was got.
 2021-02-21 19:31:43 INFO  CustomerController:34 - Customer will create.
+2021-02-21 19:42:16 INFO  DemandDepositAccountServiceImpl:222 - Money : 60 Balance Thread 1 : 10058
+2021-02-21 19:42:16 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 58 Balance Thread 2 : 10000
+2021-02-21 19:42:34 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 40 Balance Thread 2 : 9960
+2021-02-21 19:42:34 INFO  DemandDepositAccountServiceImpl:222 - Money : 60 Balance Thread 1 : 9900

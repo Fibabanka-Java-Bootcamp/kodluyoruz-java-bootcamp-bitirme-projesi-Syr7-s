@@ -19,7 +19,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/deposit")
+@RequestMapping("/api/v1/demand")
 public class DemandDepositAccountController {
     private static final Logger log = Logger.getLogger(DemandDepositAccountController.class);
     private final DemandDepositAccountService<DemandDepositAccount> demandDepositAccountService;
@@ -115,7 +115,7 @@ public class DemandDepositAccountController {
     }
 
 
-    @PutMapping("/{bankCardAccountNumber}/currency/{accountNumber}")
+    @PutMapping("/{bankCardAccountNumber}/synchronicity/{accountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto currencyProcess(@PathVariable("bankCardAccountNumber") long bankCardAccountNumber,
                                                    @PathVariable("accountNumber") long accountNumber,
@@ -162,7 +162,7 @@ public class DemandDepositAccountController {
     }
 
 
-    @PutMapping("/finalSituation/{accountNumber}")
+    @PutMapping("/synchronicity/{accountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public DemandDepositAccountDto currencyProcess(@PathVariable("accountNumber") long accountNumber,
                                                    @Min(value = 0) @RequestParam("money") int money,
