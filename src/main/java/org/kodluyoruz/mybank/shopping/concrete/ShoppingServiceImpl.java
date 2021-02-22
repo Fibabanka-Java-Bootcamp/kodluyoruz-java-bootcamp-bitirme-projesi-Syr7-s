@@ -87,6 +87,18 @@ public class ShoppingServiceImpl implements ShoppingService<Shopping> {
     }
 
     @Override
+    public String delete(int productID) {
+        Shopping shopping = getShoppingByProductID(productID);
+        try {
+            shoppingRepository.delete(shopping);
+            return productID + Messages.Info.NUMBER_PRODUCT_WAS_DELETED.message;
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.SERVER_ERROR.message);
+        }
+
+    }
+
+    @Override
     public Page<Shopping> getAllShopping(Pageable pageable) {
         return shoppingRepository.findAll(pageable);
     }

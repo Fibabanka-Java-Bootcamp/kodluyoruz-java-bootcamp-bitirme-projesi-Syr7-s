@@ -6,6 +6,19 @@
 
 Merhaba ben İsa SAYAR, Düzce Üniversitesi Bilgisayar Mühendisliği Bölümünden 2020 yılı Sonbaharında mezun oldum. Mezun olduktan sonra Java ve C# programlama dillerine yoğunlaştım ve bu diller ile Masaüstü ve Web uygulamaları geliştirmeye başladım. Bunların haricinde clean code yazmaya, SOLID ve Desing Patterns öğrenmeye çalıştım. Kasım'ın sonu gibi Sosyal platform aracılığı ile de Kodluyoruz'un Fibabanka destekli Java Bootcamp'i düzenlediğini gördüm ve bende neden olmasın diyerek başvuruda bulundum. Şu anda da bu noktaya kadar geldim.
 
+## İçindekiler
+
+- Proje Tanımı
+- Veri tabanı Tasarımı
+- Paket Yapısı
+- End Points
+- Senaryolar
+- Proje Kapsamında Yapılan Algoritmik Çözümlemeler
+- Alınabilecek Hatalar
+- Log Kayıtları
+- Kullanılan Teknolojiler
+- Proje Kapsamında Kullanılan Kaynaklar
+
 ## Proje Tanımı
 
 Online Bankacılık Sisteminin Backend'inin yazılması.
@@ -23,6 +36,46 @@ Online Bankacılık Sisteminin Backend'inin yazılması.
 
 Veritabanı diyagramında da görüldüğü gibi hesap türleri ve card çeşitleri  farklı veri tabanında tutuluyor. Kredi kartı müşteri ile ilişkilendirilmişken bank card müşteri ile ilişkilendirilmedi onun yerine bank card ve müşteri hesaplar ile ilişkilendirildi. Bu şekilde hesap bilgilerinden bank card ve müşteri bilgilerine ve müşteriden de hesap ve kredi kartı bilgilerine ulaşılabilecektir. Ayrıdan da hesap özet bilgilerini ve kartlar kullanılarak da alışveriş yapılabildiğini göstermek amacı ile de Shopping veri tabanı oluşturuldu.
 
+Paket  Yapısı: 
+
+![package](figures/packageStructure.png)
+
+## End Point
+
+- ### Bank Card Endpoints
+
+  ![bankcard](figures/bankcard_endpoints.png)
+
+- Credit Card Endpoints
+
+  ![creditcard](figures/creditcard_endpoints.png)
+
+- Customer Endpoints
+
+  ![customer](figures/customer_endpoints.png)
+
+- Demand Deposit Account Endpoints
+
+  ![+](figures/demanddepositaccount_endpoints.png)
+
+- Exchange Endpoints
+
+  ![exchange](figures/exchange_endpoints.png)
+
+- Extract of Account Endpoints
+
+  ![extractofaccount](figures/extractofaccount_endpoint.png)
+
+- Savings Account Endpoints
+
+  ![savingsaccount](figures/savingsaccount_endpoints.png)
+
+- Shopping Endpoints
+
+  ![shopping](figures/shopping_endpoints.png)
+
+  
+
 ## Senaryolar
 
 <img src="figures/images.jpg" alt="senaryo" style="zoom: 150%;" />
@@ -35,9 +88,9 @@ Uygulamamızda Birikim hesabı ve vadesiz mevduat hesapları oluşturulabiliyoru
 
 İlk olarak birikim hesabı banka müşterilerinin birikim yapmalarına olanak tanıyan aynı zamanda paraya faiz uygulayan bir hesap türü. Bu hesabın avantajlarından en güzeli ise paranızı biriktirmeye başladığınız an belirlenen vade sonunda ne kadar kazanacağınızı görebilirsiniz.
 
-- ### Faiz Hesaplama
+- ### Birikim Faiz Hesaplama
 
-<img src="figures/faiz.jpg" alt="faiz" style="zoom:33%;" />
+![percentage](figures/percentage.png)
 
 Faiz brüt olarak şu şekilde hesaplanır: Anapara * faiz oranı * vade (gün sayısı) / (36500)   (365 gün sayısı, 100 de faiz oranı yüzdesi)(Faiz oranı yıllık olarak alınıyor.)
 
@@ -57,35 +110,15 @@ Bu senaryomuz ise şu şekilde;
 
 ATM' den banka kartını kullanarak para çekerken aynı zamanda kart bilgilerini kullanarak online alışveriş yapılabildiğini düşünelim. Para çekme ve alışveriş işlemlerinin son kısmındayken yani tam para çekme ve ödeme işlemi yaparken müşterinin bu durum sonucunda doğru bir cevap alması gerekir. Çünkü işlem olarak para çekme yaptığımızda bakiye de belirli miktar para kalıyor ve aynı zamanda alışveriş için bakiye yetersiz kalabilir. Bu durum alışveriş işlemi içinde geçerli.  Bu işlemlerin eş zamanlı gerçekleşme olasılığı olabilir.
 
-Bu işlemler para çekme ve harcama durumu olduğu için bakiyenin çekilen ya da harcanan miktar çıkartılarak bakiye güncelleniyor. Bu işlem arka tarafta bir metot ile yapılıyor.  Para çekme ve alışveriş işleminde bakiye güncellemek için yani 2 durum için ortak kullanılan metoda ilk ulaşan işlemini yapacak ve bu işlemi yaparken diğer durum, işlem yapanı bekleyecek. Bu işlemde synchronized blok ile yapılıyor. Yani ilk gelen lock objesini kapıyor ve diğer işlem, ilk gelen işlemin bitmesini bekliyor.
+<img src="figures/withdrawandshopping.png" alt="withdrawandshopping" style="zoom:150%;" />
 
-Metoda hesap numarası ve para miktarı parametre olarak gönderiliyor. Hesap numarası ile veri tabanından güncel bakiye bilgisi çekiliyor. Bakiye bilgisi alındıktan sonra işlemi yapan durum ilk olarak bakiye kontrolü yapıyor eğer, bakiye çekilecek ya da alışveriş durumunda ödenecek miktardan az ise işlem yapılamayacak. Eğer bakiye kontrol durumu para çekme ya da alışveriş sonucunda ödenecek parayı karşılayabiliyor ise işlemler yapılabilecektir. İşlemi yapan durum yani para miktarı güncellendikten sonra yeni bakiye veri tabanına kaydediliyor. Bunun nedeni sırada bekleyen diğer işlemde güncel bakiye bilgisi çekerek işlemi yapacaktır. Aksi halde işlemler yapılır fakat bakiye istenilen sonucu vermez. 
 
-!NOT : Bu senaryo için 2 farklı örnek yapıldı uygulama içinde ilk örnek son işlemlerin yapıldığı yani tam para işleminin çekilme esnasında ve online alışveriş senaryosunda ödeme işlemi yapılacağı kısım düşünülerek yapıldı. İkinci senaryo ise para çekme ve online alışveriş yapılması yani ürünün ne olduğu ne kadar fiyat ile alınacağı gibi bir örnek hazırlandı.
 
-Örnek 
 
-Bakiye : 1000 
-
-ATM den çekilecek miktar : 500
-
-Online alışveriş sonucunda ödenecek tutar : 300,
-
-İlk olarak metoda ATM den para çekme işleminin ulaştığını varsayalım, 1000 > 500 den büyük yani para çekmek için yeterli bakiye var, Para çekiliyor ve güncel bakiye (1000-500 = 500)  veri tabanına kayıt ediliyor.
-
-Para çekme işleminden sonra, sırada bekleyen online alışveriş durumu işlemini yapacaktır. Bu işlem de aynı şekilde hesap numarasını kullanarak güncel bakiyeyi çekiyor. Bu bakiye ile de önceden bakiye güncellendiyse güncel bilgileri kullanmak amacı ile çekiliyor. Bu işlemden sonra online alışveriş de ödenecek tutar ile bakiye kontrolü yapılıyor. Bu kontrol sonucunda bakiye 500 > 300 olduğu için alışveriş işlemi de başarı ile işlemini yapacaktır. Bu işlem sonucunda güncel bakiye bilgisi (500 - 300 = 200) veri tabanına kayıt edilecektir.
-
-Bakiye : 200
-
-ATM den çekilecek miktar : 150
-
-Online alışveriş sonucunda ödenecek tutar : 100,
-
-Bu senaryoda da Online işlemin arka tarafta ilk olarak işlem yapacağını varsayalım. Online işlem önceki örnekteki ile aynı adımlar ile işlemi yapacak ve bakiye kontrol durumunda 200 > 100 olduğu için alışveriş işlemi yapılacak. Güncel bakiye bilgisi veri tabanında güncellenecek. Bu işlem bittikten sonra ATM den para çekme işlemi, metot da işlemi yaparken bakiye kontrolünde çekmek istediği tutar bakiye durumunu aştığı için yani 100 > 150 durumu olamayacağı için, Hesabınızda yeterli bakiye yoktur hatası alacak.
-
-Bu senaryoda işlemler sonucunda işlem yapılan hesap geri kullanıcıya gösteriliyor. (Bu senaryo 2 farklı anonim thread oluşturularak denendi ve çalıştı.)
 
 ![example](figures/example.png)
+
+
 
 ## Proje Kapsamında Yapılan Algoritmik Çözümlemeler
 
@@ -148,6 +181,8 @@ s
 Müşterinin farklı bir hesaba IBAN ile para gönderme işleminde IBAN' ı yanlış girmesi durumunda karşılaşacağı hata ise aşağıda gösterilmektedir.
 
 ![transferMoney](figures/moneyTransferBetweenDifferentAccount.png)
+
+
 
 ## Log Kayıtları
 

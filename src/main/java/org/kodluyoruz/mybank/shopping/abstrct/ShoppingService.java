@@ -11,9 +11,11 @@ public interface ShoppingService<T> {
 
     T doShoppingByCreditCard(long creditCardNo, int password, ShoppingDto shoppingDto);
 
-    T doShoppingByBankCard(long banckCardAccountNumber, long demandDepositAccountNumber, int password, ShoppingDto shoppingDto);
+    T doShoppingByBankCard(long bankCardAccountNumber, long demandDepositAccountNumber, int password, ShoppingDto shoppingDto);
 
-    T getShoppingByProductID(int shoppingID);
+    T getShoppingByProductID(int productID);
+
+    String delete(int productID);
 
     Page<T> getAllShopping(Pageable pageable);
 }

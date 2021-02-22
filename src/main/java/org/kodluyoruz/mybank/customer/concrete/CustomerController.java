@@ -78,7 +78,7 @@ public class CustomerController {
         }
     }
 
-    @DeleteMapping("/delete/{customerTC}")
+    @DeleteMapping("/{customerTC}/process")
     public String delete(@PathVariable("customerTC") long customerTC) {
         try {
             return customerService.delete(customerTC);

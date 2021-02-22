@@ -32,7 +32,8 @@ public enum Messages {
     public enum Info {
         NUMBERED_ACCOUNT_WAS_SUCCESSFULLY_DELETED(" numbered account was successfully deleted."),
         NAMED_CUSTOMER_CANCELED_BANK_CARD_USAGE(" named customer canceled bank card usage."),
-        NAMED_CUSTOMER_REGISTER_TOTALLY_DELETED(" named customer register totally deleted.");
+        NAMED_CUSTOMER_REGISTER_TOTALLY_DELETED(" named customer register totally deleted."),
+        NUMBER_PRODUCT_WAS_DELETED(" number product was deleted.");
 
         public final String message;
 

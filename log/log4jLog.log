@@ -1,45 +1,18 @@
-2021-02-21 14:15:52 ERROR CustomerServiceImpl:79 - Customer could not deleted.
-2021-02-21 14:15:52 ERROR CustomerController:86 - Customer could not deleted.
-2021-02-21 14:16:31 INFO  SavingsAccountController:63 - With draw money process will do.
-2021-02-21 14:16:31 ERROR SavingsAccountServiceImpl:168 - Not enough money in your account.
-2021-02-21 14:16:37 INFO  SavingsAccountController:63 - With draw money process will do.
-2021-02-21 14:17:45 INFO  DemandDepositAccountController:71 - With draw money process was did.
-2021-02-21 14:18:03 INFO  DemandDepositAccountController:71 - With draw money process was did.
-2021-02-21 14:18:03 ERROR DemandDepositAccountServiceImpl:129 - Card could not matched to your account.
-2021-02-21 14:18:24 INFO  DemandDepositAccountController:71 - With draw money process was did.
-2021-02-21 14:21:31 INFO  CustomerController:34 - Customer will create.
-2021-02-21 14:22:06 INFO  CustomerController:34 - Customer will create.
-2021-02-21 14:23:01 INFO  CreditCardController:43 - Credit card will create.
-2021-02-21 14:23:46 INFO  ExtractOfAccountController:31 - Extract of account create for credit card.
-2021-02-21 14:24:30 INFO  BankCardController:32 - Bank card will create.
-2021-02-21 14:26:12 INFO  SavingsAccountController:29 - Savings account will create.
-2021-02-21 14:26:16 INFO  SavingsAccountController:29 - Savings account will create.
-2021-02-21 14:26:40 INFO  SavingsAccountController:89 - 8500163960538730 will delete.
-2021-02-21 14:26:40 ERROR SavingsAccountServiceImpl:97 - Account could not deleted.Because have money in your account.
-2021-02-21 14:26:40 ERROR SavingsAccountController:92 - Account could not deleted.Because have money in your account.
-2021-02-21 14:27:28 INFO  SavingsAccountController:63 - With draw money process will do.
-2021-02-21 14:27:53 INFO  SavingsAccountController:89 - 8500163960538730 will delete.
-2021-02-21 14:29:33 INFO  DemandDepositAccountController:37 - Account was created.
-2021-02-21 14:29:33 INFO  DemandDepositAccountServiceImpl:70 - 94556701125 customer was created.
-2021-02-21 14:29:45 INFO  DemandDepositAccountController:37 - Account was created.
-2021-02-21 14:29:45 INFO  DemandDepositAccountServiceImpl:70 - 94556701125 customer was created.
-2021-02-21 14:30:45 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 300 Balance Thread 2 : 14700
-2021-02-21 14:30:45 INFO  DemandDepositAccountServiceImpl:222 - Money : 250 Balance Thread 1 : 14450
-2021-02-21 14:31:00 INFO  DemandDepositAccountServiceImpl:222 - Money : 250 Balance Thread 1 : 14200
-2021-02-21 14:31:00 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 300 Balance Thread 2 : 13900
-2021-02-21 14:32:30 INFO  DemandDepositAccountController:71 - With draw money process was did.
-2021-02-21 14:32:44 INFO  DemandDepositAccountController:106 - 8500912490990093 number will deleted.
-2021-02-21 14:32:44 ERROR DemandDepositAccountController:112 - could not execute statement; SQL [n/a]; constraint [null]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
-2021-02-21 14:36:28 INFO  DemandDepositAccountController:106 - 8500912490990093 number will deleted.
-2021-02-21 14:37:46 INFO  DemandDepositAccountController:37 - Account was created.
-2021-02-21 14:37:47 INFO  DemandDepositAccountServiceImpl:70 - 94556701125 customer was created.
-2021-02-21 19:26:00 INFO  CustomerController:34 - Customer will create.
-2021-02-21 19:29:14 INFO  SavingsAccountController:35 - 8500714841159360 will get
-2021-02-21 19:29:21 INFO  SavingsAccountController:35 - 8500714841159360 will get
-2021-02-21 19:29:35 INFO  DemandDepositAccountController:43 - 8500831863100394 account was got.
-2021-02-21 19:29:43 INFO  DemandDepositAccountController:43 - 8500831863100394 account was got.
-2021-02-21 19:31:43 INFO  CustomerController:34 - Customer will create.
-2021-02-21 19:42:16 INFO  DemandDepositAccountServiceImpl:222 - Money : 60 Balance Thread 1 : 10058
-2021-02-21 19:42:16 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 58 Balance Thread 2 : 10000
-2021-02-21 19:42:34 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 40 Balance Thread 2 : 9960
-2021-02-21 19:42:34 INFO  DemandDepositAccountServiceImpl:222 - Money : 60 Balance Thread 1 : 9900
+2021-02-21 21:00:37 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 300 Balance Thread 2 : 8700
+2021-02-21 21:00:38 INFO  DemandDepositAccountServiceImpl:222 - Money : 250 Balance Thread 1 : 8450
+2021-02-21 21:01:34 INFO  DemandDepositAccountServiceImpl:222 - Money : 250 Balance Thread 1 : 8200
+2021-02-21 21:01:34 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 300 Balance Thread 2 : 7900
+2021-02-21 21:02:11 INFO  DemandDepositAccountServiceImpl:222 - Money : 3500 Balance Thread 1 : 4400
+2021-02-21 21:02:11 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-21 21:02:11 ERROR DemandDepositAccountServiceImpl:232 - 500 INTERNAL_SERVER_ERROR "Not enough money in your account."
+2021-02-22 13:12:04 INFO  DemandDepositAccountController:143 - Money : 200 Balance Thread 1 : 4200
+2021-02-22 13:12:05 INFO  DemandDepositAccountController:154 - Shopping Money : 250 Balance Thread 2 : 3950
+2021-02-22 13:13:31 ERROR CustomerServiceImpl:79 - Customer could not deleted.
+2021-02-22 13:13:31 ERROR CustomerController:86 - Customer could not deleted.
+2021-02-22 14:39:25 INFO  DemandDepositAccountServiceImpl:222 - Money : 250 Balance Thread 1 : 3700
+2021-02-22 14:39:25 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 200 Balance Thread 2 : 3500
+2021-02-22 14:39:50 INFO  DemandDepositAccountServiceImpl:222 - Money : 2000 Balance Thread 1 : 1500
+2021-02-22 14:39:50 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-22 14:39:50 ERROR DemandDepositAccountServiceImpl:232 - 500 INTERNAL_SERVER_ERROR "Not enough money in your account."
+2021-02-22 14:40:17 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 600 Balance Thread 2 : 900
+2021-02-22 14:40:17 INFO  DemandDepositAccountServiceImpl:222 - Money : 900 Balance Thread 1 : 0
