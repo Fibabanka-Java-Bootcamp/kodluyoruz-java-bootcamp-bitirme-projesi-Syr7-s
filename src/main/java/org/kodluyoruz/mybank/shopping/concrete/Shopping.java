@@ -31,7 +31,7 @@ public class Shopping {
     @JoinColumn(name = "creditCard_no")
     private CreditCard creditCard;
 
-    public ShoppingDto toShoppingDto(){
+    public ShoppingDto toShoppingDto() {
         return ShoppingDto.builder()
                 .productID(this.productID)
                 .productType(this.productType)
@@ -42,7 +42,6 @@ public class Shopping {
                 .creditCard(this.creditCard)
                 .build();
     }
-
 
 
 }

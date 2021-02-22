@@ -20,7 +20,7 @@ public class CreditCardDto {
     private Currency currency;
     private Customer customer;
 
-    public CreditCard toCreditCard(){
+    public CreditCard toCreditCard() {
         return CreditCard.builder()
                 .cardAccountNumber(this.creditCardAccountNumber)
                 .cardNameSurname(this.cardNameSurname)

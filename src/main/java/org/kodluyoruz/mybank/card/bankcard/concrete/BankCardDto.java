@@ -14,7 +14,7 @@ public class BankCardDto {
     private LocalDate bankCardExpirationDate;
     private String securityCode;
 
-    public BankCard toBankCard(){
+    public BankCard toBankCard() {
         return BankCard.builder()
                 .bankCardAccountNumber(this.bankCardAccountNumber)
                 .bankCardNameSurname(this.bankCardNameSurname)

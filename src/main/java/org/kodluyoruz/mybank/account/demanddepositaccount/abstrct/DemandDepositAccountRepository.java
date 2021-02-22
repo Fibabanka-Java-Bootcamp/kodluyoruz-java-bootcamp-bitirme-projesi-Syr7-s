@@ -12,5 +12,6 @@ import java.util.Optional;
 @Repository
 public interface DemandDepositAccountRepository extends CrudRepository<DemandDepositAccount, Long> {
     Page<DemandDepositAccount> findAll(Pageable pageable);
+
     DemandDepositAccount findDemandDepositAccountByDemandDepositAccountIBAN(String accountIBAN);
 }

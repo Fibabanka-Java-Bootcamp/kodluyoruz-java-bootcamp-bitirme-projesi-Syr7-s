@@ -17,7 +17,7 @@ public class CustomerDto {
     private String customerAddress;
     private LocalDate customerBirthDate;
 
-    public Customer toCustomer(){
+    public Customer toCustomer() {
         return Customer.builder()
                 .customerTC(this.customerTC)
                 .customerName(this.customerName)

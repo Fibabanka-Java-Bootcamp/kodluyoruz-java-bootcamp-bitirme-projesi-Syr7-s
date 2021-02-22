@@ -11,7 +11,7 @@ import java.time.Instant;
 
 @Component
 public class ResponseTimeLogger implements HandlerInterceptor {
-    private static ThreadLocal<Instant> instant =new ThreadLocal<>();
+    private static ThreadLocal<Instant> instant = new ThreadLocal<>();
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

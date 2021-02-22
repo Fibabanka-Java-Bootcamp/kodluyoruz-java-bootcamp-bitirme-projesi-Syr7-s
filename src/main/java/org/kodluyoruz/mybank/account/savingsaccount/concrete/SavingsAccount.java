@@ -32,14 +32,15 @@ public class SavingsAccount {
     private double savingsAccountInterestRate;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name="customer_id")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "bankcard__no")
     private BankCard bankCard;
-    public SavingsAccountDto toSavingsAccountDto(){
+
+    public SavingsAccountDto toSavingsAccountDto() {
         return SavingsAccountDto.builder()
                 .savingsAccountNumber(this.savingsAccountNumber)
                 .savingsAccountIBAN(this.savingsAccountIBAN)

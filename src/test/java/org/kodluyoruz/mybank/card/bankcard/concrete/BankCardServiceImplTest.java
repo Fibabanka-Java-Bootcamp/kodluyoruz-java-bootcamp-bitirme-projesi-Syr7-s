@@ -27,20 +27,22 @@ class BankCardServiceImplTest {
 
     BankCard bankCard = new BankCard();
     Customer customer;
+
     @BeforeEach
-    void setUp(){
+    void setUp() {
         restTemplate = new RestTemplate();
         customer = customerService.getCustomerById(94556701125L);
     }
+
     @Test
     void create() {
         bankCard.setBankCardAccountNumber(Long.parseLong(CardAccountNumber.generateCardAccountNumber.get()));
-        bankCard.setBankCardNameSurname(customer.getCustomerName()+" "+customer.getCustomerLastname());
+        bankCard.setBankCardNameSurname(customer.getCustomerName() + " " + customer.getCustomerLastname());
         bankCard.setBankCardPassword(1996);
-        bankCard.setBankCardExpirationDate(LocalDate.of(2020,2,10));
+        bankCard.setBankCardExpirationDate(LocalDate.of(2020, 2, 10));
         bankCard.setBankCardSecurityCode(SecurityCodeGenerate.securityCode.get());
         BankCard newBankCard = bankCardRepository.save(bankCard);
-        Assertions.assertEquals(newBankCard.getBankCardNameSurname(),bankCard.getBankCardNameSurname());
+        Assertions.assertEquals(newBankCard.getBankCardNameSurname(), bankCard.getBankCardNameSurname());
 
     }
 }

@@ -35,10 +35,10 @@ public class ExtractOfAccount {
 
     @OneToOne
     @JsonIgnore
-    @JoinColumn(name = "creditCardNo",referencedColumnName = "cardAccountNumber")
+    @JoinColumn(name = "creditCardNo", referencedColumnName = "cardAccountNumber")
     private CreditCard creditCard;
 
-    public ExtractOfAccountDto toExtractOfAccountDto(){
+    public ExtractOfAccountDto toExtractOfAccountDto() {
         return ExtractOfAccountDto.builder()
                 .id(this.id)
                 .termDebt(this.termDebt)

@@ -5,7 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
-public interface SavingsAccountRepository extends CrudRepository<SavingsAccount,Long> {
+public interface SavingsAccountRepository extends CrudRepository<SavingsAccount, Long> {
     Page<SavingsAccount> findAll(Pageable pageable);
+
     SavingsAccount findSavingsAccountBySavingsAccountIBAN(String accountIBAN);
 }

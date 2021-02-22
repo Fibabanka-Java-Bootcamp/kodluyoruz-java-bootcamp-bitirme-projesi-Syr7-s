@@ -23,7 +23,7 @@ public class SavingsAccountDto {
     private Customer customer;
     private BankCard bankCard;
 
-    public SavingsAccount toSavingsAccount(){
+    public SavingsAccount toSavingsAccount() {
         return SavingsAccount.builder()
                 .savingsAccountNumber(this.savingsAccountNumber)
                 .savingsAccountIBAN(this.savingsAccountIBAN)

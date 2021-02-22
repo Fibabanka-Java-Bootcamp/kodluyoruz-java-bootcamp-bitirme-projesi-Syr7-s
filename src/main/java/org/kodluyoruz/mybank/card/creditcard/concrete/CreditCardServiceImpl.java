@@ -58,7 +58,7 @@ public class CreditCardServiceImpl implements CreditCardService<CreditCard> {
         CreditCard creditCard = getCreditCard(accountNumber);
         if (creditCard.getCardDebt() == 0) {
             creditCardRepository.delete(creditCard);
-            return creditCard.getCardNameSurname()  + Messages.Info.NAMED_CUSTOMER_CANCELED_BANK_CARD_USAGE.message;
+            return creditCard.getCardNameSurname() + Messages.Info.NAMED_CUSTOMER_CANCELED_BANK_CARD_USAGE.message;
         } else {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Messages.Error.CARD_COULD_NOT_DELETED.message);
         }

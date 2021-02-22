@@ -24,7 +24,7 @@ public class ExtractOfAccountDto {
     private LocalDate paymentDueTo;
     private CreditCard creditCard;
 
-    public ExtractOfAccount toExtractOfAccount(){
+    public ExtractOfAccount toExtractOfAccount() {
         return ExtractOfAccount.builder()
                 .id(this.id)
                 .termDebt(this.termDebt)

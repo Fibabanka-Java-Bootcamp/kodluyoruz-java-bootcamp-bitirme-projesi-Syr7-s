@@ -78,7 +78,7 @@ public class CreditCardController {
     @ResponseStatus(HttpStatus.CREATED)
     public CreditCardDto payCreditCardDebt(@PathVariable("creditCardNO") long creditCardNO,
                                            @Min(value = 0) @RequestParam("password") int password,
-                                           @Min(value = 0)@RequestParam("payMoney") int payMoney,
+                                           @Min(value = 0) @RequestParam("payMoney") int payMoney,
                                            @RequestParam("minimumPayment") double minimumPayment) {
         log.info("Debt will payment with credit card where in ATM.");
         return creditCardService.payCreditCardDebt(creditCardNO, password, payMoney, minimumPayment).toCreditCardDto();
@@ -87,8 +87,8 @@ public class CreditCardController {
     @PutMapping("/withoutCard/{creditCardNO}")
     @ResponseStatus(HttpStatus.CREATED)
     public CreditCardDto debtPaymentWithoutCreditCard(@PathVariable("creditCardNO") long creditCardNO,
-                                                      @Min(value = 0)@RequestParam("payMoney") int payMoney,
-                                                      @Min(value = 0)@RequestParam("minimumPayment") double minimumPayment) {
+                                                      @Min(value = 0) @RequestParam("payMoney") int payMoney,
+                                                      @Min(value = 0) @RequestParam("minimumPayment") double minimumPayment) {
         log.info("Debt will payment without credit card in ATM.");
         return creditCardService.debtPaymentWithoutCreditCard(creditCardNO, payMoney, minimumPayment).toCreditCardDto();
     }

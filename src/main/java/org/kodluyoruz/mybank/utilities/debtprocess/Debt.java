@@ -4,9 +4,10 @@ import org.kodluyoruz.mybank.card.creditcard.concrete.CreditCard;
 import org.kodluyoruz.mybank.extractofaccount.concrete.ExtractOfAccount;
 
 public class Debt {
-    private Debt(){
+    private Debt() {
 
     }
+
     public static void debtProcess(int payMoney, double minimumPayment, CreditCard creditCard, ExtractOfAccount extractOfAccount) {
         if (payMoney == 0) {
             extracted(minimumPayment, extractOfAccount);

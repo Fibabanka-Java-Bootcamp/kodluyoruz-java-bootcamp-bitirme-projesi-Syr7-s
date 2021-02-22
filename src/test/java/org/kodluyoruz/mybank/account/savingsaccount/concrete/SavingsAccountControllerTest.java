@@ -28,6 +28,6 @@ class SavingsAccountControllerTest {
         SavingsAccount savingsAccount = restTemplate
                 .getForObject("http://localhost:8080/api/v1/savings/8500714841159360", SavingsAccount.class);
         assert savingsAccount != null;
-        assertEquals(10000,savingsAccount.getSavingsAccountBalance());
+        assertEquals(10000, savingsAccount.getSavingsAccountBalance());
     }
 }

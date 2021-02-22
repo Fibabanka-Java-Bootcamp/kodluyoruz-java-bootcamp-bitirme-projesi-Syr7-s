@@ -58,11 +58,12 @@ class SavingsAccountServiceImplTest {
                 .getByAccountIban(savingsAccount.getSavingsAccountIBAN())
                 .getSavingsAccountCurrency());
     }
+
     @Test
-    void theBalanceLowerThanTwentyThousand(){
+    void theBalanceLowerThanTwentyThousand() {
         Mockito.when(savingsAccountRepository.findSavingsAccountBySavingsAccountIBAN(savingsAccount.getSavingsAccountIBAN())).thenReturn(savingsAccount);
         assertTrue(savingsAccountService
                 .getByAccountIban(savingsAccount.getSavingsAccountIBAN())
-                .getSavingsAccountBalance()<20000);
+                .getSavingsAccountBalance() < 20000);
     }
 }

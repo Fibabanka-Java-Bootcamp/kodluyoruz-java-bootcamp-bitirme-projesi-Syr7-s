@@ -23,7 +23,7 @@ public class CreditCard {
     private long cardAccountNumber;
     private String cardNameSurname;
     private int cardPassword;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate expirationDate;
     private String securityCode;
     private int cardLimit;
@@ -39,11 +39,11 @@ public class CreditCard {
     @JsonIgnore
     private Set<Shopping> shoppings;
 
-    @OneToOne(mappedBy = "creditCard",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "creditCard", cascade = CascadeType.ALL)
     @JsonIgnore
     private ExtractOfAccount extractOfAccount;
 
-    public CreditCardDto toCreditCardDto(){
+    public CreditCardDto toCreditCardDto() {
         return CreditCardDto.builder()
                 .creditCardAccountNumber(this.cardAccountNumber)
                 .cardNameSurname(this.cardNameSurname)

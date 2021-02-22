@@ -10,13 +10,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 class CustomerRepositoryTest {
     @Autowired
     CustomerRepository customerRepository;
+
     @Test
     void findCustomerByCustomerTC() {
         Customer customer = customerRepository.findCustomerByCustomerTC(94556701125L);
-        Assertions.assertEquals("Isa",customer.getCustomerName());
+        Assertions.assertEquals("Isa", customer.getCustomerName());
     }
+
     @Test
-    void deleteCustomer(){
+    void deleteCustomer() {
         Customer customer = customerRepository.findCustomerByCustomerTC(40452857809L);
         customerRepository.delete(customer);
         customer = customerRepository.findCustomerByCustomerTC(40452857809L);

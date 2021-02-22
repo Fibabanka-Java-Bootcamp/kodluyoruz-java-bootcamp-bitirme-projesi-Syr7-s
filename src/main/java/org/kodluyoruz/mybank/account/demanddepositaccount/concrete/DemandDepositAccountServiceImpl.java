@@ -229,7 +229,7 @@ public class DemandDepositAccountServiceImpl implements DemandDepositAccountServ
         try {
             log.info("Shopping : " + shoppingMoney + " Balance Thread 2 : " + updateBalanceFromAccount(accountNumber, shoppingMoney).getDemandDepositAccountBalance());
         } catch (Exception exception) {
-            log.error("( Shopping Money : "+shoppingMoney+" ) "+exception.getMessage());
+            log.error("( Shopping Money : " + shoppingMoney + " ) " + exception.getMessage());
         }
     }
 

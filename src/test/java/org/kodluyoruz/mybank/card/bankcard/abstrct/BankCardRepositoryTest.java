@@ -12,9 +12,9 @@ class BankCardRepositoryTest {
     BankCardRepository bankCardRepository;
 
     @Test
-    void findBankCardByBankCardAccountNumber(){
+    void findBankCardByBankCardAccountNumber() {
         BankCard bankCard = bankCardRepository.findBankCardByBankCardAccountNumber(8573593428595747L);
-        Assertions.assertEquals("Isa SAYAR",bankCard.getBankCardNameSurname());
+        Assertions.assertEquals("Isa SAYAR", bankCard.getBankCardNameSurname());
     }
 
 }

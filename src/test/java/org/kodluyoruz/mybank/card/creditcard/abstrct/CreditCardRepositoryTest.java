@@ -11,14 +11,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 class CreditCardRepositoryTest {
     @Autowired
     CreditCardRepository creditCardRepository;
+
     @Test
-    void findCreditCardByCardAccountNumber(){
+    void findCreditCardByCardAccountNumber() {
         CreditCard creditCard = creditCardRepository.findCreditCardByCardAccountNumber(8525028619666010L);
-        Assertions.assertEquals("Isa SAYAR",creditCard.getCardNameSurname());
+        Assertions.assertEquals("Isa SAYAR", creditCard.getCardNameSurname());
     }
+
     @Test
-    void isCreditCardLimitTenThousandControl(){
+    void isCreditCardLimitTenThousandControl() {
         CreditCard creditCard = creditCardRepository.findCreditCardByCardAccountNumber(8525028619666010L);
-        Assertions.assertEquals(10000,creditCard.getCardLimit());
+        Assertions.assertEquals(10000, creditCard.getCardLimit());
     }
 }
