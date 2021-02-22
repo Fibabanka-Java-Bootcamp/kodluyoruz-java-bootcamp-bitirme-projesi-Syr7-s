@@ -142,7 +142,7 @@ public class DemandDepositAccountController {
             Thread.sleep(time);
             log.info("Money : " + money + " Balance Thread 1 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, money).getDemandDepositAccountBalance());
         } catch (Exception exception) {
-            log.error("With draw money : " + exception.getMessage());
+            log.error("( With draw money : " + money + " ) " + exception.getMessage());
         }
     }
 
@@ -154,10 +154,10 @@ public class DemandDepositAccountController {
                 log.info("Shopping Money : " + (int) moneyProcess + " Balance Thread 2 : " + demandDepositAccountService.updateBalanceFromAccount(accountNumber, (int) moneyProcess).getDemandDepositAccountBalance());
                 shoppingService.create(shoppingDto.toShopping());
             } else {
-                log.error("Shopping Money Thread " + Messages.Error.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED.message);
+                log.error("Shopping  " + Messages.Error.ACCOUNT_NUMBER_AND_PASSWORD_COULD_NOT_MATCHED.message);
             }
         } catch (Exception exception) {
-            log.error("Shopping Money Thread " + exception.getMessage());
+            log.error("( Shopping Money : " + shoppingDto.getProductPrice() + " ) " + exception.getMessage());
         }
     }
 
