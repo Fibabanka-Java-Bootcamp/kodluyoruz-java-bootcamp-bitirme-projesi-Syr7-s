@@ -96,3 +96,9 @@
 2021-02-22 19:52:54 ERROR CustomerController:52 - 86740814846 number person could not found.
 2021-02-22 19:55:07 ERROR ShoppingServiceImpl:84 - Product could not found.
 2021-02-22 19:55:07 ERROR ShoppingController:75 - 404 NOT_FOUND "Product could not found."
+2021-02-22 20:12:24 INFO  BankCardController:60 - Bank card will delete.
+2021-02-22 20:12:35 INFO  BankCardController:46 - 8596228911755869 bank card will get.
+2021-02-22 20:12:35 ERROR BankCardServiceImpl:50 - Card could not deleted.
+2021-02-22 20:12:35 ERROR BankCardController:49 - Card could not created.
+2021-02-22 20:14:19 INFO  BankCardController:60 - Bank card will delete.
+2021-02-22 20:14:19 ERROR BankCardController:66 - Server error.
