@@ -174,7 +174,7 @@ Müşterinin kredi kartı ile alışveriş yaptığını ve müşterinin limiti 
 
 ![creditCardLimit](figures/creditCardLimit.png)
 
-s	
+
 
 ### Senaryo 2
 
@@ -189,6 +189,8 @@ Müşterinin farklı bir hesaba IBAN ile para gönderme işleminde IBAN' ı yanl
 Uygulama içerisinde yapılan işlemleri ve kullanıcının karşılaştığı hataları log4j kullanarak kayıt altına almaktayım.
 
 ![logRegister](figures/logRegister.png)
+
+
 
 ## Kullanılan Teknolojiler
 
