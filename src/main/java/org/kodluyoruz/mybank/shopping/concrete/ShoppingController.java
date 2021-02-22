@@ -60,7 +60,7 @@ public class ShoppingController {
         }
     }
 
-    @GetMapping(value = "/all/shoppings", params = {"page", "size"})
+    @GetMapping(value = "/shoppings", params = {"page", "size"})
     public List<ShoppingDto> getAllShopping(@Min(value = 0) @RequestParam("page") int page, @Min(value = 1) @RequestParam("size") int size) {
         return shoppingService.getAllShopping(PageRequest.of(page, size)).stream()
                 .map(Shopping::toShoppingDto)

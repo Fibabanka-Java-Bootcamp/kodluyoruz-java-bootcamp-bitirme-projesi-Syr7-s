@@ -49,3 +49,50 @@
 2021-02-22 15:44:32 INFO  DemandDepositAccountController:154 - Shopping Money : 0 Balance Thread 2 : 21850
 2021-02-22 15:44:54 INFO  DemandDepositAccountController:154 - Shopping Money : 250 Balance Thread 2 : 21600
 2021-02-22 15:44:54 INFO  DemandDepositAccountController:143 - Money : 400 Balance Thread 1 : 21200
+2021-02-22 15:50:30 INFO  SavingsAccountController:53 - Deposit Money process will do.
+2021-02-22 15:51:29 INFO  SavingsAccountController:63 - With draw money process will do.
+2021-02-22 15:53:53 INFO  DemandDepositAccountController:80 - Money transfer process was did.
+2021-02-22 15:54:55 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 600 Balance Thread 2 : 19400
+2021-02-22 15:54:55 INFO  DemandDepositAccountServiceImpl:222 - Money : 400 Balance Thread 1 : 19000
+2021-02-22 19:19:51 INFO  CustomerController:34 - Customer will create.
+2021-02-22 19:20:56 INFO  BankCardController:32 - Bank card will create.
+2021-02-22 19:22:08 INFO  DemandDepositAccountController:37 - Account was created.
+2021-02-22 19:22:08 INFO  DemandDepositAccountServiceImpl:70 - 86740814846 customer was created.
+2021-02-22 19:22:15 INFO  DemandDepositAccountController:37 - Account was created.
+2021-02-22 19:22:15 INFO  DemandDepositAccountServiceImpl:70 - 86740814846 customer was created.
+2021-02-22 19:25:43 INFO  DemandDepositAccountController:80 - Money transfer process was did.
+2021-02-22 19:27:42 INFO  SavingsAccountController:29 - Savings account will create.
+2021-02-22 19:30:23 INFO  CreditCardController:43 - Credit card will create.
+2021-02-22 19:31:42 INFO  ExtractOfAccountController:31 - Extract of account create for credit card.
+2021-02-22 19:32:38 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-22 19:34:08 INFO  SavingsAccountController:35 - 8500525789919118 will get
+2021-02-22 19:36:10 INFO  SavingsAccountController:73 - Debt will payment with savings account.
+2021-02-22 19:36:34 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-22 19:37:15 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-22 19:39:58 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-22 19:40:54 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-22 19:42:46 ERROR ShoppingServiceImpl:55 - Credit card limit over.
+2021-02-22 19:43:20 INFO  CreditCardController:83 - Debt will payment with credit card where in ATM.
+2021-02-22 19:43:35 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-22 19:44:38 INFO  DemandDepositAccountServiceImpl:222 - Money : 500 Balance Thread 1 : 7500
+2021-02-22 19:44:38 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 300 Balance Thread 2 : 7200
+2021-02-22 19:44:53 INFO  DemandDepositAccountServiceImpl:222 - Money : 500 Balance Thread 1 : 6700
+2021-02-22 19:44:53 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 300 Balance Thread 2 : 6400
+2021-02-22 19:45:00 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 300 Balance Thread 2 : 6100
+2021-02-22 19:45:00 INFO  DemandDepositAccountServiceImpl:222 - Money : 500 Balance Thread 1 : 5600
+2021-02-22 19:46:33 INFO  DemandDepositAccountController:143 - Money : 250 Balance Thread 1 : 5350
+2021-02-22 19:46:34 INFO  DemandDepositAccountController:154 - Shopping Money : 291 Balance Thread 2 : 5059
+2021-02-22 19:46:52 INFO  DemandDepositAccountController:143 - Money : 250 Balance Thread 1 : 4809
+2021-02-22 19:46:52 INFO  DemandDepositAccountController:154 - Shopping Money : 291 Balance Thread 2 : 4518
+2021-02-22 19:47:10 INFO  DemandDepositAccountController:143 - Money : 300 Balance Thread 1 : 4218
+2021-02-22 19:47:10 INFO  DemandDepositAccountController:154 - Shopping Money : 116 Balance Thread 2 : 4102
+2021-02-22 19:47:32 INFO  DemandDepositAccountController:143 - Money : 450 Balance Thread 1 : 3652
+2021-02-22 19:47:32 INFO  DemandDepositAccountController:154 - Shopping Money : 58 Balance Thread 2 : 3594
+2021-02-22 19:47:55 INFO  DemandDepositAccountController:154 - Shopping Money : 500 Balance Thread 2 : 3094
+2021-02-22 19:47:55 INFO  DemandDepositAccountController:143 - Money : 450 Balance Thread 1 : 2644
+2021-02-22 19:49:14 INFO  DemandDepositAccountController:71 - With draw money process was did.
+2021-02-22 19:49:42 INFO  DemandDepositAccountController:71 - With draw money process was did.
+2021-02-22 19:51:22 INFO  SavingsAccountController:63 - With draw money process will do.
+2021-02-22 19:52:54 ERROR CustomerController:52 - 86740814846 number person could not found.
+2021-02-22 19:55:07 ERROR ShoppingServiceImpl:84 - Product could not found.
+2021-02-22 19:55:07 ERROR ShoppingController:75 - 404 NOT_FOUND "Product could not found."
