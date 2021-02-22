@@ -36,7 +36,9 @@ Online Bankacılık Sisteminin Backend'inin yazılması.
 
 Veritabanı diyagramında da görüldüğü gibi hesap türleri ve card çeşitleri  farklı veri tabanında tutuluyor. Kredi kartı müşteri ile ilişkilendirilmişken bank card müşteri ile ilişkilendirilmedi onun yerine bank card ve müşteri hesaplar ile ilişkilendirildi. Bu şekilde hesap bilgilerinden bank card ve müşteri bilgilerine ve müşteriden de hesap ve kredi kartı bilgilerine ulaşılabilecektir. Ayrıdan da hesap özet bilgilerini ve kartlar kullanılarak da alışveriş yapılabildiğini göstermek amacı ile de Shopping veri tabanı oluşturuldu.
 
-Paket  Yapısı: 
+## Paket  Yapısı
+
+ 
 
 ![package](figures/packageStructure.png)
 
@@ -124,7 +126,7 @@ ATM' den banka kartını kullanarak para çekerken aynı zamanda kart bilgilerin
 
 ### Senaryo 1
 
-- Vadesiz mevduat hesaplarında parası bulunan ve kredi kartı borcu bulunan müşterilerin sistemden silinme işlemi yapılamayacaktır. (Fakat müşteri dilerse hesaplarını kapatabilir ya da kredi kartı kullanımını bırakabilir (burda da yukarıdaki şartları yerine getirmeli) fakat banka dan tamamen ilişiğini kesmek için belirtilen koşulu sağlaması gerekir.)
+- Vadesiz mevduat hesaplarında parası bulunan ve kredi kartı borcu bulunan müşterilerin sistemden silinme işlemi yapılamayacaktır. (Fakat müşteri dilerse hesaplarını kapatabilir ya da kredi kartı kullanımını bırakabilir (burada da yukarıdaki şartları yerine getirmeli) fakat banka dan tamamen ilişiğini kesmek için belirtilen koşulu sağlaması gerekir.)
 - Müşteri üzerinden vadesiz mevduat hesabındaki para miktarı bir listeye atanır. 
 - Müşteri üzerinden birikim hesabındaki para miktarı bir listeye atanır.
 - Müşteri üzerinden kredi kartındaki borç bilgisi bir listeye atanır.
