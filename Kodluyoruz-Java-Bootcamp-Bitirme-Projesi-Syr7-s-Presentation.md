@@ -126,7 +126,7 @@ ATM' den banka kartını kullanarak para çekerken aynı zamanda kart bilgilerin
 
 ### Senaryo 1
 
-- Vadesiz mevduat hesaplarında parası bulunan ve kredi kartı borcu bulunan müşterilerin sistemden silinme işlemi yapılamayacaktır. (Fakat müşteri dilerse hesaplarını kapatabilir ya da kredi kartı kullanımını bırakabilir (burada da yukarıdaki şartları yerine getirmeli) fakat banka dan tamamen ilişiğini kesmek için belirtilen koşulu sağlaması gerekir.)
+- Vadesiz mevduat hesaplarında, birikim hesaplarında parası bulunan ve kredi kartı borcu bulunan müşterilerin sistemden silinme işlemi yapılamayacaktır. (Fakat müşteri dilerse hesaplarını kapatabilir ya da kredi kartı kullanımını bırakabilir (burada da yukarıdaki şartları yerine getirmeli) fakat banka dan tamamen ilişiğini kesmek için belirtilen koşulu sağlaması gerekir.)
 - Müşteri üzerinden vadesiz mevduat hesabındaki para miktarı bir listeye atanır. 
 - Müşteri üzerinden birikim hesabındaki para miktarı bir listeye atanır.
 - Müşteri üzerinden kredi kartındaki borç bilgisi bir listeye atanır.
