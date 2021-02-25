@@ -52,8 +52,8 @@ public class CreditCardController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{creditCardNo}")
-    public ResponseEntity<CreditCardDto> get(@PathVariable("creditCardNo") long creditCardNo) {
+    @GetMapping("/{creditCardNO}")
+    public ResponseEntity<CreditCardDto> get(@PathVariable("creditCardNO") long creditCardNo) {
         try {
             log.info("Credit card info will get.");
             return ResponseEntity.ok(creditCardService.getCreditCard(creditCardNo).toCreditCardDto());

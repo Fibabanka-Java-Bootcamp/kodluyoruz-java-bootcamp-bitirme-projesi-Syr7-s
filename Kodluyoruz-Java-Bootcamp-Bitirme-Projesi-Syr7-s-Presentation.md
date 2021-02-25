@@ -208,7 +208,7 @@ Uygulama içerisinde yapılan işlemleri ve kullanıcının karşılaştığı h
 
 - [Spring](https://spring.io/projects/spring-boot)
 
-- [TutorialPoints](https://www.tutorialspoint.com/spring/index.htm)
+- [TutorialsPoints](https://www.tutorialspoint.com/spring/index.htm)
 
 - [Mockito](https://site.mockito.org/)
 
