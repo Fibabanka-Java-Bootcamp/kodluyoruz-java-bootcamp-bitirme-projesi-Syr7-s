@@ -1,0 +1,70 @@
+2021-02-26 15:07:18 INFO  CustomerController:34 - Customer will create.
+2021-02-26 15:09:01 INFO  BankCardController:32 - Bank card will create.
+2021-02-26 15:10:34 INFO  DemandDepositAccountController:37 - Account was created.
+2021-02-26 15:10:34 INFO  DemandDepositAccountServiceImpl:70 - 37145213325 customer was created.
+2021-02-26 15:11:27 INFO  SavingsAccountController:29 - Savings account will create.
+2021-02-26 15:15:05 INFO  CreditCardController:43 - Credit card will create.
+2021-02-26 15:15:59 ERROR ExtractOfAccountController:35 - Card password could incorrect.
+2021-02-26 15:16:09 ERROR CreditCardServiceImpl:46 - Card could not created.
+2021-02-26 15:16:15 INFO  ExtractOfAccountController:31 - Extract of account create for credit card.
+2021-02-26 15:17:16 ERROR CreditCardServiceImpl:46 - Card could not created.
+2021-02-26 15:17:25 ERROR ShoppingServiceImpl:59 - Card password could incorrect.
+2021-02-26 15:18:13 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-26 15:18:30 ERROR ShoppingServiceImpl:55 - Credit card limit over.
+2021-02-26 15:18:48 INFO  ExtractOfAccountController:31 - Extract of account create for credit card.
+2021-02-26 15:21:19 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-26 15:21:25 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-26 15:25:25 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-26 15:26:05 INFO  ExtractOfAccountController:43 - extract of account info will get.
+2021-02-26 15:27:02 INFO  DemandDepositAccountServiceImpl:222 - Money : 300 Balance Thread 1 : 8054
+2021-02-26 15:27:02 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 54 Balance Thread 2 : 8000
+2021-02-26 15:27:27 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 300 Balance Thread 2 : 7700
+2021-02-26 15:27:27 INFO  DemandDepositAccountServiceImpl:222 - Money : 700 Balance Thread 1 : 7000
+2021-02-26 15:28:04 INFO  DemandDepositAccountServiceImpl:222 - Money : 3500 Balance Thread 1 : 3500
+2021-02-26 15:28:04 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-26 15:28:04 ERROR DemandDepositAccountServiceImpl:232 - ( Shopping Money : 4000 ) 500 INTERNAL_SERVER_ERROR "Not enough money in your account."
+2021-02-26 15:37:14 INFO  DemandDepositAccountController:61 - Deposit Money process was did.
+2021-02-26 15:39:58 INFO  DemandDepositAccountController:80 - Money transfer process was did.
+2021-02-26 15:41:21 INFO  SavingsAccountController:63 - With draw money process will do.
+2021-02-26 15:44:39 INFO  DemandDepositAccountController:143 - Money : 250 Balance Thread 1 : 9750
+2021-02-26 15:44:39 INFO  DemandDepositAccountController:154 - Shopping Money : 84 Balance Thread 2 : 9666
+2021-02-26 15:45:11 INFO  DemandDepositAccountController:143 - Money : 250 Balance Thread 1 : 9416
+2021-02-26 15:45:11 INFO  DemandDepositAccountController:154 - Shopping Money : 84 Balance Thread 2 : 9332
+2021-02-26 15:45:26 INFO  DemandDepositAccountController:143 - Money : 300 Balance Thread 1 : 9032
+2021-02-26 15:45:26 INFO  DemandDepositAccountController:154 - Shopping Money : 282 Balance Thread 2 : 8750
+2021-02-26 15:45:36 INFO  DemandDepositAccountController:143 - Money : 300 Balance Thread 1 : 8450
+2021-02-26 15:45:37 INFO  DemandDepositAccountController:154 - Shopping Money : 282 Balance Thread 2 : 8168
+2021-02-26 15:45:59 INFO  DemandDepositAccountController:61 - Deposit Money process was did.
+2021-02-26 15:46:06 INFO  DemandDepositAccountController:143 - Money : 300 Balance Thread 1 : 9868
+2021-02-26 15:46:06 INFO  DemandDepositAccountController:154 - Shopping Money : 282 Balance Thread 2 : 9586
+2021-02-26 15:46:15 INFO  DemandDepositAccountController:143 - Money : 300 Balance Thread 1 : 9286
+2021-02-26 15:46:15 INFO  DemandDepositAccountController:154 - Shopping Money : 282 Balance Thread 2 : 9004
+2021-02-26 15:46:33 INFO  DemandDepositAccountController:143 - Money : 300 Balance Thread 1 : 8704
+2021-02-26 15:46:33 INFO  DemandDepositAccountController:154 - Shopping Money : 84 Balance Thread 2 : 8620
+2021-02-26 15:46:45 INFO  DemandDepositAccountController:143 - Money : 300 Balance Thread 1 : 8320
+2021-02-26 15:46:45 INFO  DemandDepositAccountController:154 - Shopping Money : 84 Balance Thread 2 : 8236
+2021-02-26 15:47:14 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 500 Balance Thread 2 : 7736
+2021-02-26 15:47:14 INFO  DemandDepositAccountServiceImpl:222 - Money : 500 Balance Thread 1 : 7236
+2021-02-26 15:47:32 INFO  DemandDepositAccountController:143 - Money : 300 Balance Thread 1 : 6936
+2021-02-26 15:47:32 INFO  DemandDepositAccountController:154 - Shopping Money : 84 Balance Thread 2 : 6852
+2021-02-26 15:47:48 INFO  DemandDepositAccountController:143 - Money : 300 Balance Thread 1 : 6552
+2021-02-26 15:47:48 INFO  DemandDepositAccountController:154 - Shopping Money : 750 Balance Thread 2 : 5802
+2021-02-26 15:47:58 INFO  DemandDepositAccountController:154 - Shopping Money : 750 Balance Thread 2 : 5052
+2021-02-26 15:47:58 INFO  DemandDepositAccountController:143 - Money : 300 Balance Thread 1 : 4752
+2021-02-26 15:48:28 INFO  DemandDepositAccountController:154 - Shopping Money : 750 Balance Thread 2 : 4002
+2021-02-26 15:48:28 INFO  DemandDepositAccountController:143 - Money : 300 Balance Thread 1 : 3702
+2021-02-26 15:48:38 INFO  DemandDepositAccountController:154 - Shopping Money : 750 Balance Thread 2 : 2952
+2021-02-26 15:48:38 INFO  DemandDepositAccountController:143 - Money : 450 Balance Thread 1 : 2502
+2021-02-26 15:48:49 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 500 Balance Thread 2 : 2002
+2021-02-26 15:48:49 INFO  DemandDepositAccountServiceImpl:222 - Money : 500 Balance Thread 1 : 1502
+2021-02-26 15:48:57 INFO  DemandDepositAccountServiceImpl:230 - Shopping : 500 Balance Thread 2 : 1002
+2021-02-26 15:48:57 INFO  DemandDepositAccountServiceImpl:222 - Money : 500 Balance Thread 1 : 502
+2021-02-26 15:49:09 INFO  DemandDepositAccountController:143 - Money : 450 Balance Thread 1 : 52
+2021-02-26 15:49:09 ERROR DemandDepositAccountServiceImpl:196 - Not enough money in your account.
+2021-02-26 15:49:09 ERROR DemandDepositAccountController:160 - ( Shopping Money : 750 ) 500 INTERNAL_SERVER_ERROR "Not enough money in your account."
+2021-02-26 15:49:41 INFO  DemandDepositAccountController:61 - Deposit Money process was did.
+2021-02-26 15:51:00 ERROR ShoppingServiceImpl:84 - Product could not found.
+2021-02-26 15:51:00 ERROR ShoppingController:75 - 404 NOT_FOUND "Product could not found."
+2021-02-26 15:51:45 ERROR ShoppingServiceImpl:84 - Product could not found.
+2021-02-26 15:51:45 ERROR ShoppingController:75 - 404 NOT_FOUND "Product could not found."
+2021-02-26 15:55:28 INFO  SavingsAccountController:63 - With draw money process will do.
