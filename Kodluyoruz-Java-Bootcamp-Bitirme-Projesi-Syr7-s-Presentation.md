@@ -196,7 +196,7 @@ Uygulama içerisinde yapılan işlemleri ve kullanıcının karşılaştığı h
 
 ## Kullanılan Teknolojiler
 
-- Java, Spring Boot, Spring MVC, Spring Data JPA, Swagger, Postman, MySql, Rest API, JUnit5, Mockito, log4j
+- Java, Spring Boot, Spring MVC, Spring Data JPA,Maven, Swagger, Postman, MySql, Rest API, JUnit5, Mockito, log4j
 
 ## Proje Kapsamında Kullanılan Kaynaklar
 
